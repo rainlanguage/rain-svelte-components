@@ -1,3 +1,12 @@
-<h1 class="text-3xl font-semibold">Welcome to your library project</h1>
-<p>Create your package using @sveltejs/package and preview/showcase your work with SvelteKit</p>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+	import ComponentSection from '$lib/ComponentSection.svelte';
+	import Switch from '$lib/package/Switch.svelte';
+</script>
+
+<div class="max-w-screen-lg mx-auto">
+	<span>This is the Rain component library.</span>
+	<ComponentSection>
+		<h1 class="text-3xl font-semibold">Components</h1>
+		<Switch />
+	</ComponentSection>
+</div>
