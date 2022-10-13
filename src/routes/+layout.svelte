@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+	import NavItem from '$lib/NavItem.svelte';
 	import Switch from '$lib/package/Switch.svelte';
 	import '../app.postcss';
 
@@ -6,21 +8,38 @@
 </script>
 
 <div class:dark={checked}>
-	<div class="flex justify-between p-3 bg-gray-900">
-		<span class="text-gray-200 text-large">Rain component library</span>
+	<div
+		class="flex justify-between p-3 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700"
+	>
+		<span class="dark:text-gray-200 text-gray-800 text-large">Rain component library</span>
 		<Switch bind:checked />
 	</div>
 	<div class="bg-white dark:bg-gray-900 min-h-screen flex">
-		<div class="w-56 p-4 border-r border-gray-200 flex flex-col gap-y-4">
-			<a href="/" class="font-semibold">Home</a>
-			<div class="flex flex-col">
-				<span class="font-semibold">Forms</span>
-				<a href="/examples/input">Input</a>
-				<a href="/examples/switch">Switch</a>
-			</div>
+		<div class="w-56 border-r border-gray-200 dark:border-gray-700 flex flex-col">
+			<NavItem link="/">
+				<span class="title">Home</span>
+			</NavItem>
+			<NavItem>
+				<span class="title">Forms</span>
+			</NavItem>
+			<NavItem link="/examples/input">
+				<span>Input</span>
+			</NavItem>
+			<NavItem link="/examples/switch">
+				<span>Switch</span>
+			</NavItem>
 		</div>
 		<div class="p-8 w-full">
 			<slot />
 		</div>
 	</div>
 </div>
+
+<style lang="postcss">
+	.title {
+		@apply text-gray-800 dark:text-gray-100 font-semibold;
+	}
+	a {
+		@apply text-gray-600 dark:text-gray-400;
+	}
+</style>

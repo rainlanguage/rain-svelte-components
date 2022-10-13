@@ -4,10 +4,11 @@
 	import ExampleUsage from '$lib/ExampleUsage.svelte';
 	import Example from '$lib/Example.svelte';
 	import ExampleHeading from '$lib/ExampleHeading.svelte';
+	import PageHeading from '$lib/PageHeading.svelte';
 </script>
 
-<div class="flex flex-col">
-	<span class="text-3xl mb-8">Switch</span>
+<div class="flex flex-col gap-y-4">
+	<PageHeading>Switch</PageHeading>
 	<ExampleHeading>Normal</ExampleHeading>
 	<Example>
 		<ExampleComponent>

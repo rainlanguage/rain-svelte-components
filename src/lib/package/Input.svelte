@@ -62,12 +62,12 @@
 
 <div use:autoAnimate class="flex w-full flex-col gap-y-2">
 	{#if $$slots.label}
-		<div class=" text-gray-500 dark:text-gray-200 text-sm font-medium">
+		<div class=" text-gray-800 dark:text-gray-200 text-sm font-medium">
 			<slot name="label" />
 		</div>
 	{/if}
 	{#if $$slots.description}
-		<span class="text-gray-400 text-sm">
+		<span class="text-gray-600 dark:text-gray-400 text-sm">
 			<slot name="description" />
 		</span>
 	{/if}
@@ -78,7 +78,6 @@
 			{placeholder}
 			on:input={handleInput}
 			on:blur={() => {
-				console.log('blur');
 				validate();
 			}}
 			{disabled}
