@@ -23,10 +23,10 @@
 				<span class="title">Forms</span>
 			</NavItem>
 			<NavItem link="/examples/input">
-				<span>Input</span>
+				<span class="link">Input</span>
 			</NavItem>
 			<NavItem link="/examples/switch">
-				<span>Switch</span>
+				<span class="link">Switch</span>
 			</NavItem>
 		</div>
 		<div class="p-8 w-full">
@@ -39,7 +39,7 @@
 	.title {
 		@apply text-gray-800 dark:text-gray-100 font-semibold;
 	}
-	a {
+	.link {
 		@apply text-gray-600 dark:text-gray-400;
 	}
 </style>
