@@ -28,6 +28,9 @@
 			<NavItem link="/examples/switch">
 				<span class="link">Switch</span>
 			</NavItem>
+			<NavItem link="/examples/button">
+				<span class="link">Button</span>
+			</NavItem>
 		</div>
 		<div class="p-8 w-full">
 			<slot />
