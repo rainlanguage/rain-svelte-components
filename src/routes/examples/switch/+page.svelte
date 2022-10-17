@@ -14,10 +14,6 @@
 		<ExampleComponent>
 			<Switch />
 		</ExampleComponent>
-		<ExampleUsage>
-			{`<script lang="ts">
-			</script>
-			<Input />`}
-		</ExampleUsage>
+		<ExampleUsage>here</ExampleUsage>
 	</Example>
 </div>

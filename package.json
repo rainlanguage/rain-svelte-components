@@ -38,12 +38,14 @@
 	},
 	"type": "module",
 	"exports": {
-		"./package.json": "./package/package.json",
+		"./package.json": "./package.json",
 		"./Switch.svelte": "./Switch.svelte",
-		".": "./package/index.js"
+		".": "./index.js"
 	},
-	"svelte": "./package/index.js",
+	"svelte": "./index.js",
 	"dependencies": {
-		"@formkit/auto-animate": "^1.0.0-beta.3"
+		"@formkit/auto-animate": "^1.0.0-beta.3",
+		"rain-sdk": "beehive-innovation/rain-sdk#f6710e64a7d6c47110e3e584cd17e947c1d7313a",
+		"svelte-ethers-store": "^2.5.8"
 	}
 }

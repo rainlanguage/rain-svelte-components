@@ -1,81 +1,58 @@
 <script lang="ts">
-	import Button from '$lib/package/Button.svelte';
 	import ExampleComponent from '$lib/ExampleComponent.svelte';
 	import ExampleUsage from '$lib/ExampleUsage.svelte';
 	import Example from '$lib/Example.svelte';
 	import ExampleHeading from '$lib/ExampleHeading.svelte';
 	import PageHeading from '$lib/PageHeading.svelte';
+	import Button from '$lib/package/Button.svelte';
 
-	let _status = "OFF";
+	export const required = async (value: any): Promise<true | { error: string }> => {
+		await new Promise((resolve) => {
+			setTimeout(() => {
+				resolve('');
+			}, 1000);
+		});
+		if (value) {
+			return { error: 'An error message' };
+		}
+		return true;
+	};
 
-  const handleClick = async () => {
-    _status = _status == "OFF" ? "ON" : "OFF";
-  };
-
+	let debouncedValue: string;
 </script>
 
 <div class="flex flex-col gap-y-4">
 	<PageHeading>Button</PageHeading>
 
-	<ExampleHeading>Normal</ExampleHeading>
+	<ExampleHeading>Regular</ExampleHeading>
 	<Example>
 		<ExampleComponent>
-			<Button>Press</Button>
+			<Button>Click me</Button>
 		</ExampleComponent>
-		<ExampleUsage>
-			{`<script lang="ts">
-			</script>
-			<Input />`}
-		</ExampleUsage>
+		<ExampleUsage>example usage here</ExampleUsage>
 	</Example>
-
 
 	<ExampleHeading>Small</ExampleHeading>
 	<Example>
 		<ExampleComponent>
-			<Button small>Press</Button>
+			<Button size="small">Click me</Button>
 		</ExampleComponent>
-		<ExampleUsage>
-			{`<script lang="ts">
-			</script>
-			<Input />`}
-		</ExampleUsage>
+		<ExampleUsage>example usage here</ExampleUsage>
 	</Example>
 
-	<ExampleHeading>Shrink</ExampleHeading>
+	<ExampleHeading>Primary</ExampleHeading>
 	<Example>
 		<ExampleComponent>
-			<Button shrink>Press</Button>
+			<Button variant="primary">Click me</Button>
 		</ExampleComponent>
-		<ExampleUsage>
-			{`<script lang="ts">
-			</script>
-			<Input />`}
-		</ExampleUsage>
+		<ExampleUsage>example usage here</ExampleUsage>
 	</Example>
 
 	<ExampleHeading>Disabled</ExampleHeading>
 	<Example>
 		<ExampleComponent>
-			<Button small disabled=true>Press</Button>
+			<Button disabled>Click me</Button>
 		</ExampleComponent>
-		<ExampleUsage>
-			{`<script lang="ts">
-			</script>
-			<Input />`}
-		</ExampleUsage>
-	</Example>
-	
-	<ExampleHeading>With click event</ExampleHeading>
-	<Example>
-		<ExampleComponent>
-			<Button small on:click={handleClick}>Press</Button>
-			<div class="pt-4">On/off: {_status}</div>
-		</ExampleComponent>
-		<ExampleUsage>
-			{`<script lang="ts">
-			</script>
-			<Input />`}
-		</ExampleUsage>
+		<ExampleUsage>example usage here</ExampleUsage>
 	</Example>
 </div>
