@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import NavItem from '$lib/NavItem.svelte';
+	import Button from '$lib/package/Button.svelte';
 	import Switch from '$lib/package/Switch.svelte';
+	import { defaultEvmStores } from 'svelte-ethers-store';
 	import '../app.postcss';
 
 	let checked: boolean;
@@ -12,7 +14,15 @@
 		class="flex justify-between px-3 h-12 fixed inset-x-0 items-center dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700"
 	>
 		<span class="dark:text-gray-200 text-gray-800 text-large">Rain component library</span>
-		<Switch bind:checked />
+		<div>
+			<Button
+				size="small"
+				on:click={() => {
+					defaultEvmStores.setProvider();
+				}}>Connect</Button
+			>
+			<Switch bind:checked />
+		</div>
 	</nav>
 	<div class="dark:bg-gray-900 flex top-12 fixed inset-x-0 bottom-0">
 		<div class="w-56 border-r border-gray-200 dark:border-gray-700 flex flex-col">

@@ -26,8 +26,9 @@
 			autocompleteSelection = null;
 			await tick();
 			var selectedNode = document.getSelection();
-			// console.log(selectedNode)
-			const type = selectedNode.anchorNode.parentElement.attributes?.['data-type']?.nodeValue;
+			const type =
+				selectedNode.anchorNode.parentElement.previousElementSibling?.attributes?.['data-type']
+					?.nodeValue;
 			if (type == 'unknown-op' && selectedNode.anchorOffset == selectedNode.anchorNode.length) {
 				// console.log(selectedNode.anchorNode.textContent)
 				// console.log(selectedNode.anchorNode.parentElement.attributes['data-index'].nodeValue)
@@ -37,7 +38,7 @@
 
 		const getTextSegments = (element: ChildNode) => {
 			const textSegments = [];
-			console.log(element.childNodes);
+			// console.log(element.childNodes);
 			Array.from(element.childNodes).forEach((node) => {
 				switch (node.nodeType) {
 					case Node.TEXT_NODE:
@@ -74,9 +75,11 @@
 				}
 				currentIndex += text.length;
 			});
-
-			renderText(textContent);
-
+			if (textContent !== '') {
+				renderText(textContent);
+			} else {
+				node.innerHTML = '';
+			}
 			restoreSelection(anchorIndex, focusIndex);
 			autocomplete();
 		};
@@ -107,11 +110,11 @@
 		};
 
 		const renderText = (text: string) => {
+			console.log(text);
 			console.log('tree', Parser.getParseTree(text, OpMeta));
 			const parsedResult = Parser.getParseTree(text, OpMeta);
 			$vmStateConfig = Parser.getStateConfig(text, OpMeta);
 			const tree = parsedResult[0].tree;
-
 			if (!tree.length) return text;
 
 			let lastIndex = 0;
@@ -143,11 +146,13 @@
 					});
 					lastIndex = el?.position[1] + 1;
 				} else if (el?.error && el.error.startsWith('unknown')) {
-					textSegments.push({
-						text: text.slice(lastIndex, el?.position[0]),
-						node: null,
-						type: 'ignored'
-					});
+					if (lastIndex !== el?.position[0]) {
+						textSegments.push({
+							text: text.slice(lastIndex, el?.position[0]),
+							node: null,
+							type: 'ignored'
+						});
+					}
 					textSegments.push({
 						text: text.slice(el?.position[0], el?.position[1] + 1),
 						node: el,
@@ -170,8 +175,6 @@
 			tree.forEach(explode);
 			textSegments.push({ text: text.slice(lastIndex), node: null, type: 'ignored' });
 			_textSegments = textSegments;
-
-			// console.log(textSegments)
 
 			node.innerHTML = '';
 
