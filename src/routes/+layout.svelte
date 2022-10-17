@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import NavItem from '$lib/NavItem.svelte';
-	import Button from '$lib/package/Button.svelte';
-	import Switch from '$lib/package/Switch.svelte';
+	import NavItem from '$lib/_docs/NavItem.svelte';
+	import Button from '$lib/Button.svelte';
+	import Switch from '$lib/Switch.svelte';
 	import { connected, defaultEvmStores, signerAddress } from 'svelte-ethers-store';
 	import '../app.postcss';
 

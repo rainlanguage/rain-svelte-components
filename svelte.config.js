@@ -11,10 +11,6 @@ const config = {
 		})
 	],
 
-	package: {
-		source: 'src/lib/package'
-	},
-
 	kit: {
 		adapter: adapter()
 	}
