@@ -3,21 +3,20 @@
 	import { createEventDispatcher } from 'svelte';
 	import Ring from './Ring.svelte';
 
-	export let type: 'text' | 'number' | 'range' | 'address' | 'datetime-local' | 'textarea' = 'text';
+	export let type: 'text' | 'number' | 'range' | 'datetime-local' | 'textarea' = 'text';
 	export let value: string | number = '';
 	export let placeholder = '';
-	export let validator = async (value: any): Promise<any> => null;
 	export let debounce: boolean = false;
 	export let debounceTime: number = 750;
 	export let min = '';
 	export let max = '';
 	export let disabled = false;
-	export let errorMsg = '';
+
+	export let validator = async (value: any): Promise<any> => null;
 
 	let error: string | null;
-	let timer: NodeJS.Timeout, validating: boolean;
 
-	$: _type = type == 'address' ? 'text' : type;
+	let timer: NodeJS.Timeout, validating: boolean;
 
 	$: borderColor = error ? 'border-red-500' : 'border-gray-500';
 
@@ -31,6 +30,11 @@
 			value = v;
 			dispatch('input', v);
 		}
+	};
+
+	const handleBlur = (e: any) => {
+		validate();
+		dispatch('blur', e);
 	};
 
 	const doDebounce = (v: number) => {
@@ -71,33 +75,32 @@
 			<slot name="description" />
 		</span>
 	{/if}
-	<div class="flex w-full flex-row items-center gap-x-2 self-stretch">
+	<div class="flex w-full flex-row items-center gap-x-2 self-stretch relative">
 		<input
-			type={_type}
+			{type}
 			{value}
 			{placeholder}
 			on:input={handleInput}
-			on:blur={() => {
-				validate();
-			}}
+			on:blur={handleBlur}
 			{disabled}
 			{min}
 			{max}
 			class="w-full rounded-md bg-gray-200 dark:bg-gray-800 p-2 font-light {borderColor} dark:text-gray-100"
+			class:disabled
 		/>
 		{#if validating}
-			<div
-				class="absolute right-1 top-0 bottom-0 flex flex-col justify-center"
-				class:push-loader={type == 'address'}
-			>
-				<Ring size="30px" color="#FFF" />
+			<div class="absolute right-1 top-0 bottom-0 flex flex-col justify-center">
+				<Ring size="30px" color="#000" />
 			</div>
 		{/if}
 	</div>
 	{#if error}
 		<span class="text-red-500">{error}</span>
 	{/if}
-	{#if errorMsg && errorMsg !== ''}
-		<span class="text-red-500">{errorMsg}</span>
-	{/if}
 </div>
+
+<style lang="postcss">
+	.disabled {
+		@apply opacity-50 cursor-not-allowed;
+	}
+</style>

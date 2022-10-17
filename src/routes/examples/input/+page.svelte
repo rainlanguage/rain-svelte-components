@@ -7,6 +7,11 @@
 	import PageHeading from '$lib/PageHeading.svelte';
 
 	export const required = async (value: any): Promise<true | { error: string }> => {
+		await new Promise((resolve) => {
+			setTimeout(() => {
+				resolve('');
+			}, 1000);
+		});
 		if (value) {
 			return { error: 'An error message' };
 		}
@@ -26,12 +31,9 @@
 				<span slot="description">Description</span>
 			</Input>
 		</ExampleComponent>
-		<ExampleUsage>
-			{`<script lang="ts">
-			</script>
-			<Input />`}
-		</ExampleUsage>
+		<ExampleUsage>example usage here</ExampleUsage>
 	</Example>
+
 	<ExampleHeading>With validation</ExampleHeading>
 	<Example>
 		<ExampleComponent>
@@ -42,12 +44,9 @@
 				>
 			</Input>
 		</ExampleComponent>
-		<ExampleUsage>
-			{`<script lang="ts">
-			</script>
-			<Input />`}
-		</ExampleUsage>
+		<ExampleUsage>example usage here</ExampleUsage>
 	</Example>
+
 	<ExampleHeading>With debounce</ExampleHeading>
 	<Example>
 		<ExampleComponent>
@@ -57,10 +56,17 @@
 			</Input>
 			<div class="pt-4">Debounced value: {debouncedValue}</div>
 		</ExampleComponent>
-		<ExampleUsage>
-			{`<script lang="ts">
-			</script>
-			<Input />`}
-		</ExampleUsage>
+		<ExampleUsage>example usage here</ExampleUsage>
+	</Example>
+
+	<ExampleHeading>Disabled</ExampleHeading>
+	<Example>
+		<ExampleComponent>
+			<Input disabled>
+				<span slot="label">Input name</span>
+				<span slot="description">This field is disabled</span>
+			</Input>
+		</ExampleComponent>
+		<ExampleUsage>example usage here</ExampleUsage>
 	</Example>
 </div>

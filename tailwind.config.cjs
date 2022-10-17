@@ -6,6 +6,7 @@ const config = {
 	theme: {
 		extend: {},
 		colors: {
+			...colors,
 			gray: colors.neutral
 		}
 	},

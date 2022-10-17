@@ -7,20 +7,23 @@
 	let checked: boolean;
 </script>
 
-<div class:dark={checked}>
-	<div
+<div class:dark={checked} class="fixed inset-0">
+	<nav
 		class="flex justify-between p-3 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700"
 	>
 		<span class="dark:text-gray-200 text-gray-800 text-large">Rain component library</span>
 		<Switch bind:checked />
-	</div>
-	<div class="bg-white dark:bg-gray-900 min-h-screen flex">
-		<div class="w-56 border-r border-gray-200 dark:border-gray-700 flex flex-col">
+	</nav>
+	<div class="bg-white dark:bg-gray-900 min-h-screen flex overflow-scroll">
+		<div class="sticky top-0 w-56 border-r border-gray-200 dark:border-gray-700 flex flex-col">
 			<NavItem link="/">
 				<span class="title">Home</span>
 			</NavItem>
 			<NavItem>
 				<span class="title">Forms</span>
+			</NavItem>
+			<NavItem link="/examples/button">
+				<span class="link">Button</span>
 			</NavItem>
 			<NavItem link="/examples/input">
 				<span class="link">Input</span>
