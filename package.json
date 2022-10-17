@@ -1,6 +1,9 @@
 {
 	"name": "rain-svelte-components",
 	"version": "0.0.1",
+	"files": [
+		"package/**"
+	],
 	"scripts": {
 		"dev": "vite dev",
 		"build": "svelte-kit sync && svelte-package",
