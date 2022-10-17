@@ -1,8 +1,6 @@
 {
 	"name": "rain-svelte-components",
 	"version": "0.0.1",
-	"main": "package/Index.svelte",
-  "typings": "package/Index.svelte.d.ts",
 	"files": [
 		"package/**"
 	],
@@ -42,7 +40,7 @@
 		"./package.json": "./package.json",
 		".": "./index.js"
 	},
-	"svelte": "./index.js",
+	"svelte": "./package/index.js",
 	"dependencies": {
 		"@formkit/auto-animate": "^1.0.0-beta.3",
 		"@steeze-ui/heroicons": "^2.1.0",
