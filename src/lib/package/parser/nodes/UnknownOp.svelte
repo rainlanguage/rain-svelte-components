@@ -2,8 +2,10 @@
 	export let i, segment;
 </script>
 
-<span class="unknown-op" style="color:darkMagenta" data-type="unknown-op" data-index={i}
-	>{segment.text}</span
+<span
+	class="unknown-op text-fuchsia-700 dark:text-fuchsia-400"
+	data-type="unknown-op"
+	data-index={i}>{segment.text}</span
 >
 
 <style lang="postcss">

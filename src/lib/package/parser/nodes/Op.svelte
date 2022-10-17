@@ -1,6 +1,7 @@
 <script lang="ts">
-    
-    export let i, segment
+	export let i, segment;
 </script>
 
-<span style="color:darkMagenta" data-type="op" data-index={i}>{segment.text}</span>
+<span class="text-fuchsia-700 dark:text-fuchsia-400" data-type="op" data-index={i}
+	>{segment.text}</span
+>

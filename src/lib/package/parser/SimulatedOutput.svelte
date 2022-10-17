@@ -28,7 +28,7 @@
 	};
 </script>
 
-<div class="font-mono text-gray-800">
+<div class="font-mono text-gray-800 dark:text-gray-200">
 	{#if error}
 		<span class="text-red-500 text-xs leading-tight">{error}</span>
 	{/if}

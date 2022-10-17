@@ -13,10 +13,10 @@
 </script>
 
 <div class="rounded-lg overflow-hidden">
-	<div class="flex bg-gray-100">
+	<div class="flex bg-gray-100 dark:bg-gray-700">
 		<div class="flex flex-col w-2/3">
 			<div class="heading">Expression</div>
-			<div class="border-r border-gray-300 parser-wrapper flex flex-col">
+			<div class="border-r border-gray-300 dark:border-gray-600   parser-wrapper flex flex-col">
 				<ParserInput {vmStateConfig} bind:error />
 			</div>
 		</div>
@@ -27,7 +27,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="bg-gray-200 p-2 flex justify-between">
+	<div class="bg-gray-200 dark:bg-gray-800 p-2 flex justify-between">
 		<div class="text-red-500 text-xs font-regular h-4">
 			{#if error}
 				Error: {error}
@@ -40,7 +40,7 @@
 					<Icon src={QuestionMarkCircle} />
 				</span>
 			</div>
-			<div class="parser-button">
+			<div class="parser-button ">
 				<span class="text-xs">Expand</span>
 				<span class="w-4">
 					<Icon src={ArrowsPointingOut} />
@@ -60,6 +60,6 @@
 	}
 
 	.parser-button {
-		@apply flex items-center gap-x-1 text-gray-500 hover:text-gray-800 cursor-pointer transition-colors;
+		@apply flex items-center gap-x-1 cursor-pointer hover:opacity-80 transition-opacity;
 	}
 </style>
