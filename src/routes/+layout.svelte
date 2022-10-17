@@ -3,7 +3,7 @@
 	import NavItem from '$lib/NavItem.svelte';
 	import Button from '$lib/package/Button.svelte';
 	import Switch from '$lib/package/Switch.svelte';
-	import { defaultEvmStores } from 'svelte-ethers-store';
+	import { connected, defaultEvmStores, signerAddress } from 'svelte-ethers-store';
 	import '../app.postcss';
 
 	let checked: boolean;
@@ -17,10 +17,16 @@
 		<div>
 			<Button
 				size="small"
+				disabled={Boolean($signerAddress)}
 				on:click={() => {
 					defaultEvmStores.setProvider();
-				}}>Connect</Button
-			>
+				}}
+				>{#if $signerAddress}
+					Connected
+				{:else}
+					Connect
+				{/if}
+			</Button>
 			<Switch bind:checked />
 		</div>
 	</nav>
