@@ -14,7 +14,6 @@
 		"prepare": "yarn build"
 	},
 	"devDependencies": {
-		"@rgossiaux/svelte-heroicons": "^0.1.2",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
 		"@sveltejs/package": "next",
@@ -45,6 +44,9 @@
 	"svelte": "./index.js",
 	"dependencies": {
 		"@formkit/auto-animate": "^1.0.0-beta.3",
+		"@steeze-ui/heroicons": "^2.1.0",
+		"@steeze-ui/svelte-icon": "^1.3.2",
+		"ethers": "^5.7.1",
 		"rain-sdk": "beehive-innovation/rain-sdk#f6710e64a7d6c47110e3e584cd17e947c1d7313a",
 		"svelte-ethers-store": "^2.5.8"
 	}
