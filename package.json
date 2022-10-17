@@ -1,6 +1,8 @@
 {
 	"name": "rain-svelte-components",
 	"version": "0.0.1",
+	"main": "package/Index.svelte",
+  "typings": "package/Index.svelte.d.ts",
 	"files": [
 		"package/**"
 	],
