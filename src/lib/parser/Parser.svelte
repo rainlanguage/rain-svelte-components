@@ -1,5 +1,5 @@
 <script lang="ts">
-	import SimulatedOutput from '$lib/package/parser/SimulatedOutput.svelte';
+	import SimulatedOutput from '$lib/parser/SimulatedOutput.svelte';
 	import type { Signer } from 'ethers';
 	import type { StateConfig } from 'rain-sdk';
 	import { writable, type Writable } from 'svelte/store';

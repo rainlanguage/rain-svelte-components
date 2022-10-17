@@ -1,10 +1,10 @@
 <script lang="ts">
-	import ExampleComponent from '$lib/ExampleComponent.svelte';
-	import Input from '$lib/package/Input.svelte';
-	import ExampleUsage from '$lib/ExampleUsage.svelte';
-	import Example from '$lib/Example.svelte';
-	import ExampleHeading from '$lib/ExampleHeading.svelte';
-	import PageHeading from '$lib/PageHeading.svelte';
+	import ExampleComponent from '$lib/_docs/ExampleComponent.svelte';
+	import Input from '$lib/Input.svelte';
+	import ExampleUsage from '$lib/_docs/ExampleUsage.svelte';
+	import Example from '$lib/_docs/Example.svelte';
+	import ExampleHeading from '$lib/_docs/ExampleHeading.svelte';
+	import PageHeading from '$lib/_docs/PageHeading.svelte';
 
 	export const required = async (value: any): Promise<true | { error: string }> => {
 		await new Promise((resolve) => {
