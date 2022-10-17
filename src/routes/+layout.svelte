@@ -7,15 +7,15 @@
 	let checked: boolean;
 </script>
 
-<div class:dark={checked} class="fixed inset-0">
+<div class:dark={checked}>
 	<nav
-		class="flex justify-between p-3 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700"
+		class="flex justify-between px-3 h-12 fixed inset-x-0 items-center dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700"
 	>
 		<span class="dark:text-gray-200 text-gray-800 text-large">Rain component library</span>
 		<Switch bind:checked />
 	</nav>
-	<div class="bg-white dark:bg-gray-900 min-h-screen flex overflow-scroll">
-		<div class="sticky top-0 w-56 border-r border-gray-200 dark:border-gray-700 flex flex-col">
+	<div class="dark:bg-gray-900 flex top-12 fixed inset-x-0 bottom-0">
+		<div class="w-56 border-r border-gray-200 dark:border-gray-700 flex flex-col">
 			<NavItem link="/">
 				<span class="title">Home</span>
 			</NavItem>
@@ -32,7 +32,7 @@
 				<span class="link">Switch</span>
 			</NavItem>
 		</div>
-		<div class="p-8 w-full">
+		<div class="p-8 w-full overflow-auto">
 			<slot />
 		</div>
 	</div>

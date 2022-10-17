@@ -1,34 +1,35 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
-
-	export let variant = 'primary';
+	export let variant = 'default';
 	export let disabled = false;
-	export let small = false;
-	export let id = '';
-	export let shrink = false;
+	export let size = 'regular';
 	$: variantCalc = disabled ? 'disabled' : variant;
 </script>
 
-{#if small}
-	<button {disabled} {id} on:click class={`text-sm ${variantCalc}`}>
-		<slot />
-	</button>
-{:else}
-	<button {disabled} {id} on:click class={'text-base' + variantCalc}>
-		<slot />
-	</button>
-{/if}
+<button {disabled} on:click class={`button ${variantCalc} ${size}`}>
+	<slot />
+</button>
 
 <style lang="postcss">
 	.button {
-		@apply leading-none py-3 px-5 rounded-lg transition-colors text-white dark:text-black;
+		@apply leading-none rounded-lg transition-colors text-white dark:text-black;
+	}
+
+	.small {
+		@apply py-2 px-3 text-sm;
+	}
+
+	.regular {
+		@apply py-2 px-5 text-base;
+	}
+	.default {
+		@apply bg-gray-700 hover:bg-gray-600;
 	}
 	.primary {
 		@apply bg-blue-700 hover:bg-blue-600 dark:bg-blue-300 dark:hover:bg-blue-200;
 	}
 
 	.secondary {
-		@apply bg-gray-200 hover:bg-gray-100;
+		@apply bg-blue-500 hover:bg-blue-400;
 	}
 
 	.disabled {
