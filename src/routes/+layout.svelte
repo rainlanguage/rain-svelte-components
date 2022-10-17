@@ -31,6 +31,9 @@
 			<NavItem link="/examples/switch">
 				<span class="link">Switch</span>
 			</NavItem>
+			<NavItem link="/examples/parser">
+				<span class="link">Parser</span>
+			</NavItem>
 		</div>
 		<div class="p-8 w-full overflow-auto">
 			<slot />
