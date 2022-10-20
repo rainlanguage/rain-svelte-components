@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { signer } from 'svelte-ethers-store';
-	import ExampleComponent from '$lib/ExampleComponent.svelte';
-	import ExampleUsage from '$lib/ExampleUsage.svelte';
-	import Example from '$lib/Example.svelte';
-	import ExampleHeading from '$lib/ExampleHeading.svelte';
-	import PageHeading from '$lib/PageHeading.svelte';
-	import ParserInput from '$lib/package/parser/ParserInput.svelte';
+	import ExampleComponent from '$lib/_docs/ExampleComponent.svelte';
+	import ExampleUsage from '$lib/_docs/ExampleUsage.svelte';
+	import Example from '$lib/_docs/Example.svelte';
+	import ExampleHeading from '$lib/_docs/ExampleHeading.svelte';
+	import PageHeading from '$lib/_docs/PageHeading.svelte';
+	import ParserInput from '$lib/parser/ParserInput.svelte';
 	import { writable, type Writable } from 'svelte/store';
-	import SimulatedOutput from '$lib/package/parser/SimulatedOutput.svelte';
+	import SimulatedOutput from '$lib/parser/SimulatedOutput.svelte';
 	import type { StateConfig } from 'rain-sdk';
-	import Parser from '$lib/package/parser/Parser.svelte';
+	import Parser from '$lib/parser/Parser.svelte';
 
 	let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
 </script>

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import ComponentSection from '$lib/ComponentSection.svelte';
-	import Switch from '$lib/package/Switch.svelte';
+	import ComponentSection from '$lib/_docs/ComponentSection.svelte';
+	import Switch from '$lib/Switch.svelte';
 </script>
 
 <div class="flex flex-col max-w-screen-lg mx-auto pt-8">
