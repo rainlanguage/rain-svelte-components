@@ -49,6 +49,9 @@
 			<NavItem link="/examples/parser">
 				<span class="link">Parser</span>
 			</NavItem>
+			<NavItem link="/examples/select">
+				<span class="link">Select</span>
+			</NavItem>
 		</div>
 		<div class="p-8 w-full overflow-auto">
 			<slot />
