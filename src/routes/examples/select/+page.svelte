@@ -8,14 +8,14 @@
 
 	
 	const options = [
-  {label: 'Option 1'},
-  {label: 'Option 2'},
-  {label: 'Option 3'},
-  {label: 'Option 4'},
-  {label: 'Option 5'},
-];
+		{label: 'Option 1'},
+		{label: 'Option 2'},
+		{label: 'Option 3'},
+		{label: 'Option 4'},
+	];
 
-	let selectedNetwork ={label: 'None'};
+	let select1 = {label: "No option selected"};
+	let select2 = {label: "No option selected"};
 
 </script>
 
@@ -25,8 +25,34 @@
 	<ExampleHeading>Regular</ExampleHeading>
 	<Example>
 		<ExampleComponent>
-			<Select bind:value={selectedNetwork} items={options} />
+			<Select bind:value={select1} items={options} />
+			<div class="pt-4"><strong>Option selected:</strong> {select1.label}</div>
 		</ExampleComponent>
-		<ExampleUsage>example usage here</ExampleUsage>
+		<ExampleUsage>
+{`<script>
+	const options = [...];
+	let select;
+</script>
+
+<div>
+	<Select bind:value={select} items={options} />
+</div>`}
+		</ExampleUsage>
+	</Example>
+	<ExampleHeading>Disabled</ExampleHeading>
+	<Example>
+		<ExampleComponent>
+			<Select bind:value={select2} disabled={true} items={options} />
+		</ExampleComponent>
+		<ExampleUsage>
+{`<script>
+	const options = [...];
+	let select;
+</script>
+
+<div>
+	<Select bind:value={select} items={options} disabled={true} />
+</div>`}
+		</ExampleUsage>
 	</Example>
 </div>
