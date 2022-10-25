@@ -11,8 +11,17 @@
 	let result: any, result2: any;
 </script>
 
-<div class="flex flex-col gap-y-4">
+<div class="flex flex-col gap-y-4 dark:text-gray-100">
 	<PageHeading>Auto ABI Form</PageHeading>
+	<div>
+		This component takes an ABI and a method name, and produces a form for the required inputs. If
+		the type <span class="font-mono inline-block">struct StateConfig</span>
+		is found, it will show the parser.
+	</div>
+	<div>
+		Bind to the <span class="font-mono">results</span> prop to get an object that can be spread for the
+		method input args.
+	</div>
 	<ExampleHeading>With parser</ExampleHeading>
 	<Example>
 		<ExampleComponent>
@@ -36,8 +45,8 @@
 		<ExampleComponent>
 			<div class="grid grid-cols-3">
 				<div class="col-span-2">
-					<div class="text-xl mb-2">Method name: mintNFT</div>
-					<AutoAbiForm abi={Vapour721A.abi} bind:result={result2} methodName="mintNFT" />
+					<div class="text-xl mb-2">Method name: safeTransferFrom</div>
+					<AutoAbiForm abi={Vapour721A.abi} bind:result={result2} methodName="safeTransferFrom" />
 				</div>
 				<div class="p-4">
 					<span>Result</span>

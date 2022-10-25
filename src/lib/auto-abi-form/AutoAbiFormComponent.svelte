@@ -6,7 +6,7 @@
 	import { writable } from 'svelte/store';
 
 	export let component: AbiParameter;
-	export let result: any;
+	export let result: any = 'components' in component ? {} : undefined;
 
 	let vmStateConfig = writable({ sources: [], constants: [] });
 
@@ -16,15 +16,15 @@
 
 {#if type == 'string'}
 	<Input type="text" bind:value={result}>
-		<span slot="label">{component.name}</span>
+		<span slot="label">{component.name} ({type})</span>
 	</Input>
 {:else if type == 'uint256'}
 	<Input type="number" bind:value={result}>
-		<span slot="label">{component.name}</span>
+		<span slot="label">{component.name} ({type})</span>
 	</Input>
 {:else if type == 'address'}
 	<Input type="text" bind:value={result}>
-		<span slot="label">{component.name}</span>
+		<span slot="label">{component.name} ({type})</span>
 	</Input>
 {:else if type == 'struct StateConfig'}
 	<span>expression</span>
