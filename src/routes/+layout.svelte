@@ -52,6 +52,9 @@
 			<NavItem link="/examples/select">
 				<span class="link">Select</span>
 			</NavItem>
+			<NavItem link="/examples/hoverTooltip">
+				<span class="link">Hover Tooltip</span>
+			</NavItem>
 		</div>
 		<div class="p-8 w-full overflow-auto">
 			<slot />
