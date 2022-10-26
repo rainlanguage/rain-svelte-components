@@ -35,12 +35,12 @@
 	</div>
 	<Example>
 		<ExampleComponent>
-			<Select bind:value={select2} items={options2} />
+			<Select bind:value={select1} items={options} />
 			<div class="pt-4">
 				<strong>Option selected:</strong>
 				{options[select1]?.label || 'none selected'}
 			</div>
-			<div><strong>Option value:</strong> {select2}</div>
+			<div><strong>Option value:</strong> {select1}</div>
 		</ExampleComponent>
 		<ExampleUsage>
 			{`<script>
