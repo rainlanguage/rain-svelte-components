@@ -54,6 +54,9 @@
 			</NavItem>
 			<NavItem link="/examples/hoverTooltip">
 				<span class="link">Hover Tooltip</span>
+      </NavItem>
+			<NavItem link="/examples/auto-abi-form">
+				<span class="link">Auto ABI Form</span>
 			</NavItem>
 		</div>
 		<div class="p-8 w-full overflow-auto">
