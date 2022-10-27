@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Vapour721AFactory from './Vapour721AFactory.json';
 	import Vapour721A from './Vapour721A.json';
+	import Vapour721AMetadata from './Vapour721AMetadata.json';
 	import AutoAbiForm from '$lib/auto-abi-form/AutoAbiForm.svelte';
 	import PageHeading from '$lib/_docs/PageHeading.svelte';
 	import ExampleHeading from '$lib/_docs/ExampleHeading.svelte';
@@ -28,7 +29,12 @@
 			<div class="grid grid-cols-3">
 				<div class="col-span-2">
 					<div class="text-xl mb-2">Method name: createChildTyped</div>
-					<AutoAbiForm abi={Vapour721AFactory.abi} bind:result methodName="createChildTyped" />
+					<AutoAbiForm
+						abi={Vapour721AFactory.abi}
+						metadata={Vapour721AMetadata}
+						bind:result
+						methodName="createChildTyped"
+					/>
 				</div>
 				<div class="p-4">
 					<span>Result</span>

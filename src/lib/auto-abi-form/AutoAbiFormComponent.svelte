@@ -16,18 +16,34 @@
 
 {#if type == 'string'}
 	<Input type="text" bind:value={result}>
-		<span slot="label">{component.name} ({type})</span>
+		<span slot="label">{component.nameMeta || component.name} ({type})</span>
+		<span slot="description"
+			>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
+		>
 	</Input>
 {:else if type == 'uint256'}
 	<Input type="number" bind:value={result}>
-		<span slot="label">{component.name} ({type})</span>
+		<span slot="label">{component.nameMeta || component.name} ({type})</span>
+		<span slot="description"
+			>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
+		>
 	</Input>
 {:else if type == 'address'}
 	<Input type="text" bind:value={result}>
-		<span slot="label">{component.name} ({type})</span>
+		<span slot="label">{component.nameMeta || component.name} ({type})</span>
+		<span slot="description"
+			>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
+		>
 	</Input>
 {:else if type == 'struct StateConfig'}
-	<span>expression</span>
+	<div>
+		{#if component.nameMeta}
+			<div class="font-medium">{component.nameMeta}</div>
+		{/if}
+		{#if component.descriptionMeta}
+			<div class="text-sm">{component.descriptionMeta}</div>
+		{/if}
+	</div>
 	<Parser signer={$signer} bind:vmStateConfig />
 {:else if type?.startsWith('struct') && 'components' in component}
 	<span>{component.name}</span>

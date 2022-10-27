@@ -1,0 +1,29 @@
+{
+	"name": "test",
+	"description": "test desc",
+	"type": "Factory",
+	"version": {
+		"major": 0,
+		"minor": 0
+	},
+	"addresses": [
+		{
+			"chainId": 2,
+			"address": "0x0"
+		}
+	],
+	"expressions": [
+		{
+			"name": "Price and quantity",
+			"description": "Description",
+			"path": "[4].inputs[0].components[9]"
+		}
+	],
+	"inputs": [
+		{
+			"name": "Name",
+			"description": "Name desc",
+			"path": "[4].inputs[0].components[0]"
+		}
+	]
+}
