@@ -5,20 +5,6 @@
 	import ExampleHeading from '$lib/_docs/ExampleHeading.svelte';
 	import PageHeading from '$lib/_docs/PageHeading.svelte';
 	import Button from '$lib/Button.svelte';
-
-	export const required = async (value: any): Promise<true | { error: string }> => {
-		await new Promise((resolve) => {
-			setTimeout(() => {
-				resolve('');
-			}, 1000);
-		});
-		if (value) {
-			return { error: 'An error message' };
-		}
-		return true;
-	};
-
-	let debouncedValue: string;
 </script>
 
 <div class="flex flex-col gap-y-4">

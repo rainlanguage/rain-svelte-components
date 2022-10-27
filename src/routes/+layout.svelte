@@ -49,6 +49,12 @@
 			<NavItem link="/examples/parser">
 				<span class="link">Parser</span>
 			</NavItem>
+			<NavItem link="/examples/select">
+				<span class="link">Select</span>
+			</NavItem>
+			<NavItem link="/examples/hoverTooltip">
+				<span class="link">Hover Tooltip</span>
+      </NavItem>
 			<NavItem link="/examples/auto-abi-form">
 				<span class="link">Auto ABI Form</span>
 			</NavItem>
