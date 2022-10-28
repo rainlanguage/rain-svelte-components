@@ -64,6 +64,9 @@
 			<NavItem link="/examples/display-address">
 				<span class="link">Display Address</span>
 			</NavItem>
+			<NavItem link="/examples/form-panel">
+				<span class="link">Form Panel</span>
+			</NavItem>
 		</div>
 		<div class="p-8 w-full overflow-auto">
 			<slot />
