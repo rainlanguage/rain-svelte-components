@@ -61,6 +61,9 @@
 			<NavItem link="/examples/jazzicon">
 				<span class="link">Jazzicon</span>
 			</NavItem>
+			<NavItem link="/examples/display-address">
+				<span class="link">Display Address</span>
+			</NavItem>
 		</div>
 		<div class="p-8 w-full overflow-auto">
 			<slot />
