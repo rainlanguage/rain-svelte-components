@@ -6,16 +6,10 @@
 	import PageHeading from '$lib/_docs/PageHeading.svelte';
 	import Jazzicon from '$lib/Jazzicon.svelte';
 	import Input from '$lib/Input.svelte';
-  import { onMount } from "svelte";
 
-
-	export let address1: string = "";
-	export let address2: string = "";
-
-	onMount(() => {
-    address1 = "0xabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd";
-    address2 = "0xabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd";
-  });
+	// Initial addresses values
+	export let address1: string = "0xabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd";
+	export let address2: string = "0xabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd";
 </script>
 
 <div class="flex flex-col gap-y-4">

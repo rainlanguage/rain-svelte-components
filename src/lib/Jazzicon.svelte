@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { tick } from "svelte";
+  import { afterUpdate, tick } from "svelte";
   import jazzicon from "@metamask/jazzicon";
 
   let avatar:any, icon:any;
@@ -21,9 +21,11 @@
     return seed;
   }
 
-  $: if (address) {
+  afterUpdate(() => {
+    if (address) {
     append();
   }
+  });
 
   $: show = address
     ? "transition-opacity duration-500 opacity-100"
