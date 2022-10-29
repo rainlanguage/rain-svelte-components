@@ -28,9 +28,3 @@
 		<ExampleUsage>{`<DisplayAddress address={yourAddress}/>`}</ExampleUsage>
 	</Example>
 </div>
-
-<style>
-	.mb-5px {
-		margin-bottom: 5px;
-	}
-</style>
