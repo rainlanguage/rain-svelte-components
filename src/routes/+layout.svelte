@@ -58,6 +58,15 @@
 			<NavItem link="/examples/auto-abi-form">
 				<span class="link">Auto ABI Form</span>
 			</NavItem>
+			<NavItem link="/examples/jazzicon">
+				<span class="link">Jazzicon</span>
+			</NavItem>
+			<NavItem link="/examples/display-address">
+				<span class="link">Display Address</span>
+			</NavItem>
+			<NavItem link="/examples/progress-bar">
+				<span class="link">Progress Bar</span>
+			</NavItem>
 		</div>
 		<div class="p-8 w-full overflow-auto">
 			<slot />
