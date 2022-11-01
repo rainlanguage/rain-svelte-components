@@ -1,0 +1,31 @@
+{
+	"name": "Vapour721A Factory",
+	"description": "test desc",
+	"type": "Factory",
+	"source": "",
+	"commit": "",
+	"version": {
+		"major": 0,
+		"minor": 0
+	},
+	"addresses": [
+		{
+			"chainId": 2,
+			"knownAddresses": ["0x0"]
+		}
+	],
+	"expressions": [
+		{
+			"name": "Price and quantity",
+			"description": "Description",
+			"path": "[4].inputs[0].components[9]"
+		}
+	],
+	"inputs": [
+		{
+			"name": "Name",
+			"description": "Name desc",
+			"path": "[4].inputs[0].components[0]"
+		}
+	]
+}

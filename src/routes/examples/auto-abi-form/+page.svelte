@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Vapour721AFactory from './Vapour721AFactory.json';
 	import Vapour721A from './Vapour721A.json';
+	import Vapour721AMetadata from './Vapour721AMetadata.json';
 	import AutoAbiForm from '$lib/auto-abi-form/AutoAbiForm.svelte';
 	import PageHeading from '$lib/_docs/PageHeading.svelte';
 	import ExampleHeading from '$lib/_docs/ExampleHeading.svelte';
@@ -13,14 +14,25 @@
 
 <div class="flex flex-col gap-y-4 dark:text-gray-100">
 	<PageHeading>Auto ABI Form</PageHeading>
-	<div>
-		This component takes an ABI and a method name, and produces a form for the required inputs. If
-		the type <span class="font-mono inline-block">struct StateConfig</span>
-		is found, it will show the parser.
-	</div>
-	<div>
-		Bind to the <span class="font-mono">results</span> prop to get an object that can be spread for the
-		method input args.
+	<div class="max-w-prose flex flex-col gap-y-4">
+		<div>
+			This component takes an ABI and a method name, and produces a form for the required inputs. If
+			the type <span class="font-mono inline-block">struct StateConfig</span>
+			is found, it will show the parser.
+		</div>
+		<div>
+			Bind to the <span class="font-mono">results</span> prop to get an object that can be spread for
+			the method input args.
+		</div>
+		<div>
+			Optionally pass a <span class="font-mono">metadata</span> prop using the contract metadata
+			schema defined at
+			<a
+				class="underline"
+				href="https://github.com/beehive-innovation/rain-metadata/blob/master/json-schemas/contract.json"
+				>https://github.com/beehive-innovation/rain-metadata/blob/master/json-schemas/contract.json</a
+			>
+		</div>
 	</div>
 	<ExampleHeading>With parser</ExampleHeading>
 	<Example>
@@ -28,7 +40,12 @@
 			<div class="grid grid-cols-3">
 				<div class="col-span-2">
 					<div class="text-xl mb-2">Method name: createChildTyped</div>
-					<AutoAbiForm abi={Vapour721AFactory.abi} bind:result methodName="createChildTyped" />
+					<AutoAbiForm
+						abi={Vapour721AFactory.abi}
+						metadata={Vapour721AMetadata}
+						bind:result
+						methodName="createChildTyped"
+					/>
 				</div>
 				<div class="p-4">
 					<span>Result</span>
