@@ -1,15 +1,17 @@
 /**
  * @title Rain Contract Metadata
- * @description Schema for a contract to be used 
+ * @description Schema for a contract
  * @version 0.01
  */
 export type ContractMetadata = {
     addresses: EVMAddress[]
     name: string
+    source: string
+    commit: string
     description: string
     type: string
-    expressions: Expression[]
-    inputs: Input[]
+    expressions?: Expression[]
+    inputs?: Input[]
     version: Version
 }
 
@@ -26,7 +28,7 @@ export type Version = {
  */
 export type EVMAddress = {
     chainId: number
-    address: string
+    knownAddresses: string[]
 }
 
 /*
@@ -36,6 +38,24 @@ export type Expression = {
     name: string
     description: string
     path: string
+    contextColumns?: ContextColumn[]
+}
+
+/*
+* Each column in the context, cells are optional in the case of additional context passed in at time of execution (like arbitrary signed context).
+*/
+export type ContextColumn = {
+    name: string
+    description?: string
+    cells?: ContextCell[]
+}
+
+/*
+* One cell in the context.
+*/
+export type ContextCell = {
+    name: string
+    description?: string
 }
 
 /*

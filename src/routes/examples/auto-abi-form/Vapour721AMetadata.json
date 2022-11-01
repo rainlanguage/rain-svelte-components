@@ -1,7 +1,9 @@
 {
-	"name": "test",
+	"name": "Vapour721A Factory",
 	"description": "test desc",
 	"type": "Factory",
+	"source": "",
+	"commit": "",
 	"version": {
 		"major": 0,
 		"minor": 0
@@ -9,7 +11,7 @@
 	"addresses": [
 		{
 			"chainId": 2,
-			"address": "0x0"
+			"knownAddresses": ["0x0"]
 		}
 	],
 	"expressions": [

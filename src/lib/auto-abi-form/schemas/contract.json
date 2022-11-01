@@ -11,6 +11,12 @@
     "name": {
       "type": "string"
     },
+    "source": {
+      "type": "string"
+    },
+    "commit": {
+      "type": "string"
+    },
     "description": {
       "type": "string"
     },
@@ -36,15 +42,15 @@
   "required": [
     "addresses",
     "name",
+    "source",
+    "commit",
     "description",
     "type",
-    "expressions",
-    "inputs",
     "version"
   ],
   "additionalProperties": false,
   "title": "Rain Contract Metadata",
-  "description": "Schema for a contract to be used",
+  "description": "Schema for a contract",
   "definitions": {
     "EVMAddress": {
       "type": "object",
@@ -52,11 +58,14 @@
         "chainId": {
           "type": "number"
         },
-        "address": {
-          "type": "string"
+        "knownAddresses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       },
-      "required": ["chainId", "address"],
+      "required": ["chainId", "knownAddresses"],
       "additionalProperties": false,
       "description": "The address of the deployed contract for the specified chain."
     },
@@ -71,9 +80,47 @@
         },
         "path": {
           "type": "string"
+        },
+        "contextColumns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ContextColumn"
+          }
         }
       },
       "required": ["name", "description", "path"],
+      "additionalProperties": false
+    },
+    "ContextColumn": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "cells": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ContextCell"
+          }
+        }
+      },
+      "required": ["name"],
+      "additionalProperties": false
+    },
+    "ContextCell": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": ["name"],
       "additionalProperties": false
     },
     "Input": {
