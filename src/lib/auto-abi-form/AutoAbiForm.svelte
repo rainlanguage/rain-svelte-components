@@ -2,7 +2,7 @@
 	import AutoAbiFormComponent from '$lib/auto-abi-form/AutoAbiFormComponent.svelte';
 	import ContractMeta from '$lib/auto-abi-form/schemas/contract.json';
 	import type { ContractMetadata } from '$lib/auto-abi-form/schemas/contract';
-	import Ajv from 'ajv';
+	import * as Ajv from 'ajv';
 	import { set } from 'lodash';
 	import type { Abi } from 'abitype';
 	import { setContext } from 'svelte';
@@ -23,7 +23,7 @@
 	$: inputs = method?.type == 'function' ? method.inputs : null;
 
 	if (metadata) {
-		const ajv = new Ajv();
+		const ajv = new Ajv.default();
 		const validate = ajv.compile(ContractMeta);
 
 		valid = validate(metadata);
