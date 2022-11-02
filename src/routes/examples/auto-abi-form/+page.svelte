@@ -10,8 +10,9 @@
 	import Example from '$lib/_docs/Example.svelte';
 	import ExampleComponent from '$lib/_docs/ExampleComponent.svelte';
 	import ExampleUsage from '$lib/_docs/ExampleUsage.svelte';
+	import AutoAbiFormSeparated from '$lib/auto-abi-form/AutoAbiFormSeparated.svelte';
 
-	let result: any, result2: any;
+	let result: any, resultMerged: any, result2: any;
 </script>
 
 <div class="flex flex-col gap-y-4 dark:text-gray-100">
@@ -36,7 +37,7 @@
 			>
 		</div>
 	</div>
-	<ExampleHeading>With parser</ExampleHeading>
+	<ExampleHeading id="with-parser">With parser</ExampleHeading>
 	<Example>
 		<ExampleComponent>
 			<div class="grid grid-cols-3">
@@ -59,7 +60,30 @@
 		</ExampleComponent>
 		<ExampleUsage>example usage here</ExampleUsage>
 	</Example>
-	<ExampleHeading>Without parser</ExampleHeading>
+	<ExampleHeading id="separated">Separated expressions and config</ExampleHeading>
+	<Example>
+		<ExampleComponent>
+			<div class="grid grid-cols-3">
+				<div class="col-span-2">
+					<div class="text-xl mb-2">Method name: createChildTyped</div>
+					<AutoAbiFormSeparated
+						abi={FlowERC20Factory.abi}
+						metadata={FlowERC20FactoryMetadata}
+						bind:result={resultMerged}
+						methodName="createChildTyped"
+					/>
+				</div>
+				<div class="p-4">
+					<span>Result</span>
+					<pre>
+						{JSON.stringify(resultMerged, null, 2)}
+					</pre>
+				</div>
+			</div>
+		</ExampleComponent>
+		<ExampleUsage>example usage here</ExampleUsage>
+	</Example>
+	<ExampleHeading id="without-parser">Without parser</ExampleHeading>
 	<Example>
 		<ExampleComponent>
 			<div class="grid grid-cols-3">
