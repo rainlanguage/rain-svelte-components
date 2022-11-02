@@ -17,7 +17,7 @@
 
 	// metadata
 	export let metadata: ContractMetadata;
-	let valid: boolean;
+	let valid: boolean = true;
 
 	$: method = abi.find((method) => method.type == 'function' && method?.name == methodName);
 	$: inputs = method?.type == 'function' ? method.inputs : null;
