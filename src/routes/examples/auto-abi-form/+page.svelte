@@ -2,6 +2,8 @@
 	import Vapour721AFactory from './Vapour721AFactory.json';
 	import Vapour721A from './Vapour721A.json';
 	import Vapour721AMetadata from './Vapour721AMetadata.json';
+	import FlowERC20Factory from './FlowERC20Factory.json';
+	import FlowERC20FactoryMetadata from './FlowERC20FactoryMetadata.json';
 	import AutoAbiForm from '$lib/auto-abi-form/AutoAbiForm.svelte';
 	import PageHeading from '$lib/_docs/PageHeading.svelte';
 	import ExampleHeading from '$lib/_docs/ExampleHeading.svelte';
@@ -41,8 +43,8 @@
 				<div class="col-span-2">
 					<div class="text-xl mb-2">Method name: createChildTyped</div>
 					<AutoAbiForm
-						abi={Vapour721AFactory.abi}
-						metadata={Vapour721AMetadata}
+						abi={FlowERC20Factory.abi}
+						metadata={FlowERC20FactoryMetadata}
 						bind:result
 						methodName="createChildTyped"
 					/>
