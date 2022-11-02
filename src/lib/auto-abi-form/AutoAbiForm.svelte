@@ -2,7 +2,7 @@
 	import AutoAbiFormComponent from '$lib/auto-abi-form/AutoAbiFormComponent.svelte';
 	import ContractMeta from '$lib/auto-abi-form/schemas/contract.json';
 	import type { ContractMetadata } from '$lib/auto-abi-form/schemas/contract';
-	import * as Ajv from 'ajv';
+	// import * as Ajv from 'ajv';
 	import { set } from 'lodash';
 	import type { Abi } from 'abitype';
 	import { setContext } from 'svelte';
@@ -23,27 +23,27 @@
 	$: inputs = method?.type == 'function' ? method.inputs : null;
 
 	if (metadata) {
-		const ajv = new Ajv.default();
-		const validate = ajv.compile(ContractMeta);
+		// const ajv = new Ajv.default();
+		// const validate = ajv.compile(ContractMeta);
 
-		valid = validate(metadata);
+		// valid = validate(metadata);
 
-		if (!valid) {
-			console.log(validate.errors);
-		} else {
-			if (metadata.expressions) {
-				metadata.expressions.forEach((expression) => {
-					set(abi, expression.path + '.nameMeta', expression.name);
-					set(abi, expression.path + '.descriptionMeta', expression.description);
-				});
-			}
-			if (metadata.inputs) {
-				metadata.inputs.forEach((input) => {
-					set(abi, input.path + '.nameMeta', input.name);
-					set(abi, input.path + '.descriptionMeta', input.description);
-				});
-			}
+		// if (!valid) {
+		// 	console.log(validate.errors);
+		// } else {
+		if (metadata.expressions) {
+			metadata.expressions.forEach((expression) => {
+				set(abi, expression.path + '.nameMeta', expression.name);
+				set(abi, expression.path + '.descriptionMeta', expression.description);
+			});
 		}
+		if (metadata.inputs) {
+			metadata.inputs.forEach((input) => {
+				set(abi, input.path + '.nameMeta', input.name);
+				set(abi, input.path + '.descriptionMeta', input.description);
+			});
+		}
+		// }
 	}
 </script>
 
