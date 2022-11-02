@@ -5,10 +5,15 @@
 	import Ajv from 'ajv';
 	import { set } from 'lodash';
 	import type { Abi } from 'abitype';
+	import { setContext } from 'svelte';
 
 	export let abi: Abi;
 	export let methodName: string = 'createChildTyped';
 	export let result: any = [];
+	export let onlyExpressions = false;
+	export let onlyConfig = false;
+
+	setContext('abi-form', { onlyExpressions, onlyConfig });
 
 	// metadata
 	export let metadata: ContractMetadata;
@@ -44,7 +49,7 @@
 
 {#if (metadata && valid) || !metadata}
 	{#if inputs}
-		<div class="flex flex-col gap-y-4">
+		<div class:onlyConfig class:normalForm={!onlyConfig}>
 			{#each inputs as component, i}
 				<AutoAbiFormComponent {component} bind:result={result[i]} />
 			{/each}
@@ -53,3 +58,13 @@
 {:else}
 	Invalid contract metadata
 {/if}
+
+<style>
+	.onlyConfig {
+		@apply gap-y-4 grid grid-cols-2 items-end gap-4;
+	}
+
+	.normalForm {
+		@apply flex flex-col gap-y-4;
+	}
+</style>
