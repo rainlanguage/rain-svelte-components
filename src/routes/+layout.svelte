@@ -67,6 +67,9 @@
 			<NavItem link="/examples/progress-bar">
 				<span class="link">Progress Bar</span>
 			</NavItem>
+			<NavItem link="/examples/tabs">
+				<span class="link">Tabs</span>
+			</NavItem>
 		</div>
 		<div class="p-8 w-full overflow-auto">
 			<slot />

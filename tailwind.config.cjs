@@ -8,11 +8,14 @@ const config = {
 		colors: {
 			...colors,
 			gray: colors.neutral
+		},
+		fontFamily: {
+			sans: ['DM Sans', { fontFeatureSettings: '"calt", "off"' }]
 		}
 	},
 	darkMode: 'class',
 
-	plugins: []
+	variants: ['dark', 'dark-hover', 'dark-group-hover', 'dark-even', 'dark-odd']
 };
 
 module.exports = config;

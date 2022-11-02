@@ -10,7 +10,7 @@
 <div class="flex flex-col gap-y-4">
 	<PageHeading>Hover Tooltip</PageHeading>
 	<ExampleHeading>Placeholder</ExampleHeading>
-		<div>
+		<div class="dark:text-white">
 			You can provide a placeholder that will be displayed when hovering over the element.
 			If no placeholder is provided, the text "Info" will be used
 		</div>
@@ -19,6 +19,7 @@
 			<div class="wrapper-fixed">
 				<HoverTooltip placeHolder="You mouse is hover over me">
 						<svg
+						fill='gray'
 						class="font-black"
 						width=30
 						viewBox="0 0 17 17"
