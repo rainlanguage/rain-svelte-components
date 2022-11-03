@@ -10,7 +10,7 @@
 
 <div class="flex flex-col gap-y-4">
 	<PageHeading>Tabs</PageHeading>
-	<ExampleHeading>Regular</ExampleHeading>
+	<ExampleHeading id="normal">Normal</ExampleHeading>
 	<Example>
 		<ExampleComponent>
 			<Tabs>
@@ -33,7 +33,60 @@
 				</TabPanel>
 			</Tabs>
 		</ExampleComponent>
-		<ExampleUsage></ExampleUsage>
+		<ExampleUsage>
+{`<script>
+	import { Tabs, TabList, TabPanel, Tab } from 'rain-svelte-components';
+</script>
+
+<Tabs>
+	<TabList>
+		<Tab>First Tab</Tab>
+		<Tab>Second Tab</Tab>
+		<Tab>Third Tab</Tab>
+	</TabList>
+
+	<TabPanel>
+		<h2>The first tab is activated</h2>
+	</TabPanel>
+
+	<TabPanel>
+		<h2>The second tab is activated</h2>
+	</TabPanel>
+
+	<TabPanel>
+		<h2>The third tab is activated</h2>
+	</TabPanel>
+</Tabs>
+`}
+		</ExampleUsage>
+	</Example>
+
+	<ExampleHeading id="external-references">External references</ExampleHeading>
+	<div class="dark:text-white">
+		You can provide an url to the Tab with the href property. This will redirect the app to the page defined.
+	</div>
+	<Example>
+		
+		<ExampleComponent>
+		<Tabs>
+			<TabList>
+				<Tab href="/examples/tabs/first-url">Click and redirect to First URL</Tab>
+			</TabList>
+		</Tabs>
+	</ExampleComponent>
+
+		<ExampleUsage>
+{`<script>
+	import { Tabs, TabList, TabPanel, Tab } from 'rain-svelte-components';
+</script>
+
+<Tabs>
+	<TabList>
+		<Tab href="/examples/tabs/first-url" >Click and redirect to First URL</Tab>
+	</TabList>
+</Tabs>
+`}
+		</ExampleUsage>
 	</Example>
 
 

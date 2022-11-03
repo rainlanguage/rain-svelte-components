@@ -8,11 +8,13 @@
   const { registerTab, selectTab, selectedTab } = getContext(TABS);
 
   registerTab(tab);
+
+
 </script>
 
 
   <a
-    class={`tab ${$selectedTab === tab ? "letsee" : ""}`}
+    class={`tab ${$selectedTab === tab ? "selected dark:text-white dark:border-white dark:hover:border-white" : ""}`}
     class:selected={$selectedTab === tab}
     on:click={() => selectTab(tab)}
     {href}
@@ -23,11 +25,11 @@
 
 <style lang="postcss">
   .tab {
-    @apply cursor-pointer border-b pb-2 px-3 font-sans tracking-tight text-gray-500
+    @apply cursor-pointer pb-2 px-3 font-sans tracking-tight text-gray-500 hover:border-gray-400 hover:border-b;
   }
 
   .selected {
-    @apply border-b text-black border-black dark:border-white;
+    @apply border-b text-black border-black hover:border-black;
   }
 
 </style>
