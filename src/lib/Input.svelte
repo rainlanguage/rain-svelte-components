@@ -85,7 +85,7 @@
 			{disabled}
 			{min}
 			{max}
-			class="w-full rounded-md bg-gray-200 dark:bg-gray-800 p-2 font-light {borderColor} dark:text-gray-100"
+			class="w-full rounded-md bg-gray-100 dark:bg-gray-800 p-2 font-light {borderColor} dark:text-gray-100"
 			class:disabled
 		/>
 		{#if validating}

@@ -1,0 +1,72 @@
+{
+	"name": "Flow ERC20 Factory",
+	"description": "Description",
+	"type": "Factory",
+	"source": "https://github.com/beehive-innovation/rain-protocol",
+	"commit": "253c5fb2184b886216b682cae6076597f5e8e086",
+	"version": {
+		"major": 0,
+		"minor": 0
+	},
+	"addresses": [
+		{
+			"chainId": 1,
+			"knownAddresses": ["0x0"]
+		}
+	],
+	"expressions": [
+		{
+			"name": "Can transfer",
+			"description": "An expression that determines whether this token can be transferred.",
+			"path": "[5].inputs[0].components[2]",
+			"contextColumns": [
+				{
+					"name": "Base",
+					"cells": [
+						{
+							"name": "From"
+						},
+						{
+							"name": "To"
+						},
+						{
+							"name": "amount"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Flows",
+			"description": "The available flows for this token.",
+			"path": "[5].inputs[0].components[3].components[2]",
+			"contextColumns": [
+				{
+					"name": "Base",
+					"cells": [
+						{
+							"name": "From"
+						},
+						{
+							"name": "To"
+						},
+						{
+							"name": "amount"
+						}
+					]
+				}
+			]
+		}
+	],
+	"inputs": [
+		{
+			"name": "Name",
+			"description": "Name of the token",
+			"path": "[5].inputs[0].components[0]"
+		},
+		{
+			"name": "Flow config",
+			"path": "[5].inputs[0].components[3]"
+		}
+	]
+}
