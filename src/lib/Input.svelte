@@ -1,6 +1,9 @@
 <script lang="ts">
 	import autoAnimate from '@formkit/auto-animate';
 	import { createEventDispatcher } from 'svelte';
+	import { Icon } from '@steeze-ui/svelte-icon';
+	import type { IconSource } from '@steeze-ui/heroicons/types';
+
 	import Ring from './Ring.svelte';
 
 	export let type: 'text' | 'number' | 'range' | 'datetime-local' | 'textarea' = 'text';
@@ -12,6 +15,8 @@
 	export let max = '';
 	export let disabled = false;
 
+	export let icon: IconSource | undefined = undefined;
+
 	export let validator = async (value: any): Promise<any> => null;
 
 	let error: string | null;
@@ -19,6 +24,7 @@
 	let timer: NodeJS.Timeout, validating: boolean;
 
 	$: borderColor = error ? 'border-red-500' : 'border-gray-500';
+
 
 	const dispatch = createEventDispatcher();
 
@@ -76,6 +82,9 @@
 		</span>
 	{/if}
 	<div class="flex w-full flex-row items-center gap-x-2 self-stretch relative">
+		{#if icon != undefined}
+			<Icon src={icon} class="w-6 h-6 absolute top-1/2 transform -translate-y-1/2 left-3 opacity-50"/>
+		{/if}
 		<input
 			{type}
 			{value}
@@ -85,9 +94,10 @@
 			{disabled}
 			{min}
 			{max}
-			class="w-full rounded-md bg-gray-100 dark:bg-gray-800 p-2 font-light {borderColor} dark:text-gray-100"
+			class={`w-full rounded-md bg-gray-100 dark:bg-gray-800 p-2 font-light ${borderColor} dark:text-gray-100  ${icon ? "pl-12" : ""}`}
 			class:disabled
 		/>
+
 		{#if validating}
 			<div class="absolute right-1 top-0 bottom-0 flex flex-col justify-center">
 				<Ring size="30px" color="#000" />
