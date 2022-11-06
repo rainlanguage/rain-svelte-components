@@ -5,6 +5,7 @@
 	import ExampleHeading from '$lib/_docs/ExampleHeading.svelte';
 	import PageHeading from '$lib/_docs/PageHeading.svelte';
 	import Button from '$lib/Button.svelte';
+	import { Heart } from '@steeze-ui/heroicons';
 </script>
 
 <div class="flex flex-col gap-y-4">
@@ -40,5 +41,19 @@
 			<Button disabled>Click me</Button>
 		</ExampleComponent>
 		<ExampleUsage>example usage here</ExampleUsage>
+	</Example>
+
+	<ExampleHeading>Icons</ExampleHeading>
+	<Example>
+		<ExampleComponent>
+			<Button icon={Heart} solidIcon size={"small"} variant={"transparent"}>
+				Favorite
+			</Button>
+		</ExampleComponent>
+		<ExampleUsage>
+{`<Button icon={Heart} solidIcon size={"small"} variant={"transparent"}>
+	Favorite
+</Button>`}
+		</ExampleUsage>
 	</Example>
 </div>

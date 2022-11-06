@@ -5,6 +5,8 @@
 	import Example from '$lib/_docs/Example.svelte';
 	import ExampleHeading from '$lib/_docs/ExampleHeading.svelte';
 	import PageHeading from '$lib/_docs/PageHeading.svelte';
+	import { MagnifyingGlass } from '@steeze-ui/heroicons';
+
 
 	export const required = async (value: any): Promise<true | { error: string }> => {
 		await new Promise((resolve) => {
@@ -65,6 +67,28 @@
 			<Input disabled>
 				<span slot="label">Input name</span>
 				<span slot="description">This field is disabled</span>
+			</Input>
+		</ExampleComponent>
+		<ExampleUsage>example usage here</ExampleUsage>
+	</Example>
+
+	<ExampleHeading>With placeholder</ExampleHeading>
+	<Example>
+		<ExampleComponent>
+			<Input placeholder={"Your placeholder"}>
+				<span slot="label">Input name</span>
+				<span slot="description">The description have a placeholder</span>
+			</Input>
+		</ExampleComponent>
+		<ExampleUsage>example usage here</ExampleUsage>
+	</Example>
+
+	<ExampleHeading>With Icons</ExampleHeading>
+	<Example>
+		<ExampleComponent>
+			<Input icon={MagnifyingGlass}>
+				<span slot="label">Input name</span>
+				<span slot="description">Description</span>
 			</Input>
 		</ExampleComponent>
 		<ExampleUsage>example usage here</ExampleUsage>

@@ -15,28 +15,34 @@
 			value
 		};
 	};
+
+	const isOpened = () => {
+		opened = !opened;
+	}
+
+	$: opened = false;
 </script>
 
-<div class="flex w-full flex-col gap-y-2">
-	<div class="self-start rounded-md border border-gray-500 text-white ">
+	<div class={`w-full`}>
 		<select
 			{disabled}
 			bind:value
 			on:change
-			class="default text-light text-black dark:text-white"
+			on:click={isOpened}
+			on:blur={isOpened}
+			class={`default  ${opened ? "border-neutral-300 bg-white rounded-t-lg" : "border-neutral-100 bg-neutral-100 rounded-md" }`}
 			class:disabled
 		>
-			<option class="opacity-50" value={-1} hidden selected>Select</option>
+			<option value={-1} hidden selected>Select</option>
 			{#each items as item, i}
-				<option class="text-black" value={item?.value || i}>{item.label}</option>
+				<option value={item?.value || i}>{item.label}</option>
 			{/each}
 		</select>
 	</div>
-</div>
 
 <style lang="postcss">
 	.default {
-		@apply outline-none mr-2 border-none bg-transparent px-4 py-2;
+		@apply w-full px-4 py-2 text-neutral-600 border;
 	}
 
 	.disabled {
