@@ -35,7 +35,9 @@
 	</div>
 	<Example>
 		<ExampleComponent>
-			<Select bind:value={select1} items={options} />
+			<div class="w-max">
+				<Select bind:value={select1} items={options} />
+			</div>
 			<div class="pt-4">
 				<strong>Option selected:</strong>
 				{options[select1]?.label || 'none selected'}
@@ -64,7 +66,9 @@
 	<ExampleHeading>Labels and values</ExampleHeading>
 	<Example>
 		<ExampleComponent>
-			<Select bind:value={select2} items={options2} />
+			<div class="w-max">
+				<Select bind:value={select2} items={options2} />
+			</div>
 			<div class="pt-4">
 				<strong>Option selected:</strong>
 				{options2.find((opt) => opt?.value == select2)?.label || 'none selected'}
@@ -94,7 +98,9 @@
 	<ExampleHeading>Disabled</ExampleHeading>
 	<Example>
 		<ExampleComponent>
-			<Select bind:value={select2} disabled={true} items={options} />
+			<div class="w-max">
+				<Select bind:value={select2} disabled={true} items={options} />
+			</div>
 		</ExampleComponent>
 		<ExampleUsage>
 			{`<script>
