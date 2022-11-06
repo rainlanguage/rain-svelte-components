@@ -29,7 +29,7 @@
 	<PageHeading>Select</PageHeading>
 
 	<ExampleHeading>Labels only</ExampleHeading>
-	<div>
+	<div class="dark:text-white">
 		If no value is provided in the options array, the index will be used. Value is -1 before any
 		selection is made.
 	</div>

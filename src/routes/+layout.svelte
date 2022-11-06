@@ -73,6 +73,9 @@
 			<NavItem link="/examples/section">
 				<span class="link">Section</span>
 			</NavItem>
+			<NavItem link="/examples/pills">
+				<span class="link">Pills</span>
+			</NavItem>
 		</div>
 		<div class="p-8 w-full overflow-auto">
 			<slot />
