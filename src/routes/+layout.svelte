@@ -76,6 +76,9 @@
 			<NavItem link="/examples/pills">
 				<span class="link">Pills</span>
 			</NavItem>
+			<NavItem link="/examples/filter">
+				<span class="link">Filter</span>
+			</NavItem>
 		</div>
 		<div class="p-8 w-full overflow-auto">
 			<slot />
