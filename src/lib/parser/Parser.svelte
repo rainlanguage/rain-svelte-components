@@ -1,3 +1,5 @@
+<svelte:options accessors={true} />
+
 <script lang="ts">
 	import SimulatedOutput from '$lib/parser/SimulatedOutput.svelte';
 	import type { Signer } from 'ethers';
@@ -5,11 +7,36 @@
 	import { writable, type Writable } from 'svelte/store';
 	import ParserInput from './ParserInput.svelte';
 	import { Icon } from '@steeze-ui/svelte-icon';
-	import { QuestionMarkCircle, ArrowsPointingOut } from '@steeze-ui/heroicons';
+	import {
+		QuestionMarkCircle,
+		ArrowsPointingOut,
+		CloudArrowUp,
+		CloudArrowDown
+	} from '@steeze-ui/heroicons';
+	import { createEventDispatcher, onMount, SvelteComponent } from 'svelte';
 
 	export let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
+	export let raw: string = '';
 	export let signer: Signer;
 	export let error: string = '';
+
+	let parserInput: SvelteComponent;
+
+	export let loadRaw: any = null;
+
+	onMount(() => {
+		loadRaw = parserInput.loadRaw;
+	});
+
+	const dispatch = createEventDispatcher();
+
+	const save = () => {
+		dispatch('save', { raw });
+	};
+
+	const load = () => {
+		dispatch('load');
+	};
 </script>
 
 <div class="rounded-lg overflow-hidden">
@@ -17,7 +44,7 @@
 		<div class="flex flex-col w-2/3">
 			<div class="heading">Expression</div>
 			<div class="border-r border-gray-300 dark:border-gray-600   parser-wrapper flex flex-col">
-				<ParserInput {vmStateConfig} bind:error />
+				<ParserInput {vmStateConfig} bind:error bind:raw bind:this={parserInput} />
 			</div>
 		</div>
 		<div class="flex flex-col w-1/3">
@@ -38,6 +65,18 @@
 				<span class="text-xs">Help</span>
 				<span class="w-4">
 					<Icon src={QuestionMarkCircle} />
+				</span>
+			</div>
+			<div on:click={load} class="parser-button">
+				<span class="text-xs">Load</span>
+				<span class="w-4">
+					<Icon src={CloudArrowDown} />
+				</span>
+			</div>
+			<div on:click={save} class="parser-button">
+				<span class="text-xs">Save</span>
+				<span class="w-4">
+					<Icon src={CloudArrowUp} />
 				</span>
 			</div>
 			<div class="parser-button ">
