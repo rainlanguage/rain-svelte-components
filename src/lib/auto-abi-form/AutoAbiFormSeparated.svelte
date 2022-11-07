@@ -3,7 +3,7 @@
 	import type { ContractMetadata } from '$lib/auto-abi-form/schemas/contract';
 	import { Section, SectionBody, SectionHeading } from '$lib/section';
 	import type { Abi } from 'abitype';
-	import { merge } from 'lodash';
+	import { merge } from 'lodash-es';
 
 	export let abi: Abi;
 	export let methodName: string = 'createChildTyped';

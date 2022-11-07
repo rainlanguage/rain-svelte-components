@@ -3,7 +3,7 @@
 	import ContractMeta from '$lib/auto-abi-form/schemas/contract.json';
 	import type { ContractMetadata } from '$lib/auto-abi-form/schemas/contract';
 	// import * as Ajv from 'ajv';
-	import { set } from 'lodash';
+	import { set } from 'lodash-es';
 	import type { Abi } from 'abitype';
 	import { setContext } from 'svelte';
 

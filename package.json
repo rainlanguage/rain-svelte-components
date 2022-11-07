@@ -50,7 +50,7 @@
 		"abitype": "^0.1.7",
 		"ajv": "^8.11.0",
 		"ethers": "^5.7.1",
-		"lodash": "^4.17.21",
+		"lodash-es": "^4.17.21",
 		"rain-sdk": "git+https://github.com/beehive-innovation/rain-sdk.git#f6710e64a7d6c47110e3e584cd17e947c1d7313a",
 		"svelte-ethers-store": "^2.5.8"
 	}
