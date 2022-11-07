@@ -1,7 +1,6 @@
 <script lang="ts">
 	import AutoAbiFormComponent from '$lib/auto-abi-form/AutoAbiFormComponent.svelte';
-	import ContractMeta from '$lib/auto-abi-form/schemas/contract.json';
-	import type { ContractMetadata } from '$lib/auto-abi-form/schemas/contract';
+	import type { ContractMetadata } from 'rain-metadata/metadata-types/contract';
 	// import * as Ajv from 'ajv';
 	import { set } from 'lodash-es';
 	import type { Abi } from 'abitype';

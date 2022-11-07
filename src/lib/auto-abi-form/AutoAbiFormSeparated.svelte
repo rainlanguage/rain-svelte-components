@@ -1,6 +1,6 @@
 <script lang="ts">
 	import AutoAbiForm from '$lib/auto-abi-form/AutoAbiForm.svelte';
-	import type { ContractMetadata } from '$lib/auto-abi-form/schemas/contract';
+	import type { ContractMetadata } from 'rain-metadata/metadata-types/contract';
 	import { Section, SectionBody, SectionHeading } from '$lib/section';
 	import type { Abi } from 'abitype';
 	import { merge } from 'lodash-es';
