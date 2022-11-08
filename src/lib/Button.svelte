@@ -36,19 +36,18 @@
 
 <style lang="postcss">
 	.button {
-		@apply flex leading-none rounded-xl transition-colors text-white;
+		@apply flex leading-none rounded-[10px] transition-colors text-white;
 	}
 
 	.icon {
-		@apply w-6 h-6 py-0.5 mr-1.5;
+		@apply w-6 h-6 mr-1.5;
 	}
-
 
 	.small {
-		@apply py-2 px-3 text-sm;
+		@apply px-2.5 py-[5px] text-sm;
 	}
 	.regular {
-		@apply py-2 px-3 text-base;
+		@apply px-5 py-2.5 text-base;
 	}
 
 
@@ -61,6 +60,10 @@
 
 	.secondary {
 		@apply bg-blue-500 hover:bg-blue-400;
+	}
+
+	.black {
+		@apply bg-neutral-800 hover:bg-neutral-600;
 	}
 
 	.transparent {
