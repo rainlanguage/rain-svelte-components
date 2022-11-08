@@ -13,7 +13,7 @@
 		class="flex justify-between px-3 h-12 fixed inset-x-0 items-center dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700"
 	>
 		<span class="dark:text-gray-200 text-gray-800 text-large">Rain component library</span>
-		<div>
+		<div class="flex gap-x-2 items-center">
 			<Button
 				size="small"
 				disabled={Boolean($signerAddress)}
