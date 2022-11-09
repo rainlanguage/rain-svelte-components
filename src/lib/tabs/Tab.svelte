@@ -1,20 +1,37 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
+	import { getContext, onMount } from 'svelte';
+	import { page } from '$app/stores';
+
 	import { TABS } from './Tabs.svelte';
 
+	export let id: string;
 	export let href: string;
+
+	let _id:string;
+
+	if (id) {
+		_id = "#" + id;
+	}
 
 	const tab = {};
 	const { registerTab, selectTab, selectedTab } = getContext(TABS) as any;
 
 	registerTab(tab);
+
+	onMount(() => {
+		if ($page.url.hash.includes(id)) {
+			selectTab(tab)
+		}
+	})
+
 </script>
 
 <a
 	class={`tab`}
 	class:selected={$selectedTab === tab}
 	on:click={() => selectTab(tab)}
-	href={href || null}
+	href={href || _id || null}
+	id={id || null}
 >
 	<slot />
 </a>

@@ -15,9 +15,9 @@
 		<ExampleComponent>
 			<Tabs>
 				<TabList>
-					<Tab>First Tab</Tab>
-					<Tab>Second Tab</Tab>
-					<Tab>Third Tab</Tab>
+					<Tab id={"first-tab"}>First Tab</Tab>
+					<Tab id={"second-tab"}>Second Tab</Tab>
+					<Tab id={"third-tab"}>Third Tab</Tab>
 				</TabList>
 			
 				<TabPanel>
@@ -71,6 +71,7 @@
 		<Tabs>
 			<TabList>
 				<Tab href="/examples/tabs/first-url">Click and redirect to First URL</Tab>
+				<Tab id="letsee">Let see</Tab>
 			</TabList>
 		</Tabs>
 	</ExampleComponent>
