@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition';
+	import { fade, fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	export let open: boolean = true;
 	let modalWrapper: HTMLDivElement, modalInner: HTMLDivElement;
@@ -21,7 +21,10 @@
 			bind:this={modalInner}
 			class="fixed flex items-center justify-center w-screen h-full bg-black bg-opacity-40"
 		>
-			<div class="bg-white rounded-lg p-8 shadow-md dark:bg-gray-900 dark:text-white">
+			<div
+				in:fly={{ y: 30, duration: 400 }}
+				class="bg-white rounded-lg p-8 shadow-md dark:bg-gray-900 dark:text-white"
+			>
 				<slot />
 			</div>
 		</div>
