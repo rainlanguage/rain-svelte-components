@@ -4,7 +4,7 @@
 	// import * as Ajv from 'ajv';
 	import { set } from 'lodash-es';
 	import type { Abi } from 'abitype';
-	import { setContext } from 'svelte';
+	import { createEventDispatcher, setContext } from 'svelte';
 
 	export let abi: Abi;
 	export let methodName: string = 'createChildTyped';
@@ -44,13 +44,16 @@
 		}
 		// }
 	}
+
+	// if the method name changes, clear the result
+	// $: if (methodName) result = [];
 </script>
 
 {#if (metadata && valid) || !metadata}
 	{#if inputs}
 		<div class:onlyConfig class:normalForm={!onlyConfig}>
 			{#each inputs as component, i}
-				<AutoAbiFormComponent {component} bind:result={result[i]} />
+				<AutoAbiFormComponent {component} bind:result={result[i]} on:save />
 			{/each}
 		</div>
 	{/if}

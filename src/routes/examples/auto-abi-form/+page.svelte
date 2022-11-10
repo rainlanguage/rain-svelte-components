@@ -71,6 +71,9 @@
 						metadata={FlowERC20FactoryMetadata}
 						bind:result={resultMerged}
 						methodName="createChildTyped"
+						on:save={({ detail }) => {
+							console.log(detail);
+						}}
 					/>
 				</div>
 				<div class="p-4">

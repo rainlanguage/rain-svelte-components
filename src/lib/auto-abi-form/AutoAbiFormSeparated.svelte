@@ -4,11 +4,14 @@
 	import { Section, SectionBody, SectionHeading } from '$lib/section';
 	import type { Abi } from 'abitype';
 	import { merge } from 'lodash-es';
+	import { createEventDispatcher } from 'svelte';
 
 	export let abi: Abi;
 	export let methodName: string = 'createChildTyped';
 	export let result: any = [];
 	export let metadata: ContractMetadata;
+
+	const dispatch = createEventDispatcher();
 
 	let expressionsResult: any, configResult: any;
 
@@ -19,7 +22,14 @@
 	<Section>
 		<SectionHeading>Expressions</SectionHeading>
 		<SectionBody>
-			<AutoAbiForm {abi} {methodName} bind:result={expressionsResult} {metadata} onlyExpressions />
+			<AutoAbiForm
+				{abi}
+				{methodName}
+				bind:result={expressionsResult}
+				{metadata}
+				onlyExpressions
+				on:save
+			/>
 		</SectionBody>
 	</Section>
 	<Section>

@@ -6,10 +6,12 @@
 	import { derived, get, writable, type Readable, type Writable } from 'svelte/store';
 	import type { StateConfig } from 'rain-sdk';
 	import Button from '$lib/Button.svelte';
-	import { getContext } from 'svelte';
+	import { createEventDispatcher, getContext } from 'svelte';
 
 	export let component: AbiParameter & { nameMeta?: string; descriptionMeta?: string };
 	export let result: any = 'components' in component ? {} : undefined;
+
+	const dispatch = createEventDispatcher();
 
 	const settings: { onlyConfig: boolean; onlyExpressions: boolean } = getContext('abi-form');
 
@@ -76,7 +78,7 @@
 				<div class="text-sm">{component.descriptionMeta}</div>
 			{/if}
 		</div>
-		<Parser signer={$signer} bind:vmStateConfig />
+		<Parser signer={$signer} bind:vmStateConfig on:save />
 	{:else if type == 'struct StateConfig[]'}
 		<div>
 			{#if component.nameMeta}
@@ -88,7 +90,7 @@
 		</div>
 		{#each $stateConfigsStore as instance (instance.id)}
 			<div class="flex flex-col gap-y-2">
-				<Parser signer={$signer} bind:vmStateConfig={instance.store} />
+				<Parser signer={$signer} bind:vmStateConfig={instance.store} on:save />
 				<button
 					class="self-end text-xs underline cursor-pointer"
 					on:click={() => {
@@ -115,7 +117,7 @@
 	{/if} -->
 	{#each component.components as subComponent}
 		{#if subComponent}
-			<svelte:self component={subComponent} bind:result={result[subComponent.name]} />
+			<svelte:self component={subComponent} bind:result={result[subComponent.name]} on:save />
 		{/if}
 	{/each}
 {/if}
