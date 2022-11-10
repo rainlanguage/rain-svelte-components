@@ -29,14 +29,14 @@
 />
 
 <div class="relative inline-flex">
-	<div
-		class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md transition-colors dark:hover:bg-gray-800 hover:bg-gray-100 border border-gray-200 dark:border-gray-700"
-		on:click={toggle}
-		bind:this={buttonRef}
-	>
-		<span class="w-6">
-			<Icon src={EllipsisVertical} />
-		</span>
+	<div class:noButton={!$$slots.button} on:click={toggle} bind:this={buttonRef}>
+		{#if !$$slots.button}
+			<span class="w-6">
+				<Icon src={EllipsisVertical} />
+			</span>
+		{:else}
+			<slot name="button" />
+		{/if}
 	</div>
 	{#if open}
 		<div
@@ -48,3 +48,9 @@
 		</div>
 	{/if}
 </div>
+
+<style lang="postcss" global>
+	:local(.noButton) {
+		@apply flex h-8 w-8 cursor-pointer items-center justify-center rounded-md transition-colors dark:hover:bg-gray-800 hover:bg-gray-100 border border-gray-200 dark:border-gray-700;
+	}
+</style>
