@@ -4,7 +4,8 @@
 	import type { Writable } from 'svelte/store';
 	import AutocompleteList from './AutocompleteList.svelte';
 	// import { OpMeta } from '$components/parser/opmeta';
-	import { Parser, OpMeta, type StateConfig } from 'rain-sdk';
+	import type { StateConfig } from 'rain-sdk';
+	import { Parser, standardOpMeta } from '@beehiveinnovation/rainlang';
 	import { tick } from 'svelte';
 	import IgnoredText from './nodes/IgnoredText.svelte';
 	import Op from './nodes/Op.svelte';
@@ -15,7 +16,7 @@
 	export let raw: string = '';
 	export let error: string = '';
 
-	let node: HTMLDivElement;
+	let node: HTMLSpanElement;
 
 	const placeholderText = '<span style="color:gray;">Write your expression</span>';
 
@@ -39,6 +40,7 @@
 		const type =
 			selectedNode.anchorNode.parentElement.previousElementSibling?.attributes?.['data-type']
 				?.nodeValue;
+
 		if (type == 'unknown-op' && selectedNode.anchorOffset == selectedNode.anchorNode.length) {
 			autocompleteSelection = selectedNode;
 		}
@@ -118,8 +120,10 @@
 	};
 
 	const renderText = (text: string) => {
-		const parsedResult = Parser.getParseTree(text, OpMeta);
-		$vmStateConfig = Parser.getStateConfig(text, OpMeta);
+		console.log(text);
+		const parsedResult = Parser.getParseTree(text, standardOpMeta);
+		console.log(parsedResult);
+		$vmStateConfig = Parser.getStateConfig(text, standardOpMeta);
 		const tree = parsedResult[0].tree;
 		error = tree?.[0]?.error || '';
 		if (!tree.length) return text;
@@ -151,7 +155,7 @@
 					type: 'param'
 				});
 				lastIndex = el?.position[1] + 1;
-			} else if (el?.error && el.error.startsWith('unknown')) {
+			} else if (el?.error && el.error.includes('unknown')) {
 				if (lastIndex !== el?.position[0]) {
 					textSegments.push({
 						text: text.slice(lastIndex, el?.position[0]),
@@ -179,7 +183,8 @@
 		};
 
 		tree.forEach(explode);
-		textSegments.push({ text: text.slice(lastIndex), node: null, type: 'ignored' });
+		if (lastIndex !== text.length)
+			textSegments.push({ text: text.slice(lastIndex), node: null, type: 'ignored' });
 		_textSegments = textSegments;
 
 		node.innerHTML = '';
@@ -245,7 +250,7 @@
 </script>
 
 <div
-	class="p-2 w-full font-mono h-full"
+	class="p-2 w-full font-mono h-full whitespace-pre-wrap"
 	use:inputAction
 	bind:this={node}
 	contenteditable="true"
@@ -255,5 +260,5 @@
 </div>
 
 {#if autocompleteSelection}
-	<AutocompleteList bind:autocompleteSelection {OpMeta} />
+	<AutocompleteList bind:autocompleteSelection OpMeta={standardOpMeta} />
 {/if}

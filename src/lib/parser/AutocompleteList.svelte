@@ -23,19 +23,19 @@
 	$: top = opRect.bottom + initialScroll - liveScroll;
 	$: left = opRect.right;
 	$: results = Array.from(OpMeta).filter((entry) => {
-		if (entry[1].aliases) {
-			return (
-				entry[1].aliases.find((alias) => alias.toLowerCase().startsWith(text.toLowerCase())) ||
-				entry[1].name.toLowerCase().startsWith(text.toLowerCase())
-			);
+		if (entry.name.toLowerCase().startsWith(text.toLowerCase())) {
+			return true;
+		}
+		if (entry?.aliases) {
+			return entry.aliases.find((alias) => alias.toLowerCase().startsWith(text.toLowerCase()));
 		} else {
-			return undefined;
+			return;
 		}
 	});
 
 	const select = (i) => {
 		const selection = window.getSelection();
-		parentElement.previousElementSibling.innerHTML = results[i][1].name;
+		parentElement.previousElementSibling.innerHTML = results[i].name;
 		const range = document.createRange();
 		selection.removeAllRanges();
 		range.selectNodeContents(parentElement);
@@ -57,7 +57,7 @@
 			if (active > results.length - 1) active = 0;
 		}
 		if (e.key == 'Enter') {
-			e.preventDefault();
+			// e.preventDefault();
 			select(active);
 		}
 		if (e.key == 'ArrowLeft' || e.key == 'ArrowRight') {
@@ -114,18 +114,18 @@
 				use:onHover
 				data-index={i}
 			>
-				<span class="font-mono">{result[1].name}</span>
+				<span class="font-mono">{result.name}</span>
 			</div>
 		{/each}
 	</div>
 	{#if autocompleteSelection && results.length}
 		<div class="bg-gray-800 border border-gray-600 w-80 p-2 flex flex-col gap-y-2">
-			<span>{results[active][1]?.description}</span>
+			<span>{results[active]?.description}</span>
 			<span class="text-gray-400 text-xs">EXAMPLE</span>
-			<span class="font-mono">{results[active][1].data?.example}</span>
+			<span class="font-mono">{results[active].data?.example}</span>
 			<span class="text-gray-400 text-xs">PARAMETERS</span>
-			{#if results[active][1].data?.parameters.length}
-				{#each results[active][1].data?.parameters as parameter}
+			{#if results[active].data?.parameters.length}
+				{#each results[active].data?.parameters as parameter}
 					<span class="font-mono">{parameter.name}</span>
 					<span class="text-gray-400">{parameter.description}</span>
 				{/each}
