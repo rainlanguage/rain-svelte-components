@@ -6,6 +6,7 @@
 		value?: boolean;
 		error?: boolean;
 		tag?: boolean;
+		name?: boolean;
 	}
 </script>
 
@@ -13,6 +14,7 @@
 	import type { Text } from 'slate';
 
 	export let leaf: IText;
+	// console.log(leaf);
 </script>
 
 <span
@@ -21,6 +23,7 @@
 	class:value={leaf.value}
 	class:error={leaf.error}
 	class:tag={leaf.tag}
+	class:name={leaf.name}
 >
 	<slot />
 </span>
@@ -35,7 +38,8 @@
 	.error {
 		@apply border-b border-red-700;
 	}
-	.tag {
-		@apply bg-gray-400 text-white;
+	.tag,
+	.name {
+		@apply bg-gray-400 text-white rounded-md px-0.5;
 	}
 </style>

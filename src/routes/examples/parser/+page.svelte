@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ParserInput from '$lib/slateParser/ParserInput.svelte';
+	import ParserInput from '$lib/parser/ParserInput.svelte';
 	import { signer } from 'svelte-ethers-store';
 	import ExampleComponent from '$lib/_docs/ExampleComponent.svelte';
 	import ExampleUsage from '$lib/_docs/ExampleUsage.svelte';

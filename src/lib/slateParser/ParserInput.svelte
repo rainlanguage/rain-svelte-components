@@ -1,46 +1,63 @@
 <script lang="ts">
-	import Leaf from './Leaf.svelte';
-	import { Slate, Editable, withSvelte } from 'svelte-slate';
+	import Leaf from '../parser/Leaf.svelte';
+	import { Slate, withSvelte, Editable } from 'svelte-slate';
 	import { createEditor, Transforms, Editor, Node, Text } from 'slate';
 	import { Parser, rainterpreterOpMeta } from '@beehiveinnovation/rainlang';
 	import { writable, type Writable } from 'svelte/store';
 	import type { StateConfig } from '@beehiveinnovation/rainlang';
-	import Button from '$lib/Button.svelte';
-	import { getFlatRanges } from '$lib/slateParser/parserHelpers';
+	import { deserialize, getFlatRanges, serialize } from '$lib/parser/parserHelpers';
 
 	const editor = withSvelte(createEditor());
 
-	export let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
+	const emptySc = { sources: [], constants: [] };
+
+	export let vmStateConfig: Writable<StateConfig> = writable(emptySc);
 	export let raw: string;
+	export let error: string;
+
+	export const loadRaw = (raw: string) => {
+		value = deserialize(raw);
+	};
 
 	let value = [
 		{
 			type: 'expression',
-			children: [{ text: 'This is editable ' }]
+			children: [{ text: '' }]
 		}
 	];
 
-	const decorate = ([node, path]) => {
-		const ranges = getFlatRanges(value);
+	$: raw = serialize(value);
 
+	$: $vmStateConfig = (() => {
+		const [tree, sc] = Parser.get(raw);
+		console.log(tree);
+		error = tree?.[0]?.error || '';
+		console.log(error);
+		if (!error) return sc;
+		else return emptySc;
+	})();
+
+	const decorate = ([node, path]: any) => {
 		if (node.type == 'expression') {
+			const ranges = getFlatRanges(value);
 			const prevSiblingsOffset = value
 				.slice(0, path[0])
 				.map((node) => Node.string(node).length)
 				.reduce((a, b) => a + b, 0);
-
-			return ranges
+			const currentLength = Node.string(node).length;
+			const finalRanges = ranges
 				.map((range) => {
 					range.anchor.offset = range.anchor.offset - prevSiblingsOffset;
 					range.focus.offset = range.focus.offset - prevSiblingsOffset;
 					return range;
 				})
-				.filter((range) => range.focus.offset > 0);
+				.filter((range) => range.focus.offset > 0 && range.anchor.offset < currentLength);
+			return finalRanges;
 		}
 		return [];
 	};
 </script>
 
 <Slate {editor} bind:value>
-	<Editable {Leaf} {decorate} spellcheck={false} placeholder="Enter some plain text..." />
+	<Editable {Leaf} {decorate} spellcheck={false} placeholder="Write your expression..." />
 </Slate>

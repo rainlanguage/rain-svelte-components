@@ -1,18 +1,34 @@
-import { Parser, rainterpreterOpMeta } from '@beehiveinnovation/rainlang';
+import { Parser, rainterpreterOpMeta, type Node as TreeNode } from '@beehiveinnovation/rainlang';
 import { Node } from 'slate';
 
-const serialize = (nodes) => {
+// Define a serializing function that takes a value and returns a string.
+export const serialize = (nodes: Node[]) => {
     return nodes.map((n) => Node.string(n)).join('\n');
 };
 
-export const getFlatRanges = (value) => {
+// Define a deserializing function that takes a string and returns a value.
+export const deserialize = (string: string) => {
+    // Return a value array of children derived by splitting the string.
+    const stacks = string.split(/,+/);
+    const sources = stacks.map(line => line.split(/;+/));
+    const lines = sources.flat()
+    const nodes = lines.map((line, i) => {
+        const text = (i + 1 == lines.length) ? line.trim() : `${line.trim()},`
+        return {
+            type: 'expression',
+            children: [{ text }],
+        }
+    })
+    return nodes
+}
+
+export const getFlatRanges = (value: Node[]) => {
     const text = serialize(value);
     const tree = Parser.getParseTree(text, rainterpreterOpMeta);
-    console.log(tree)
-    let ranges: any[] = [];
-
-    const explode = (el) => {
-        if (el?.opcode) {
+    const ranges: any[] = [];
+    const explode = (el: TreeNode) => {
+        // console.log(el)
+        if ("opcode" in el) {
             ranges.push({
                 el,
                 anchor: { path: [], offset: el.opcode.position[0] },
@@ -20,7 +36,7 @@ export const getFlatRanges = (value) => {
                 op: true,
             });
         }
-        else if (el.value) {
+        else if ("value" in el) {
             ranges.push({
                 el,
                 anchor: { path: [], offset: el.position[0] },
@@ -28,7 +44,15 @@ export const getFlatRanges = (value) => {
                 value: true,
             });
         }
-        else if (el?.error && el.error.includes('unknown')) {
+        else if ("name" in el) {
+            ranges.push({
+                el,
+                anchor: { path: [], offset: el.position[0] },
+                focus: { path: [], offset: el.position[1] + 1 },
+                name: true,
+            });
+        }
+        else if (el?.error) {
             ranges.push({
                 el,
                 anchor: { path: [], offset: el.position[0] },
@@ -36,7 +60,7 @@ export const getFlatRanges = (value) => {
                 error: true,
             });
         }
-        if (el?.tag) {
+        if ("tag" in el && el.tag) {
             ranges.push({
                 el: el.tag,
                 anchor: { path: [], offset: el.tag.position[0] },
@@ -44,13 +68,13 @@ export const getFlatRanges = (value) => {
                 tag: true
             })
         }
-        if (el?.parameters) {
+        if ("parameters" in el) {
             el?.parameters.forEach(explode);
         }
     };
 
     tree[0].tree.forEach(explode);
-
+    // console.log(ranges)
     return ranges
 };
 
