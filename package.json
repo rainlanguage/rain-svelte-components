@@ -54,6 +54,8 @@
 		"lodash-es": "^4.17.21",
 		"rain-metadata": "git+https://github.com/beehive-innovation/rain-metadata.git",
 		"rain-sdk": "git+https://github.com/beehive-innovation/rain-sdk.git#f6710e64a7d6c47110e3e584cd17e947c1d7313a",
-		"svelte-ethers-store": "^2.5.8"
+		"slate": "^0.85.0",
+		"svelte-ethers-store": "^2.5.8",
+		"svelte-slate": "^0.1.62"
 	}
 }

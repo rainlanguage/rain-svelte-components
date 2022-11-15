@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@aicacia/debounce@0":
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/@aicacia/debounce/-/debounce-0.1.18.tgz#175247af7f9d53b11b7d7e99a182139c378928c5"
+  integrity sha512-QbWHDAuHqNIRY5MxSohtjVs4zNBAyCgAckUQF9OVBquQDFCKgIeOubVLLhqxdTwfOSDcIf7WJ++28oaw+qETWg==
+
 "@beehiveinnovation/rainlang@https://github.com/beehive-innovation/rainlang#4842cc0023c20611d9927f48d798792df846f052":
   version "1.0.0"
   resolved "https://github.com/beehive-innovation/rainlang#4842cc0023c20611d9927f48d798792df846f052"
@@ -521,6 +526,11 @@
   resolved "https://registry.yarnpkg.com/@steeze-ui/svelte-icon/-/svelte-icon-1.3.2.tgz#ae81d9568bd89c06842dd2d0b2f54c94367f474a"
   integrity sha512-Y7tH9UKeDYLfBicWLw4n4mhgfuSwgEdtq9wog7H+DjvfpTvea5SEqjHI8onoKZonJqAaUBGVjH02LAiqRWu+cw==
 
+"@svelte-put/clickoutside@1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@svelte-put/clickoutside/-/clickoutside-1.1.1.tgz#ee790e6ce5fa608d31e1ea7ae726a33c1cf827d3"
+  integrity sha512-Tjjw+LA5uhxgbA5eN7qRr4DDgkdMZF+JVzyR9a+8WcGO1KQnpvXVtpXS8N9gvCr0cpysR7s/qG4ysGxM/UgoaA==
+
 "@sveltejs/adapter-auto@next":
   version "1.0.0-next.83"
   resolved "https://registry.yarnpkg.com/@sveltejs/adapter-auto/-/adapter-auto-1.0.0-next.83.tgz#50afe1afee31ec8a746da0ba209c12968a21fef3"
@@ -1035,6 +1045,11 @@ color@^0.11.3:
     color-convert "^1.3.0"
     color-string "^0.3.0"
 
+compute-scroll-into-view@^1.0.17:
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/compute-scroll-into-view/-/compute-scroll-into-view-1.0.17.tgz#6a88f18acd9d42e9cf4baa6bec7e0522607ab7ab"
+  integrity sha512-j4dx+Fb0URmzbwwMUrhqWM2BEWHdFGx+qZ9qqASHRPqvTYdqvWnHg0H1hIbcyLnvgnoNAVMlwkepyqM3DaIFUg==
+
 concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
@@ -1529,6 +1544,11 @@ fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
   integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==
 
+fast-equals@4:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/fast-equals/-/fast-equals-4.0.3.tgz#72884cc805ec3c6679b99875f6b7654f39f0e8c7"
+  integrity sha512-G3BSX9cfKttjr+2o1O22tYMLq0DPluZnYtq1rXumE1SpL/F/SLIfHx08WYQoWSIpeMYf8sRbJ8++71+v6Pnxfg==
+
 fast-glob@^3.2.11, fast-glob@^3.2.7, fast-glob@^3.2.9:
   version "3.2.12"
   resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.2.12.tgz#7f39ec99c2e6ab030337142da9e0c18f37afae80"
@@ -1751,6 +1771,11 @@ ignore@^5.2.0:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.0.tgz#6d3bac8fa7fe0d45d9f9be7bac2fc279577e345a"
   integrity sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==
 
+immer@^9.0.6:
+  version "9.0.16"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-9.0.16.tgz#8e7caab80118c2b54b37ad43e05758cdefad0198"
+  integrity sha512-qenGE7CstVm1NrHQbMh8YaSzTZTFNP3zPqr3YU0S0UY441j4bJTg4A2Hh5KAhwgaiU6ZZ1Ar6y/2f4TblnMReQ==
+
 import-fresh@^3.0.0, import-fresh@^3.2.1:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/import-fresh/-/import-fresh-3.3.0.tgz#37162c25fcb9ebaa2e6e53d5b4d88ce17d9e0c2b"
@@ -1812,6 +1837,11 @@ is-number@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/is-number/-/is-number-7.0.0.tgz#7535345b896734d5f80c4d06c50955527a14f12b"
   integrity sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==
+
+is-plain-object@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/is-plain-object/-/is-plain-object-5.0.0.tgz#4427f50ab3429e9025ea7d52e9043a9ef4159344"
+  integrity sha512-VRSzKkbMm5jMDoKLbltAkFQ5Qr7VDiTFGXxYFXXowVj387GeGNOCsOH6Msy00SGZ3Fp84b1Naa1psqgcCIEP5Q==
 
 isexe@^2.0.0:
   version "2.0.0"
@@ -2398,6 +2428,13 @@ sander@^0.5.0:
     mkdirp "^0.5.1"
     rimraf "^2.5.2"
 
+scroll-into-view-if-needed@2:
+  version "2.2.29"
+  resolved "https://registry.yarnpkg.com/scroll-into-view-if-needed/-/scroll-into-view-if-needed-2.2.29.tgz#551791a84b7e2287706511f8c68161e4990ab885"
+  integrity sha512-hxpAR6AN+Gh53AdAimHM6C8oTN1ppwVZITihix+WqalywBeFcQ6LdQP5ABNl26nX8GTEL7VT+b8lKpdqq65wXg==
+  dependencies:
+    compute-scroll-into-view "^1.0.17"
+
 scrypt-js@3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/scrypt-js/-/scrypt-js-3.0.1.tgz#d314a57c2aef69d1ad98a138a21fe9eafa9ee312"
@@ -2455,6 +2492,15 @@ slash@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-3.0.0.tgz#6539be870c165adbd5240220dbe361f1bc4d4634"
   integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
+
+slate@^0.85.0:
+  version "0.85.0"
+  resolved "https://registry.yarnpkg.com/slate/-/slate-0.85.0.tgz#1e922dce13a7b37816670312f5caac70aa2a8d1c"
+  integrity sha512-SHlgOI7fDG50sL+lfAI+nXF9FQpoqf7KNRofggyyE4ngsj1nINOEpFSYKGPkZgVUUkPflWK6PuBJMR6nEuUiKg==
+  dependencies:
+    immer "^9.0.6"
+    is-plain-object "^5.0.0"
+    tiny-warning "^1.0.3"
 
 sorcery@^0.10.0:
   version "0.10.0"
@@ -2575,6 +2621,16 @@ svelte-proxied-store@^1.1.4:
   resolved "https://registry.yarnpkg.com/svelte-proxied-store/-/svelte-proxied-store-1.1.4.tgz#220b2a2f56574b65fff48e526fcea83208934122"
   integrity sha512-Vz8egScKBx3Ve1+MlaX0D6hEgYgtIQzpZx4HtzI6+J0mJiVgfaxnEdvSVGDWNb5E+zGzGGXdmzxqjfOIyNEswQ==
 
+svelte-slate@^0.1.62:
+  version "0.1.62"
+  resolved "https://registry.yarnpkg.com/svelte-slate/-/svelte-slate-0.1.62.tgz#98ed38008c8726a8d647ce8f8ce6b9c56f8b1b84"
+  integrity sha512-+A6AaJlij6heKbpV9YMgZvXagSmObs3Vti2f+9B90ohyJJw8HJ7jYJ8rc1i1eoA6jQMghd3d2UWGc/dD4gU96w==
+  dependencies:
+    "@aicacia/debounce" "0"
+    "@svelte-put/clickoutside" "1"
+    fast-equals "4"
+    scroll-into-view-if-needed "2"
+
 svelte2tsx@~0.5.10:
   version "0.5.20"
   resolved "https://registry.yarnpkg.com/svelte2tsx/-/svelte2tsx-0.5.20.tgz#0ac5411b53d6b6913b12e12a02c03ce9eb13e945"
@@ -2640,6 +2696,11 @@ tiny-glob@^0.2.9:
   dependencies:
     globalyzer "0.1.0"
     globrex "^0.1.2"
+
+tiny-warning@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"
+  integrity sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==
 
 to-regex-range@^5.0.1:
   version "5.0.1"
