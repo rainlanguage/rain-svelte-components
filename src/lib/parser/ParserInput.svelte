@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Leaf from './Leaf.svelte';
 	import { Slate, withSvelte, Editable } from 'svelte-slate';
-	import { createEditor, Transforms, Editor, Node, Text } from 'slate';
+	import { createEditor, Node } from 'slate';
 	import { Parser, rainterpreterOpMeta } from '@beehiveinnovation/rainlang';
 	import { writable, type Writable } from 'svelte/store';
 	import type { StateConfig } from '@beehiveinnovation/rainlang';
@@ -29,10 +29,8 @@
 	$: raw = serialize(value);
 
 	$: $vmStateConfig = (() => {
-		// console.log(raw, value);
 		if (raw !== '') {
-			const [tree, sc] = Parser.get(raw);
-			// console.log(tree);
+			const [tree, sc] = Parser.get(raw, rainterpreterOpMeta);
 			const error = tree?.[0]?.error || '';
 			if (!error) return sc;
 			else return emptySc;
