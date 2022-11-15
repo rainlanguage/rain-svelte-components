@@ -7,9 +7,9 @@
   resolved "https://registry.yarnpkg.com/@aicacia/debounce/-/debounce-0.1.18.tgz#175247af7f9d53b11b7d7e99a182139c378928c5"
   integrity sha512-QbWHDAuHqNIRY5MxSohtjVs4zNBAyCgAckUQF9OVBquQDFCKgIeOubVLLhqxdTwfOSDcIf7WJ++28oaw+qETWg==
 
-"@beehiveinnovation/rainlang@https://github.com/beehive-innovation/rainlang#f1ae566fcc3db35a3c492ff2441607ef43c040a0":
+"@beehiveinnovation/rainlang@https://github.com/beehive-innovation/rainlang#dfe349227bde6aa38ae95c17424540b87e0d9dd4":
   version "1.0.0"
-  resolved "https://github.com/beehive-innovation/rainlang#f1ae566fcc3db35a3c492ff2441607ef43c040a0"
+  resolved "https://github.com/beehive-innovation/rainlang#dfe349227bde6aa38ae95c17424540b87e0d9dd4"
   dependencies:
     ethers "^5.7.2"
     prettier "^2.7.1"

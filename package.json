@@ -42,7 +42,7 @@
 	},
 	"svelte": "./index.js",
 	"dependencies": {
-		"@beehiveinnovation/rainlang": "https://github.com/beehive-innovation/rainlang#f1ae566fcc3db35a3c492ff2441607ef43c040a0",
+		"@beehiveinnovation/rainlang": "https://github.com/beehive-innovation/rainlang#dfe349227bde6aa38ae95c17424540b87e0d9dd4",
 		"@formkit/auto-animate": "^1.0.0-beta.3",
 		"@metamask/jazzicon": "^2.0.0",
 		"@steeze-ui/heroicons": "^2.1.0",

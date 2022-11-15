@@ -22,7 +22,7 @@
 	let value = [
 		{
 			type: 'expression',
-			children: [{ text: '' }]
+			children: [{ text: '_:add(2 3)' }]
 		}
 	];
 
