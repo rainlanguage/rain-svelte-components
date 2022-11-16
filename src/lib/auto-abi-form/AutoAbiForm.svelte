@@ -22,14 +22,6 @@
 	$: inputs = method?.type == 'function' ? method.inputs : null;
 
 	if (metadata) {
-		// const ajv = new Ajv.default();
-		// const validate = ajv.compile(ContractMeta);
-
-		// valid = validate(metadata);
-
-		// if (!valid) {
-		// 	console.log(validate.errors);
-		// } else {
 		if (metadata.expressions) {
 			metadata.expressions.forEach((expression) => {
 				set(abi, expression.path + '.nameMeta', expression.name);
@@ -44,9 +36,6 @@
 		}
 		// }
 	}
-
-	// if the method name changes, clear the result
-	// $: if (methodName) result = [];
 </script>
 
 {#if (metadata && valid) || !metadata}

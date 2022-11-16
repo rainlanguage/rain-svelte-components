@@ -58,6 +58,14 @@
 	};
 </script>
 
-<Slate {editor} bind:value>
-	<Editable {Leaf} {decorate} spellcheck={false} placeholder="Write your expression..." />
-</Slate>
+<div class="h-full">
+	<Slate {editor} bind:value>
+		<Editable
+			{Leaf}
+			{decorate}
+			spellcheck={false}
+			placeholder="Write your expression..."
+			style="height: 100%;"
+		/>
+	</Slate>
+</div>

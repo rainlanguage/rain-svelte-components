@@ -15,7 +15,7 @@
 
 	let expressionsResult: any, configResult: any;
 
-	$: result = merge(expressionsResult, configResult);
+	$: result = merge({}, expressionsResult, configResult);
 </script>
 
 <div class="flex flex-col gap-y-8">

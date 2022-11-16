@@ -25,12 +25,10 @@ export const deserialize = (string: string) => {
 export const getFlatRanges = (value: Node[]) => {
     const text = serialize(value);
     const tree = Parser.getParseTree(text, rainterpreterOpMeta);
-    // console.log(Array.from({ ...tree, length: Object.entries(tree).length }))
     const ranges: any[] = [];
     if (!Object.keys(tree).length) return ranges;
 
     const explode = (el: TreeNode) => {
-        // console.log(el)
         if ("opcode" in el) {
             ranges.push({
                 el,
@@ -76,8 +74,6 @@ export const getFlatRanges = (value: Node[]) => {
         }
     };
     Object.values(tree).forEach(source => source.tree.forEach(explode))
-    // tree[0].tree.forEach(explode);
-    // console.log(ranges)
     return ranges
 };
 

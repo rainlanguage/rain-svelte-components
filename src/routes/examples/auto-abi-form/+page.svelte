@@ -3,6 +3,8 @@
 	import Vapour721A from './Vapour721A.json';
 	import Vapour721AMetadata from './Vapour721AMetadata.json';
 	import FlowERC20Factory from './FlowERC20Factory.json';
+	import OrderBook from './OrderBook.json';
+	import OrderBookMetadata from './OrderBookMetadata.json';
 	import FlowERC20FactoryMetadata from './FlowERC20FactoryMetadata.json';
 	import AutoAbiForm from '$lib/auto-abi-form/AutoAbiForm.svelte';
 	import PageHeading from '$lib/_docs/PageHeading.svelte';
@@ -67,10 +69,10 @@
 				<div class="col-span-2">
 					<div class="text-xl mb-2">Method name: createChildTyped</div>
 					<AutoAbiFormSeparated
-						abi={FlowERC20Factory.abi}
-						metadata={FlowERC20FactoryMetadata}
+						abi={OrderBook.abi}
+						metadata={OrderBookMetadata}
 						bind:result={resultMerged}
-						methodName="createChildTyped"
+						methodName="addOrder"
 						on:save={({ detail }) => {
 							console.log(detail);
 						}}

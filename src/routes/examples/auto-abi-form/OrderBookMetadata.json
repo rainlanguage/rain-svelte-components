@@ -1,0 +1,47 @@
+{
+  "name": "Order Book",
+  "description": "Description",
+  "type": "Contract",
+  "source": "https://github.com/beehive-innovation/rain-protocol",
+  "commit": "d35c301661393f8aa70bc808d1f8fbeefe3c2a6a",
+  "version": {
+    "major": 0,
+    "minor": 0
+  },
+  "addresses": [
+    {
+      "chainId": 80001,
+      "knownAddresses": ["0x75b4A6c9238A5206adBa189221B90ebbFe4ac248"]
+    }
+  ],
+  "expressions": [
+    {
+      "name": "Order",
+      "description": "An expression for the order.",
+      "path": "[11].inputs[0].components[2]",
+      "contextColumns": [
+        {
+          "name": "Base",
+          "cells": [
+            {
+              "name": "Order hash"
+            },
+            {
+              "name": "Sender"
+            },
+            {
+              "name": "Counterparty"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "name": "Expression deployer",
+      "description": "Address of the expression deployer",
+      "path": "[11].inputs[0].components[0]"
+    }
+  ]
+}
