@@ -19,19 +19,19 @@
 		let expressions: boolean = false;
 		const findExpression = (component: AbiParameter) => {
 			if ('internalType' in component) {
-				console.log(component);
 				if (
 					component.internalType == 'struct StateConfig' ||
 					component.internalType == 'struct StateConfig[]'
-				)
+				) {
 					expressions = true;
+				}
 			}
 			if ('components' in component) {
 				component.components.forEach(findExpression);
 			}
 		};
 		abi.forEach((e) => {
-			if ('inputs' in e) e.inputs?.forEach(findExpression);
+			if ('inputs' in e && 'name' in e && e.name == methodName) e.inputs?.forEach(findExpression);
 		});
 		return expressions;
 	};
