@@ -74,7 +74,7 @@
 				>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
 			>
 		</Input>
-	{:else if type == 'uint256'}
+	{:else if type?.startsWith('uint')}
 		<Input type="number" bind:value={result}>
 			<span slot="label">{component.nameMeta || component.name} ({type})</span>
 			<span slot="description"

@@ -15,6 +15,8 @@
 	import AutoAbiFormSeparated from '$lib/auto-abi-form/AutoAbiFormSeparated.svelte';
 
 	let result: any, resultMerged: any, result2: any;
+
+	$: console.log(resultMerged);
 </script>
 
 <div class="flex flex-col gap-y-4 dark:text-gray-100">
