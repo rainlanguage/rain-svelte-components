@@ -20,6 +20,7 @@
 			try {
 				simulatedResult = await simulator.run({ context: [await signer.getAddress()] });
 			} catch (err: any) {
+				console.log(err);
 				if (String(err).startsWith('Error: missing provider')) {
 					error = 'This expression requires a connected wallet.';
 				}

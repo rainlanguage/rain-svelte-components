@@ -42,6 +42,7 @@
 	},
 	"svelte": "./index.js",
 	"dependencies": {
+		"@beehiveinnovation/rainlang": "https://github.com/beehive-innovation/rainlang#b97c11b8fdbda6259c292f8d80d3a64fc126f212",
 		"@formkit/auto-animate": "^1.0.0-beta.3",
 		"@metamask/jazzicon": "^2.0.0",
 		"@steeze-ui/heroicons": "^2.1.0",
@@ -51,8 +52,10 @@
 		"ajv": "^8.11.0",
 		"ethers": "^5.7.1",
 		"lodash-es": "^4.17.21",
-		"rain-sdk": "git+https://github.com/beehive-innovation/rain-sdk.git#f6710e64a7d6c47110e3e584cd17e947c1d7313a",
 		"rain-metadata": "git+https://github.com/beehive-innovation/rain-metadata.git",
-		"svelte-ethers-store": "^2.5.8"
+		"rain-sdk": "git+https://github.com/beehive-innovation/rain-sdk.git#f6710e64a7d6c47110e3e584cd17e947c1d7313a",
+		"slate": "^0.85.0",
+		"svelte-ethers-store": "^2.5.8",
+		"svelte-slate": "^0.1.62"
 	}
 }
