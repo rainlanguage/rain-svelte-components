@@ -2,7 +2,7 @@
 	import AutoAbiForm from '$lib/auto-abi-form/AutoAbiForm.svelte';
 	import type { ContractMetadata } from 'rain-metadata/metadata-types/contract';
 	import { Section, SectionBody, SectionHeading } from '$lib/section';
-	import type { Abi } from 'abitype';
+	import type { Abi, AbiFunction, AbiParameter } from 'abitype';
 	import { merge } from 'lodash-es';
 	import { createEventDispatcher } from 'svelte';
 
@@ -15,23 +15,48 @@
 
 	let expressionsResult: any, configResult: any;
 
+	const hasExpressions = (abi: Abi): boolean => {
+		let expressions: boolean = false;
+		const findExpression = (component: AbiParameter) => {
+			if ('internalType' in component) {
+				console.log(component);
+				if (
+					component.internalType == 'struct StateConfig' ||
+					component.internalType == 'struct StateConfig[]'
+				)
+					expressions = true;
+			}
+			if ('components' in component) {
+				component.components.forEach(findExpression);
+			}
+		};
+		abi.forEach((e) => {
+			if ('inputs' in e) e.inputs?.forEach(findExpression);
+		});
+		return expressions;
+	};
+
+	$: expressions = hasExpressions(abi);
+
 	$: result = merge([], expressionsResult, configResult);
 </script>
 
 <div class="flex flex-col gap-y-8">
-	<Section>
-		<SectionHeading>Expressions</SectionHeading>
-		<SectionBody>
-			<AutoAbiForm
-				{abi}
-				{methodName}
-				bind:result={expressionsResult}
-				{metadata}
-				onlyExpressions
-				on:save
-			/>
-		</SectionBody>
-	</Section>
+	{#if expressions}
+		<Section>
+			<SectionHeading>Expressions</SectionHeading>
+			<SectionBody>
+				<AutoAbiForm
+					{abi}
+					{methodName}
+					bind:result={expressionsResult}
+					{metadata}
+					onlyExpressions
+					on:save
+				/>
+			</SectionBody>
+		</Section>
+	{/if}
 	<Section>
 		<SectionHeading>Configuration</SectionHeading>
 		<SectionBody>
