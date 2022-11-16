@@ -1,4 +1,4 @@
-import { Parser, rainterpreterOpMeta, type Node as TreeNode } from '@beehiveinnovation/rainlang';
+import { Parser, rainterpreterOpMeta, type Node as TreeNode, type ParseTree } from '@beehiveinnovation/rainlang';
 import { Node } from 'slate';
 
 // Define a serializing function that takes a value and returns a string.
@@ -25,6 +25,7 @@ export const deserialize = (string: string) => {
 export const getFlatRanges = (value: Node[]) => {
     const text = serialize(value);
     const tree = Parser.getParseTree(text, rainterpreterOpMeta);
+    // console.log(Array.from({ ...tree, length: Object.entries(tree).length }))
     const ranges: any[] = [];
     if (!Object.keys(tree).length) return ranges;
 
@@ -74,8 +75,8 @@ export const getFlatRanges = (value: Node[]) => {
             el?.parameters.forEach(explode);
         }
     };
-
-    tree[0].tree.forEach(explode);
+    Object.values(tree).forEach(source => source.tree.forEach(explode))
+    // tree[0].tree.forEach(explode);
     // console.log(ranges)
     return ranges
 };
