@@ -19,7 +19,7 @@
 			transition:fade={{ duration: 100 }}
 			on:click={closeModal}
 			bind:this={modalInner}
-			class="fixed flex items-center justify-center w-screen h-full bg-black bg-opacity-40"
+			class="fixed flex items-center justify-center w-screen h-full bg-black bg-opacity-40 inset-0"
 		>
 			<div
 				in:fly={{ y: 30, duration: 400 }}
