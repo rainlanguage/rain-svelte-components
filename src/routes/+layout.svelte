@@ -53,6 +53,9 @@
 		<NavItem link="/examples/parser">
 			<span class="link">Parser</span>
 		</NavItem>
+		<NavItem link="/examples/formatter">
+			<span class="link">Formatter</span>
+		</NavItem>
 		<NavItem link="/examples/select">
 			<span class="link">Select</span>
 		</NavItem>

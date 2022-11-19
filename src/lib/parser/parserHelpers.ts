@@ -8,15 +8,17 @@ export const serialize = (nodes: Node[]) => {
 
 // Define a deserializing function that takes a string and returns a value.
 export const deserialize = (string: string) => {
-    // Return a value array of children derived by splitting the string.
-    const stacks = string.split(/,+/);
-    const sources = stacks.map(line => line.split(/;+/));
-    const lines = sources.flat()
-    const nodes = lines.map((line, i) => {
-        const text = (i + 1 == lines.length) ? line.trim() : `${line.trim()},`
+    // remove all the new line chars
+    string = string.replaceAll('\n', '');
+    // split according to the stack and source delimiters
+    let lines = string.split(/(?<=[;,])/);
+    // filter any empty lines
+    lines = lines.filter(line => line !== '')
+    // construct the nodes for slate
+    const nodes = lines.map(line => {
         return {
             type: 'expression',
-            children: [{ text }],
+            children: [{ text: line }],
         }
     })
     return nodes
@@ -76,112 +78,3 @@ export const getFlatRanges = (value: Node[]) => {
     Object.values(tree).forEach(source => source.tree.forEach(explode))
     return ranges
 };
-
-// not using this for a sec
-
-// export const getSlateTree = (value) => {
-//     const text = serialize(value);
-//     // console.log(value);
-//     const tree = Parser.getParseTree(text, rainterpreterOpMeta);
-
-//     let lastIndex = 0;
-//     let textSegments = [];
-
-//     const explode = (el) => {
-//         if (el?.opcode) {
-//             if (lastIndex !== el?.opcode.position[0]) {
-//                 textSegments.push({
-//                     children: [
-//                         {
-//                             text: text.slice(lastIndex, el?.opcode.position[0])
-//                         }
-//                     ],
-//                     node: null,
-//                     type: 'ignored'
-//                 });
-//             }
-//             textSegments.push({
-//                 children: [
-//                     {
-//                         text: text.slice(el?.opcode.position[0], el?.opcode.position[1] + 1)
-//                     }
-//                 ],
-//                 node: el,
-//                 type: 'op'
-//             });
-//             lastIndex = el?.opcode.position[1] + 1;
-//         } else if (el.value) {
-//             if (lastIndex! == el?.position[0]) {
-//                 textSegments.push({
-//                     children: [
-//                         {
-//                             text: text.slice(lastIndex, el?.position[0])
-//                         }
-//                     ],
-//                     node: null,
-//                     type: 'ignored'
-//                 });
-//             }
-//             textSegments.push({
-//                 children: [
-//                     {
-//                         text: text.slice(el?.position[0], el?.position[1] + 1)
-//                     }
-//                 ],
-//                 node: el,
-//                 type: 'param'
-//             });
-//             lastIndex = el?.position[1] + 1;
-//         } else if (el?.error && el.error.includes('unknown')) {
-//             if (lastIndex !== el?.position[0]) {
-//                 textSegments.push({
-//                     children: [
-//                         {
-//                             text: text.slice(lastIndex, el?.position[0])
-//                         }
-//                     ],
-//                     node: null,
-//                     type: 'ignored'
-//                 });
-//             }
-//             textSegments.push({
-//                 children: [
-//                     {
-//                         text: text.slice(el?.position[0], el?.position[1] + 1)
-//                     }
-//                 ],
-//                 node: el,
-//                 type: 'unknown-op'
-//             });
-//             lastIndex = el?.position[1] + 1;
-//         } else {
-//             textSegments.push({
-//                 children: [
-//                     {
-//                         text: text.slice(lastIndex, el?.position[1] + 1)
-//                     }
-//                 ],
-//                 node: null,
-//                 type: 'ignored'
-//             });
-//             lastIndex = el?.position[1] + 1;
-//         }
-//         if (el?.parameters) {
-//             el?.parameters.forEach(explode);
-//         }
-//     };
-
-//     tree[0].tree.forEach(explode);
-//     if (lastIndex !== text.length)
-//         textSegments.push({
-//             children: [
-//                 {
-//                     text: text.slice(lastIndex)
-//                 }
-//             ],
-//             node: null,
-//             type: 'ignored'
-//         });
-//     console.log(value);
-//     value = textSegments;
-// };

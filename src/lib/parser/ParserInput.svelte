@@ -12,8 +12,9 @@
 	const emptySc = { sources: [], constants: [] };
 
 	export let vmStateConfig: Writable<StateConfig> = writable(emptySc);
-	export let raw: string;
-	export let error: string;
+	export let raw: string = '';
+	export let error: string = '';
+	export let readOnly: boolean = false;
 
 	export const loadRaw = (raw: string) => {
 		value = deserialize(raw);
@@ -31,7 +32,7 @@
 	$: $vmStateConfig = (() => {
 		if (raw !== '') {
 			const [tree, sc] = Parser.get(raw, rainterpreterOpMeta);
-			const error = tree?.[0]?.error || '';
+			error = tree?.[0]?.tree[0].error || '';
 			if (!error) return sc;
 			else return emptySc;
 		} else return emptySc;
@@ -62,6 +63,7 @@
 	<Slate {editor} bind:value>
 		<Editable
 			{Leaf}
+			{readOnly}
 			{decorate}
 			spellcheck={false}
 			placeholder="Write your expression..."
