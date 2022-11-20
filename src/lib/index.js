@@ -9,6 +9,7 @@ export { default as GenericSkeletonLoader } from './GenericSkeletonLoader.svelte
 export { default as HoverTooltip } from './HoverTooltip.svelte';
 export { default as Jazzicon } from './Jazzicon.svelte';
 export { default as Select } from './Select.svelte';
+export { default as Modal } from './Modal.svelte';
 
 // export { Tab, TabList, TabPanel, Tabs } from './tabs/tabs';
 export { Tab, TabList, TabPanel, Tabs };

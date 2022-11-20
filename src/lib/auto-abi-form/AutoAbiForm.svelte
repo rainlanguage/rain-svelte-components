@@ -4,7 +4,7 @@
 	// import * as Ajv from 'ajv';
 	import { set } from 'lodash-es';
 	import type { Abi } from 'abitype';
-	import { setContext } from 'svelte';
+	import { createEventDispatcher, setContext } from 'svelte';
 
 	export let abi: Abi;
 	export let methodName: string = 'createChildTyped';
@@ -22,14 +22,6 @@
 	$: inputs = method?.type == 'function' ? method.inputs : null;
 
 	if (metadata) {
-		// const ajv = new Ajv.default();
-		// const validate = ajv.compile(ContractMeta);
-
-		// valid = validate(metadata);
-
-		// if (!valid) {
-		// 	console.log(validate.errors);
-		// } else {
 		if (metadata.expressions) {
 			metadata.expressions.forEach((expression) => {
 				set(abi, expression.path + '.nameMeta', expression.name);
@@ -50,7 +42,7 @@
 	{#if inputs}
 		<div class:onlyConfig class:normalForm={!onlyConfig}>
 			{#each inputs as component, i}
-				<AutoAbiFormComponent {component} bind:result={result[i]} />
+				<AutoAbiFormComponent {component} bind:result={result[i]} on:save />
 			{/each}
 		</div>
 	{/if}
