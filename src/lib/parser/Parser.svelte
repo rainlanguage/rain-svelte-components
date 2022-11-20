@@ -19,6 +19,7 @@
 	export let raw: string = '';
 	export let signer: Signer;
 	export let error: string = '';
+	export let readOnly: boolean = false;
 
 	let parserInput: SvelteComponent;
 
@@ -44,7 +45,7 @@
 		<div class="flex flex-col w-2/3">
 			<div class="heading">Expression</div>
 			<div class="border-r border-gray-300 dark:border-gray-600 p-2 parser-wrapper flex flex-col">
-				<ParserInput {vmStateConfig} bind:error bind:raw bind:this={parserInput} />
+				<ParserInput {vmStateConfig} {readOnly} bind:error bind:raw bind:this={parserInput} />
 			</div>
 		</div>
 		<div class="flex flex-col w-1/3">
