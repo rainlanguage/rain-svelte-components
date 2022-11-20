@@ -36,15 +36,15 @@
 	<Example>
 		<ExampleComponent>
 			<div class="flex flex-col gap-y-2">
-				<div class="overflow-hidden bg-gray-100">
+				<div class="overflow-hidden bg-gray-100 dark:bg-gray-800">
 					<ParserInput {vmStateConfig} bind:raw />
 				</div>
 				<span>Simulated output</span>
-				<div class="bg-gray-100 p-3">
+				<div class="bg-gray-100 p-3 dark:bg-gray-800">
 					<SimulatedOutput {vmStateConfig} signer={$signer} />
 				</div>
 				<span>Raw text</span>
-				<div class="bg-gray-100 p-3">
+				<div class="bg-gray-100 dark:bg-gray-800 p-3">
 					{raw}
 				</div>
 			</div>
@@ -53,12 +53,14 @@
 	</Example>
 
 	<ExampleHeading>Full parser</ExampleHeading>
-	<div>
-		Component will emit <span class="font-mono">load</span> and <span class="font-mono">save</span> events
-		when the buttons are pressed.
+	<div class="dark:text-white">
+		<div>
+			Component will emit <span class="font-mono">load</span> and
+			<span class="font-mono">save</span> events when the buttons are pressed.
+		</div>
+		<div>The save event has the raw expression text in its detail.</div>
+		<div>To load raw text into the parser, call Parser.loadRaw(text).</div>
 	</div>
-	<div>The save event has the raw expression text in its detail.</div>
-	<div>To load raw text into the parser, call Parser.loadRaw(text).</div>
 	<Example>
 		<ExampleComponent>
 			<div class="flex flex-col gap-y-4">

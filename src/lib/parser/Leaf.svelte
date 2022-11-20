@@ -28,21 +28,21 @@
 	<slot />
 </span>
 
-<style lang="postcss">
-	.op {
-		@apply text-fuchsia-700;
+<style global lang="postcss">
+	:local(.op) {
+		@apply text-fuchsia-700 dark:text-fuchsia-400;
 	}
-	.value {
-		@apply text-green-700;
+	:local(.value) {
+		@apply text-green-700 dark:text-green-400;
 	}
-	.error {
+	:local(.error) {
 		@apply border-b border-red-700;
 	}
-	.tag,
-	.name {
-		@apply bg-gray-400 text-white rounded-md px-0.5;
+	:local(.tag),
+	:local(.name) {
+		@apply bg-gray-400  dark:bg-gray-300 text-white dark:text-gray-900 rounded-md px-0.5;
 	}
-	.mono {
+	:local(.mono) {
 		@apply font-mono;
 	}
 </style>
