@@ -78,6 +78,9 @@
 						on:save={({ detail }) => {
 							console.log(detail);
 						}}
+						on:load={(event) => {
+							console.log(event);
+						}}
 					/>
 				</div>
 				<div class="p-4">

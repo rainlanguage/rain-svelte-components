@@ -11,8 +11,6 @@
 	export let result: any = [];
 	export let metadata: ContractMetadata;
 
-	const dispatch = createEventDispatcher();
-
 	let expressionsResult: any, configResult: any;
 
 	const hasExpressions = (abi: Abi): boolean => {

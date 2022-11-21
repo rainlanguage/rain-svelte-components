@@ -42,7 +42,7 @@
 	{#if inputs}
 		<div class:onlyConfig class:normalForm={!onlyConfig}>
 			{#each inputs as component, i}
-				<AutoAbiFormComponent {component} bind:result={result[i]} on:save />
+				<AutoAbiFormComponent {component} bind:result={result[i]} on:save on:load />
 			{/each}
 		</div>
 	{/if}
