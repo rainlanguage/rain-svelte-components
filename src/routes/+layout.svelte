@@ -50,6 +50,9 @@
 		<NavItem link="/examples/switch">
 			<span class="link">Switch</span>
 		</NavItem>
+		<NavItem link="/examples/overflow-menu">
+			<span class="link">Overflow Menu</span>
+		</NavItem>
 		<NavItem link="/examples/parser">
 			<span class="link">Parser</span>
 		</NavItem>
