@@ -25,7 +25,6 @@
 
 	$: borderColor = error ? 'border-red-500' : 'border-gray-500';
 
-
 	const dispatch = createEventDispatcher();
 
 	const handleInput = (e: any) => {
@@ -83,20 +82,41 @@
 	{/if}
 	<div class="flex w-full flex-row items-center gap-x-2 self-stretch relative">
 		{#if icon != undefined}
-			<Icon src={icon} class="w-6 h-6 absolute top-1/2 transform -translate-y-1/2 left-3 opacity-50"/>
+			<Icon
+				src={icon}
+				class="w-6 h-6 absolute top-1/2 transform -translate-y-1/2 left-3 opacity-50"
+			/>
 		{/if}
-		<input
-			{type}
-			{value}
-			{placeholder}
-			on:input={handleInput}
-			on:blur={handleBlur}
-			{disabled}
-			{min}
-			{max}
-			class={`w-full rounded-md bg-gray-200 dark:bg-gray-800 p-2 font-light ${borderColor} dark:text-gray-100  ${icon ? "pl-12" : ""}`}
-			class:disabled
-		/>
+		{#if type !== 'textarea'}
+			<input
+				{type}
+				{value}
+				{placeholder}
+				on:input={handleInput}
+				on:blur={handleBlur}
+				{disabled}
+				{min}
+				{max}
+				class={`w-full rounded-md bg-gray-200 dark:bg-gray-800 p-2 font-light ${borderColor} dark:text-gray-100  ${
+					icon ? 'pl-12' : ''
+				}`}
+				class:disabled
+			/>
+		{:else}
+			<textarea
+				{value}
+				{placeholder}
+				on:input={handleInput}
+				on:blur={handleBlur}
+				{disabled}
+				{min}
+				{max}
+				class={`w-full rounded-md bg-gray-200 dark:bg-gray-800 p-2 font-light ${borderColor} dark:text-gray-100  ${
+					icon ? 'pl-12' : ''
+				}`}
+				class:disabled
+			/>
+		{/if}
 
 		{#if validating}
 			<div class="absolute right-1 top-0 bottom-0 flex flex-col justify-center">
