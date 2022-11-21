@@ -53,6 +53,7 @@
 					{metadata}
 					onlyExpressions
 					on:save
+					on:load
 				/>
 			</SectionBody>
 		</Section>

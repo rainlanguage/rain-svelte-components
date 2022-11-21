@@ -100,7 +100,7 @@
 				<div class="text-sm">{component.descriptionMeta}</div>
 			{/if}
 		</div>
-		<Parser signer={$signer} bind:vmStateConfig on:save />
+		<Parser signer={$signer} bind:vmStateConfig on:save on:load />
 	{:else if type == 'struct StateConfig[]'}
 		<div>
 			{#if component.nameMeta}
@@ -112,7 +112,7 @@
 		</div>
 		{#each $stateConfigsStore as instance (instance.id)}
 			<div class="flex flex-col gap-y-2">
-				<Parser signer={$signer} bind:vmStateConfig={instance.store} on:save />
+				<Parser signer={$signer} bind:vmStateConfig={instance.store} on:save on:load />
 				<button
 					class="self-end text-xs underline cursor-pointer"
 					on:click={() => {
@@ -147,6 +147,7 @@
 						component={subComponent}
 						bind:result={arrayedComponent.compResult[subComponent.name]}
 						on:save
+						on:load
 					/>
 				{/if}
 			{/each}
@@ -167,7 +168,12 @@
 	{:else}
 		{#each component.components as subComponent}
 			{#if subComponent}
-				<svelte:self component={subComponent} bind:result={result[subComponent.name]} on:save />
+				<svelte:self
+					component={subComponent}
+					bind:result={result[subComponent.name]}
+					on:save
+					on:load
+				/>
 			{/if}
 		{/each}
 	{/if}
