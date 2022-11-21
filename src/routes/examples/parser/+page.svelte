@@ -16,16 +16,16 @@
 	let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
 	let raw: string;
 	let events: string[] = [];
-	let parser: SvelteComponent;
 	let rawToLoad: string;
 
 	const saveEvent = ({ detail }: CustomEvent<{ raw: string }>) => {
 		events = [`A save event was emitted with the raw string: ${detail.raw}`, ...events];
 	};
 
-	const loadEvent = () => {
+	const loadEvent = ({ detail }: CustomEvent<{ loadRaw: Function }>) => {
 		events = ['A load event was emitted.', ...events];
-		parser.loadRaw(rawToLoad);
+		console.log(detail);
+		detail.loadRaw(rawToLoad);
 	};
 </script>
 
@@ -59,7 +59,8 @@
 			<span class="font-mono">save</span> events when the buttons are pressed.
 		</div>
 		<div>The save event has the raw expression text in its detail.</div>
-		<div>To load raw text into the parser, call Parser.loadRaw(text).</div>
+		<div>To load raw text into the parser, use Parser.loadRaw(text).</div>
+		<div>The load event will have the loadRaw function for that parser in its detail.</div>
 	</div>
 	<Example>
 		<ExampleComponent>
@@ -67,7 +68,7 @@
 				<Input bind:value={rawToLoad}>
 					<span slot="label">Enter raw text to load into parser here.</span>
 				</Input>
-				<Parser on:save={saveEvent} on:load={loadEvent} signer={$signer} bind:this={parser} />
+				<Parser on:save={saveEvent} on:load={loadEvent} signer={$signer} />
 				<div class="flex flex-col gap-y-2">
 					{#each events as event}
 						<span>{event}</span>

@@ -36,7 +36,7 @@
 	};
 
 	const load = () => {
-		dispatch('load');
+		dispatch('load', { loadRaw });
 	};
 </script>
 
