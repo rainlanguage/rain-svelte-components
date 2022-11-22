@@ -27,9 +27,8 @@
 	<ExampleHeading>Without validation</ExampleHeading>
 	<Example>
 		<ExampleComponent>
-			<Input>
+			<Input placeholder="Placeholder">
 				<span slot="label">Input name</span>
-				<span slot="description">Description</span>
 			</Input>
 		</ExampleComponent>
 		<ExampleUsage>example usage here</ExampleUsage>
@@ -83,11 +82,28 @@
 	</Example>
 
 	<ExampleHeading>With Icons</ExampleHeading>
+	<div>
+		Pass a function to the <span class="font-mono">iconAction</span>
+		prop, that will be called when the icon is clicked.
+	</div>
 	<Example>
 		<ExampleComponent>
-			<Input icon={MagnifyingGlass}>
+			<Input
+				icon={MagnifyingGlass}
+				iconAction={() => {
+					alert('clicked the icon!');
+				}}
+			>
 				<span slot="label">Input name</span>
-				<span slot="description">Description</span>
+			</Input>
+		</ExampleComponent>
+		<ExampleUsage>example usage here</ExampleUsage>
+	</Example>
+
+	<Example>
+		<ExampleComponent>
+			<Input icon={MagnifyingGlass} iconPos="end">
+				<span slot="label">Input name</span>
 			</Input>
 		</ExampleComponent>
 		<ExampleUsage>example usage here</ExampleUsage>

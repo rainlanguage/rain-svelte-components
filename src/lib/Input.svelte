@@ -16,6 +16,9 @@
 	export let disabled = false;
 
 	export let icon: IconSource | undefined = undefined;
+	export let iconPos: 'start' | 'end' = 'start';
+	export let iconAction: any = null;
+	let noIconAction: any = () => {};
 
 	export let validator = async (value: any): Promise<any> => null;
 
@@ -71,7 +74,7 @@
 
 <div use:autoAnimate class="flex w-full flex-col gap-y-2">
 	{#if $$slots.label}
-		<div class=" text-gray-800 dark:text-gray-200 text-sm font-medium">
+		<div class=" text-gray-500 dark:text-gray-200 text-sm font-medium">
 			<slot name="label" />
 		</div>
 	{/if}
@@ -82,10 +85,14 @@
 	{/if}
 	<div class="flex w-full flex-row items-center gap-x-2 self-stretch relative">
 		{#if icon != undefined}
-			<Icon
-				src={icon}
-				class="w-6 h-6 absolute top-1/2 transform -translate-y-1/2 left-3 opacity-50"
-			/>
+			<div
+				on:click={iconAction || noIconAction}
+				class={`w-6 h-6 absolute top-1/2 transform -translate-y-1/2 opacity-50 ${
+					iconPos == 'start' ? 'left-3' : 'right-3'
+				} ${iconAction ? 'cursor-pointer' : ''}`}
+			>
+				<Icon src={icon} />
+			</div>
 		{/if}
 		{#if type !== 'textarea'}
 			<input
@@ -97,7 +104,7 @@
 				{disabled}
 				{min}
 				{max}
-				class={`w-full rounded-md bg-gray-200 dark:bg-gray-800 p-2 font-light ${borderColor} dark:text-gray-100  ${
+				class={`w-full rounded-md bg-gray-100 dark:bg-gray-800 p-2 font-light ${borderColor} dark:text-gray-100  ${
 					icon ? 'pl-12' : ''
 				}`}
 				class:disabled
@@ -111,13 +118,12 @@
 				{disabled}
 				{min}
 				{max}
-				class={`w-full rounded-md bg-gray-200 dark:bg-gray-800 p-2 font-light ${borderColor} dark:text-gray-100  ${
+				class={`w-full rounded-md bg-gray-100 dark:bg-gray-800 p-2 font-light ${borderColor} dark:text-gray-100  ${
 					icon ? 'pl-12' : ''
 				}`}
 				class:disabled
 			/>
 		{/if}
-
 		{#if validating}
 			<div class="absolute right-1 top-0 bottom-0 flex flex-col justify-center">
 				<Ring size="30px" color="#000" />
