@@ -104,9 +104,9 @@
 				{disabled}
 				{min}
 				{max}
-				class={`w-full rounded-md bg-gray-100 dark:bg-gray-800 p-2 font-light ${borderColor} dark:text-gray-100  ${
-					icon ? 'pl-12' : ''
-				}`}
+				class={`w-full rounded-md bg-gray-100 dark:bg-gray-800 p-2 font-light ${borderColor} dark:text-gray-100  
+				${icon && iconPos == 'start' ? 'pl-12' : ''}
+				${icon && iconPos == 'end' ? 'pr-12' : ''}`}
 				class:disabled
 			/>
 		{:else}
