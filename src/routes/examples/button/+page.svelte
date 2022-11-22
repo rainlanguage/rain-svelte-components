@@ -43,26 +43,26 @@
 		<ExampleUsage>example usage here</ExampleUsage>
 	</Example>
 
+	<ExampleHeading>Additional classes</ExampleHeading>
+	<Example>
+		<ExampleComponent>
+			<Button disabled classes="w-full text-center">Click me</Button>
+		</ExampleComponent>
+		<ExampleUsage>example usage here</ExampleUsage>
+	</Example>
+
 	<ExampleHeading>Icons</ExampleHeading>
 	<Example>
 		<ExampleComponent>
 			<div class="space-y-1">
-				<Button icon={Heart} solidIcon size={"small"} variant={"transparent"}>
-					Favorite
-				</Button>
-				<Button icon={Square2Stack} size={"small"}>
-					Copy this expression
-				</Button>
-				<Button icon={Square2Stack} size={"small"} variant={"primary"}>
-					Copy this expression
-				</Button>
-				<Button icon={Square2Stack} variant={"black"}>
-					Copy this expression
-				</Button>
+				<Button icon={Heart} solidIcon size={'small'} variant={'transparent'}>Favorite</Button>
+				<Button icon={Square2Stack} size={'small'}>Copy this expression</Button>
+				<Button icon={Square2Stack} size={'small'} variant={'primary'}>Copy this expression</Button>
+				<Button icon={Square2Stack} variant={'black'}>Copy this expression</Button>
 			</div>
 		</ExampleComponent>
 		<ExampleUsage>
-{`<Button icon={} size={} variant={}>
+			{`<Button icon={} size={} variant={}>
 	Button Text
 </Button>`}
 		</ExampleUsage>

@@ -7,36 +7,42 @@
 	export let size = 'regular';
 	export let icon: IconSource | undefined = undefined;
 	export let solidIcon: boolean = false;
+	export let classes: string = '';
 	let iconStyle: string;
 
-
-	if (size === "small" ) {
-		iconStyle = "w-6 h-5 py-0.5 mr-1.5";
+	if (size === 'small') {
+		iconStyle = 'w-6 h-5 py-0.5 mr-1.5';
 	} else {
 		// Always setting a good value
 		size = 'regular';
-		iconStyle = "w-6 h-6 py-0.5 mr-1.5";
+		iconStyle = 'w-6 h-6 py-0.5 mr-1.5';
 	}
 
-	if (variant === "transparent") {
-		iconStyle += " text-black";
+	if (variant === 'transparent') {
+		iconStyle += ' text-black';
 	}
-
 
 	$: variantCalc = disabled ? 'disabled' : variant;
-
 </script>
 
-<button {disabled} on:click class={`button ${variantCalc} ${size}`}>
+<button
+	{disabled}
+	on:click
+	class={`button ${variantCalc} ${size} ${classes} ${icon ? 'withIcon' : ''}`}
+>
 	{#if icon != undefined}
-		<Icon  src={icon} class={iconStyle} theme={solidIcon ? "solid" : ""}/>
+		<Icon src={icon} class={iconStyle} theme={solidIcon ? 'solid' : ''} />
 	{/if}
 	<slot />
 </button>
 
 <style lang="postcss">
 	.button {
-		@apply flex leading-none rounded-[10px] transition-colors text-white;
+		@apply leading-none rounded-[10px] transition-colors text-white;
+	}
+
+	.withIcon {
+		@apply flex;
 	}
 
 	.icon {
@@ -49,7 +55,6 @@
 	.regular {
 		@apply px-5 py-2.5 text-base;
 	}
-
 
 	.default {
 		@apply bg-gray-700 hover:bg-gray-600;
