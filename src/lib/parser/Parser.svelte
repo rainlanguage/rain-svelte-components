@@ -38,6 +38,10 @@
 	const load = () => {
 		dispatch('load', { loadRaw });
 	};
+
+	const expand = () => {
+		dispatch('expand', { loadRaw, raw });
+	};
 </script>
 
 <div class="rounded-lg overflow-hidden">
@@ -55,13 +59,13 @@
 			</div>
 		</div>
 	</div>
-	<div class="bg-gray-200 dark:bg-gray-800 p-2 flex justify-between">
-		<div class="text-red-500 text-xs font-regular h-4">
+	<div class="bg-gray-200 dark:bg-gray-800 flex justify-between px-2">
+		<div class="text-red-500 text-xs font-regular h-4 p-2">
 			{#if error}
 				Error: {error}
 			{/if}
 		</div>
-		<div class="gap-x-3 flex items-center">
+		<div class="gap-x-3 flex items-center text-gray-600">
 			<div class="parser-button">
 				<span class="text-xs">Help</span>
 				<span class="w-4">
@@ -80,8 +84,9 @@
 					<Icon src={CloudArrowUp} />
 				</span>
 			</div>
-			<div class="parser-button ">
-				<span class="text-xs">Expand</span>
+			<div class="h-full border-l border-gray-300" />
+			<div on:click={expand} class="parser-button">
+				<span class="text-xs">Detailed view</span>
 				<span class="w-4">
 					<Icon src={ArrowsPointingOut} />
 				</span>
@@ -100,6 +105,6 @@
 	}
 
 	.parser-button {
-		@apply flex items-center gap-x-1 cursor-pointer hover:opacity-80 transition-opacity;
+		@apply flex items-center gap-x-1 cursor-pointer hover:opacity-80 transition-opacity py-2;
 	}
 </style>

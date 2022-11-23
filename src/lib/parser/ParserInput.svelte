@@ -6,6 +6,7 @@
 	import { writable, type Writable } from 'svelte/store';
 	import type { StateConfig } from '@beehiveinnovation/rainlang';
 	import { deserialize, getFlatRanges, serialize } from '$lib/parser/parserHelpers';
+	import { onMount } from 'svelte';
 
 	const editor = withSvelte(createEditor());
 
@@ -16,16 +17,18 @@
 	export let error: string = '';
 	export let readOnly: boolean = false;
 
-	export const loadRaw = (raw: string) => {
-		value = deserialize(raw);
-	};
-
 	let value = [
 		{
 			type: 'expression',
 			children: [{ text: '' }]
 		}
 	];
+
+	export const loadRaw = (raw: string) => {
+		value = deserialize(raw);
+	};
+
+	if (raw !== '') loadRaw(raw);
 
 	$: raw = serialize(value);
 

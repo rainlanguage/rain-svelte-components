@@ -52,6 +52,7 @@
 					onlyExpressions
 					on:save
 					on:load
+					on:expand
 				/>
 			</SectionBody>
 		</Section>

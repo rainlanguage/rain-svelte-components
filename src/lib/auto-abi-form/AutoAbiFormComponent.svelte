@@ -100,7 +100,7 @@
 				<div class="text-sm">{component.descriptionMeta}</div>
 			{/if}
 		</div>
-		<Parser signer={$signer} bind:vmStateConfig on:save on:load />
+		<Parser signer={$signer} bind:vmStateConfig on:save on:load on:expand />
 	{:else if type == 'struct StateConfig[]'}
 		<div>
 			{#if component.nameMeta}
@@ -112,7 +112,7 @@
 		</div>
 		{#each $stateConfigsStore as instance (instance.id)}
 			<div class="flex flex-col gap-y-2">
-				<Parser signer={$signer} bind:vmStateConfig={instance.store} on:save on:load />
+				<Parser signer={$signer} bind:vmStateConfig={instance.store} on:save on:load on:expand />
 				<button
 					class="self-end text-xs underline cursor-pointer"
 					on:click={() => {
@@ -148,6 +148,7 @@
 						bind:result={arrayedComponent.compResult[subComponent.name]}
 						on:save
 						on:load
+						on:expand
 					/>
 				{/if}
 			{/each}
@@ -173,6 +174,7 @@
 					bind:result={result[subComponent.name]}
 					on:save
 					on:load
+					on:expand
 				/>
 			{/if}
 		{/each}

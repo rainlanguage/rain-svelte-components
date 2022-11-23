@@ -1,4 +1,4 @@
-import { Parser, rainterpreterOpMeta, type Node as TreeNode, type ParseTree } from '@beehiveinnovation/rainlang';
+import { Parser, rainterpreterOpMeta, type Comment, type Node as TreeNode, type ParseTree } from '@beehiveinnovation/rainlang';
 import { Node } from 'slate';
 
 // Define a serializing function that takes a value and returns a string.
@@ -11,7 +11,7 @@ export const deserialize = (string: string) => {
     // remove all the new line chars
     string = string.replaceAll('\n', '');
     // split according to the stack and source delimiters
-    let lines = string.split(/(?<=[;,])/);
+    let lines = string.split(/(?<=(?:\*\/)|[;,])/);
     // filter any empty lines
     lines = lines.filter(line => line !== '')
     // construct the nodes for slate
@@ -27,6 +27,7 @@ export const deserialize = (string: string) => {
 export const getFlatRanges = (value: Node[]) => {
     const text = serialize(value);
     const tree = Parser.getParseTree(text, rainterpreterOpMeta);
+    console.log(tree)
     const ranges: any[] = [];
     if (!Object.keys(tree).length) return ranges;
 
@@ -71,10 +72,36 @@ export const getFlatRanges = (value: Node[]) => {
                 tag: true
             })
         }
+        if ("parens" in el) {
+            el.parens.forEach((parenPos) => {
+                ranges.push({
+                    el: el.tag,
+                    anchor: { path: [], offset: parenPos },
+                    focus: { path: [], offset: parenPos + 1 },
+                    paren: true
+                })
+
+            })
+        }
         if ("parameters" in el) {
             el?.parameters.forEach(explode);
         }
     };
-    Object.values(tree).forEach(source => source.tree.forEach(explode))
+
+    const addComment = (comment: Comment) => {
+        if (comment.position.length == 2) {
+            ranges.push({
+                el: comment,
+                anchor: { path: [], offset: comment.position[0] },
+                focus: { path: [], offset: comment.position[1] + 1 },
+                comment: true
+            })
+        }
+    }
+
+    Object.values(tree).forEach(source => {
+        if ('tree' in source) source.tree.forEach(explode)
+        else source.forEach(comment => addComment(comment))
+    })
     return ranges
-};
+}
