@@ -62,7 +62,7 @@
 	};
 </script>
 
-<div class="h-full">
+<div class="h-full flex-grow">
 	<Slate {editor} bind:value>
 		<Editable
 			{Leaf}

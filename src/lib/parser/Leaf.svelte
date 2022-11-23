@@ -50,7 +50,7 @@
 	}
 	:local(.tag),
 	:local(.name) {
-		@apply bg-gray-300  dark:bg-gray-300 text-black dark:text-gray-900 rounded-md px-0.5;
+		@apply bg-gray-500  dark:bg-gray-100 text-gray-100 dark:text-gray-900 rounded-md px-0.5;
 	}
 	:local(.mono) {
 		@apply font-mono;

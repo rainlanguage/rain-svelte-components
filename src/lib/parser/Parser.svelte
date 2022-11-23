@@ -44,11 +44,13 @@
 	};
 </script>
 
-<div class="rounded-lg overflow-hidden">
-	<div class="flex bg-gray-100 dark:bg-gray-700">
+<div class="rounded-lg overflow-hidden h-full flex flex-col flex-grow">
+	<div class="flex bg-gray-100 dark:bg-gray-700 flex-grow">
 		<div class="flex flex-col w-2/3">
 			<div class="heading">Expression</div>
-			<div class="border-r border-gray-300 dark:border-gray-600 p-2 parser-wrapper flex flex-col">
+			<div
+				class="border-r border-gray-300 dark:border-gray-600 p-2 parser-wrapper flex-grow flex flex-col"
+			>
 				<ParserInput {vmStateConfig} {readOnly} bind:error bind:raw bind:this={parserInput} />
 			</div>
 		</div>
@@ -72,12 +74,14 @@
 					<Icon src={QuestionMarkCircle} />
 				</span>
 			</div>
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<div on:click={load} class="parser-button">
 				<span class="text-xs">Load</span>
 				<span class="w-4">
 					<Icon src={CloudArrowDown} />
 				</span>
 			</div>
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<div on:click={save} class="parser-button">
 				<span class="text-xs">Save</span>
 				<span class="w-4">
@@ -85,6 +89,7 @@
 				</span>
 			</div>
 			<div class="h-full border-l border-gray-300" />
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<div on:click={expand} class="parser-button">
 				<span class="text-xs">Detailed view</span>
 				<span class="w-4">
@@ -99,9 +104,6 @@
 	.heading {
 		@apply bg-gray-500 text-white font-light uppercase py-2 px-2 leading-none;
 		font-size: 11px;
-	}
-	.parser-wrapper {
-		min-height: 150px;
 	}
 
 	.parser-button {

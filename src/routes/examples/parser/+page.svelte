@@ -39,7 +39,7 @@
 	<Example>
 		<ExampleComponent>
 			<div class="flex flex-col gap-y-2">
-				<div class="overflow-hidden bg-gray-100 dark:bg-gray-800">
+				<div class="bg-gray-100 dark:bg-gray-800 h-[100px] overflow-scroll flex flex-col">
 					<ParserInput {vmStateConfig} bind:raw />
 				</div>
 				<span>Simulated output</span>
@@ -73,7 +73,14 @@
 				<Input bind:value={rawToLoad}>
 					<span slot="label">Enter raw text to load into parser here.</span>
 				</Input>
-				<Parser on:save={saveEvent} on:load={loadEvent} on:expand={expandEvent} signer={$signer} />
+				<div class="min-h-[150px] flex flex-col">
+					<Parser
+						on:save={saveEvent}
+						on:load={loadEvent}
+						on:expand={expandEvent}
+						signer={$signer}
+					/>
+				</div>
 				<div class="flex flex-col gap-y-2">
 					{#each events as event}
 						<span>{event}</span>
