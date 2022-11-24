@@ -13,7 +13,7 @@
 	};
 </script>
 
-<div bind:this={modalWrapper}>
+<div class="z-50" bind:this={modalWrapper}>
 	{#if open}
 		<div
 			transition:fade={{ duration: 100 }}
