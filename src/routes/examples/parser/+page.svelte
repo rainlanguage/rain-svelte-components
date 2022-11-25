@@ -70,7 +70,7 @@
 	<Example>
 		<ExampleComponent>
 			<div class="flex flex-col gap-y-4">
-				<Input bind:value={rawToLoad}>
+				<Input type="textarea" bind:value={rawToLoad}>
 					<span slot="label">Enter raw text to load into parser here.</span>
 				</Input>
 				<div class="min-h-[150px] flex flex-col">

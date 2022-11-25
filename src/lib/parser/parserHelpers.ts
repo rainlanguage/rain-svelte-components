@@ -8,12 +8,16 @@ export const serialize = (nodes: Node[]) => {
 
 // Define a deserializing function that takes a string and returns a value.
 export const deserialize = (string: string) => {
-    // remove all the new line chars
-    string = string.replaceAll('\n', '');
-    // split according to the stack and source delimiters
-    let lines = string.split(/(?<=(?:\*\/)|[;,])/);
-    // filter any empty lines
-    lines = lines.filter(line => line !== '')
+    // pull out the comments first
+    // let lines = string.split(/(?<=(?:\*\/)|(?:\/\*))/);
+    // console.log(lines)
+    // // remove all the new line chars
+    // string = string.replaceAll('\n', '');
+    // // split according to the stack and source delimiters
+    // let lines = string.split(/(?<=(?:\*\/)|[;,])/);
+    // // filter any empty lines
+    // lines = lines.filter(line => line !== '')
+    const lines = string.split('\n');
     // construct the nodes for slate
     const nodes = lines.map(line => {
         return {
