@@ -9,10 +9,13 @@
 	export let abi: Abi;
 	export let methodName: string = 'createChildTyped';
 	export let result: any = [];
-	export let onlyExpressions = false;
-	export let onlyConfig = false;
 
-	setContext('abi-form', { onlyExpressions, onlyConfig });
+	// config - moved into context so it's available to every component
+	export let onlyExpressions: boolean = false;
+	export let onlyConfig: boolean = false;
+	export let showInterpreterFields: boolean = true;
+
+	setContext('abi-form', { onlyExpressions, onlyConfig, showInterpreterFields });
 
 	// metadata
 	export let metadata: ContractMetadata;
@@ -34,6 +37,12 @@
 				set(abi, input.path + '.descriptionMeta', input.description);
 			});
 		}
+		if (metadata.interpreterFields) {
+			console.log(metadata);
+			set(abi, metadata.interpreterFields.interpreterFieldPath + '.isInterpreterField', true);
+			set(abi, metadata.interpreterFields.deployerFieldPath + '.isDeployerField', true);
+		}
+		console.log(abi);
 		// }
 	}
 </script>

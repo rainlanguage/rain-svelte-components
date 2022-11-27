@@ -1,7 +1,5 @@
 <script lang="ts">
-	import Vapour721AFactory from './Vapour721AFactory.json';
 	import Vapour721A from './Vapour721A.json';
-	import Vapour721AMetadata from './Vapour721AMetadata.json';
 	import FlowERC20Factory from './FlowERC20Factory.json';
 	import OrderBook from './OrderBook.json';
 	import OrderBookMetadata from './OrderBookMetadata.json';
@@ -15,8 +13,6 @@
 	import AutoAbiFormSeparated from '$lib/auto-abi-form/AutoAbiFormSeparated.svelte';
 
 	let result: any, resultMerged: any, result2: any;
-
-	$: console.log(resultMerged);
 </script>
 
 <div class="flex flex-col gap-y-4 dark:text-gray-100">
@@ -65,6 +61,12 @@
 		<ExampleUsage>example usage here</ExampleUsage>
 	</Example>
 	<ExampleHeading id="separated">Separated expressions and config</ExampleHeading>
+	<div class="dark:text-white">
+		Hide the interpreter and deployer address fields as defined in the metadata by setting the prop <span
+			class="font-mono">showInterpreterFields</span
+		>
+		to <span class="font-mono">false</span>
+	</div>
 	<Example>
 		<ExampleComponent>
 			<div class="grid grid-cols-3">
@@ -75,6 +77,7 @@
 						metadata={OrderBookMetadata}
 						bind:result={resultMerged}
 						methodName="addOrder"
+						showInterpreterFields={false}
 						on:save={({ detail }) => {
 							console.log(detail);
 						}}

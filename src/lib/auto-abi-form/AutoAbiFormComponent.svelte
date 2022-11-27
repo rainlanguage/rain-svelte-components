@@ -8,12 +8,21 @@
 	import Button from '$lib/Button.svelte';
 	import { createEventDispatcher, getContext } from 'svelte';
 
-	export let component: AbiParameter & { nameMeta?: string; descriptionMeta?: string };
+	export let component: AbiParameter & {
+		nameMeta?: string;
+		descriptionMeta?: string;
+		isInterpreterField?: boolean;
+		isDeployerField?: boolean;
+	};
 	export let result: any = 'components' in component ? {} : undefined;
 
 	const dispatch = createEventDispatcher();
 
-	const settings: { onlyConfig: boolean; onlyExpressions: boolean } = getContext('abi-form');
+	const settings: {
+		onlyConfig: boolean;
+		onlyExpressions: boolean;
+		showInterpreterFields: boolean;
+	} = getContext('abi-form');
 
 	$: type = component.internalType;
 
@@ -64,30 +73,34 @@
 	const removeExpression = (instance: any) => {
 		$stateConfigsStore = $stateConfigsStore.filter((x) => x.id !== instance.id);
 	};
+
+	// console.log(component)
 </script>
 
-{#if !settings.onlyExpressions}
-	{#if type == 'string'}
-		<Input type="text" bind:value={result}>
-			<span slot="label">{component.nameMeta || component.name} ({type})</span>
-			<span slot="description"
-				>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
-			>
-		</Input>
-	{:else if type?.startsWith('uint')}
-		<Input type="number" bind:value={result}>
-			<span slot="label">{component.nameMeta || component.name} ({type})</span>
-			<span slot="description"
-				>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
-			>
-		</Input>
-	{:else if type == 'address'}
-		<Input type="text" bind:value={result}>
-			<span slot="label">{component.nameMeta || component.name} ({type})</span>
-			<span slot="description"
-				>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
-			>
-		</Input>
+{#if !((component?.isInterpreterField || component?.isDeployerField) && !settings.showInterpreterFields)}
+	{#if !settings.onlyExpressions}
+		{#if type == 'string'}
+			<Input type="text" bind:value={result}>
+				<span slot="label">{component.nameMeta || component.name} ({type})</span>
+				<span slot="description"
+					>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
+				>
+			</Input>
+		{:else if type?.startsWith('uint')}
+			<Input type="number" bind:value={result}>
+				<span slot="label">{component.nameMeta || component.name} ({type})</span>
+				<span slot="description"
+					>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
+				>
+			</Input>
+		{:else if type == 'address'}
+			<Input type="text" bind:value={result}>
+				<span slot="label">{component.nameMeta || component.name} ({type})</span>
+				<span slot="description"
+					>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
+				>
+			</Input>
+		{/if}
 	{/if}
 {/if}
 {#if !settings.onlyConfig}
