@@ -38,12 +38,9 @@
 			});
 		}
 		if (metadata.interpreterFields) {
-			console.log(metadata);
 			set(abi, metadata.interpreterFields.interpreterFieldPath + '.isInterpreterField', true);
 			set(abi, metadata.interpreterFields.deployerFieldPath + '.isDeployerField', true);
 		}
-		console.log(abi);
-		// }
 	}
 </script>
 

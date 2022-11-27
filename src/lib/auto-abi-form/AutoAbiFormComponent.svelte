@@ -73,8 +73,6 @@
 	const removeExpression = (instance: any) => {
 		$stateConfigsStore = $stateConfigsStore.filter((x) => x.id !== instance.id);
 	};
-
-	// console.log(component)
 </script>
 
 {#if !((component?.isInterpreterField || component?.isDeployerField) && !settings.showInterpreterFields)}
