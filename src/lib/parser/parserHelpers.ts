@@ -31,6 +31,7 @@ export const deserialize = (string: string) => {
 export const getFlatRanges = (value: Node[]) => {
     const text = serialize(value);
     const tree = Parser.getParseTree(text, rainterpreterOpMeta);
+    // console.log(tree)
     const ranges: any[] = [];
     if (!Object.keys(tree).length) return ranges;
 
@@ -102,7 +103,7 @@ export const getFlatRanges = (value: Node[]) => {
         }
     }
 
-    Object.values(tree).forEach(source => {
+    if (typeof tree !== 'string') Object.values(tree).forEach(source => {
         if ('tree' in source) source.tree.forEach(explode)
         else source.forEach(comment => addComment(comment))
     })
