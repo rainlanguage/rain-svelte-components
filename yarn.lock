@@ -3,9 +3,9 @@
 
 
 "@aicacia/debounce@0":
-  version "0.1.18"
-  resolved "https://registry.yarnpkg.com/@aicacia/debounce/-/debounce-0.1.18.tgz#175247af7f9d53b11b7d7e99a182139c378928c5"
-  integrity sha512-QbWHDAuHqNIRY5MxSohtjVs4zNBAyCgAckUQF9OVBquQDFCKgIeOubVLLhqxdTwfOSDcIf7WJ++28oaw+qETWg==
+  version "0.1.19"
+  resolved "https://registry.yarnpkg.com/@aicacia/debounce/-/debounce-0.1.19.tgz#107678b420985856ab1a1c0e1096f53a90865eaf"
+  integrity sha512-GU9J0A2wQ1jEOocazGrEOYTocASfKuX0CRvahVCUk+Z6NTz2gG2gRtlGr2dUUe7dIh/fSJywVQVuH0YSR0syeg==
 
 "@beehiveinnovation/rainlang@https://github.com/beehive-innovation/rainlang#fe7b9e65545738974627395f68ac1abc98ed9568":
   version "1.0.0"
@@ -527,9 +527,9 @@
   integrity sha512-Y7tH9UKeDYLfBicWLw4n4mhgfuSwgEdtq9wog7H+DjvfpTvea5SEqjHI8onoKZonJqAaUBGVjH02LAiqRWu+cw==
 
 "@svelte-put/clickoutside@1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@svelte-put/clickoutside/-/clickoutside-1.1.1.tgz#ee790e6ce5fa608d31e1ea7ae726a33c1cf827d3"
-  integrity sha512-Tjjw+LA5uhxgbA5eN7qRr4DDgkdMZF+JVzyR9a+8WcGO1KQnpvXVtpXS8N9gvCr0cpysR7s/qG4ysGxM/UgoaA==
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@svelte-put/clickoutside/-/clickoutside-1.1.2.tgz#c5d27c303c0e34ce6d76445b57b01f09d5810726"
+  integrity sha512-W+35saLYr5zVEE2loqAzsarwjvLdwOv4TPXTMDNmerctBi31VFNMUxcyMPAm5XMVrQb3qzLsw7rlEHtxrlbtuQ==
 
 "@sveltejs/adapter-auto@next":
   version "1.0.0-next.83"
@@ -1045,10 +1045,10 @@ color@^0.11.3:
     color-convert "^1.3.0"
     color-string "^0.3.0"
 
-compute-scroll-into-view@^1.0.17:
-  version "1.0.17"
-  resolved "https://registry.yarnpkg.com/compute-scroll-into-view/-/compute-scroll-into-view-1.0.17.tgz#6a88f18acd9d42e9cf4baa6bec7e0522607ab7ab"
-  integrity sha512-j4dx+Fb0URmzbwwMUrhqWM2BEWHdFGx+qZ9qqASHRPqvTYdqvWnHg0H1hIbcyLnvgnoNAVMlwkepyqM3DaIFUg==
+compute-scroll-into-view@^1.0.20:
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/compute-scroll-into-view/-/compute-scroll-into-view-1.0.20.tgz#1768b5522d1172754f5d0c9b02de3af6be506a43"
+  integrity sha512-UCB0ioiyj8CRjtrvaceBLqqhZCVP+1B8+NWQhmdsm0VXOJtobBCf1dBQmebCCo34qZmUwZfIH2MZLqNHazrfjg==
 
 concat-map@0.0.1:
   version "0.0.1"
@@ -2429,11 +2429,11 @@ sander@^0.5.0:
     rimraf "^2.5.2"
 
 scroll-into-view-if-needed@2:
-  version "2.2.29"
-  resolved "https://registry.yarnpkg.com/scroll-into-view-if-needed/-/scroll-into-view-if-needed-2.2.29.tgz#551791a84b7e2287706511f8c68161e4990ab885"
-  integrity sha512-hxpAR6AN+Gh53AdAimHM6C8oTN1ppwVZITihix+WqalywBeFcQ6LdQP5ABNl26nX8GTEL7VT+b8lKpdqq65wXg==
+  version "2.2.31"
+  resolved "https://registry.yarnpkg.com/scroll-into-view-if-needed/-/scroll-into-view-if-needed-2.2.31.tgz#d3c482959dc483e37962d1521254e3295d0d1587"
+  integrity sha512-dGCXy99wZQivjmjIqihaBQNjryrz5rueJY7eHfTdyWEiR4ttYpsajb14rn9s5d4DY4EcY6+4+U/maARBXJedkA==
   dependencies:
-    compute-scroll-into-view "^1.0.17"
+    compute-scroll-into-view "^1.0.20"
 
 scrypt-js@3.0.1:
   version "3.0.1"
@@ -2622,9 +2622,9 @@ svelte-proxied-store@^1.1.4:
   integrity sha512-Vz8egScKBx3Ve1+MlaX0D6hEgYgtIQzpZx4HtzI6+J0mJiVgfaxnEdvSVGDWNb5E+zGzGGXdmzxqjfOIyNEswQ==
 
 svelte-slate@^0.1.62:
-  version "0.1.62"
-  resolved "https://registry.yarnpkg.com/svelte-slate/-/svelte-slate-0.1.62.tgz#98ed38008c8726a8d647ce8f8ce6b9c56f8b1b84"
-  integrity sha512-+A6AaJlij6heKbpV9YMgZvXagSmObs3Vti2f+9B90ohyJJw8HJ7jYJ8rc1i1eoA6jQMghd3d2UWGc/dD4gU96w==
+  version "0.1.74"
+  resolved "https://registry.yarnpkg.com/svelte-slate/-/svelte-slate-0.1.74.tgz#57e66e8d9be1b20009a9558e0b31bd78cfa1668d"
+  integrity sha512-4RsNjhZoamKIbyk9Vp0X2KAk3Cq639k+tLhkW4Bg+Kl7cPbkDfda0BGahR8K9KgC21uAWUnZyZRiesSkrFJzAA==
   dependencies:
     "@aicacia/debounce" "0"
     "@svelte-put/clickoutside" "1"
