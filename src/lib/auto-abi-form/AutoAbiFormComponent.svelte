@@ -8,12 +8,21 @@
 	import Button from '$lib/Button.svelte';
 	import { createEventDispatcher, getContext } from 'svelte';
 
-	export let component: AbiParameter & { nameMeta?: string; descriptionMeta?: string };
+	export let component: AbiParameter & {
+		nameMeta?: string;
+		descriptionMeta?: string;
+		isInterpreterField?: boolean;
+		isDeployerField?: boolean;
+	};
 	export let result: any = 'components' in component ? {} : undefined;
 
 	const dispatch = createEventDispatcher();
 
-	const settings: { onlyConfig: boolean; onlyExpressions: boolean } = getContext('abi-form');
+	const settings: {
+		onlyConfig: boolean;
+		onlyExpressions: boolean;
+		showInterpreterFields: boolean;
+	} = getContext('abi-form');
 
 	$: type = component.internalType;
 
@@ -66,28 +75,30 @@
 	};
 </script>
 
-{#if !settings.onlyExpressions}
-	{#if type == 'string'}
-		<Input type="text" bind:value={result}>
-			<span slot="label">{component.nameMeta || component.name} ({type})</span>
-			<span slot="description"
-				>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
-			>
-		</Input>
-	{:else if type?.startsWith('uint')}
-		<Input type="number" bind:value={result}>
-			<span slot="label">{component.nameMeta || component.name} ({type})</span>
-			<span slot="description"
-				>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
-			>
-		</Input>
-	{:else if type == 'address'}
-		<Input type="text" bind:value={result}>
-			<span slot="label">{component.nameMeta || component.name} ({type})</span>
-			<span slot="description"
-				>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
-			>
-		</Input>
+{#if !((component?.isInterpreterField || component?.isDeployerField) && !settings.showInterpreterFields)}
+	{#if !settings.onlyExpressions}
+		{#if type == 'string'}
+			<Input type="text" bind:value={result}>
+				<span slot="label">{component.nameMeta || component.name} ({type})</span>
+				<span slot="description"
+					>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
+				>
+			</Input>
+		{:else if type?.startsWith('uint')}
+			<Input type="number" bind:value={result}>
+				<span slot="label">{component.nameMeta || component.name} ({type})</span>
+				<span slot="description"
+					>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
+				>
+			</Input>
+		{:else if type == 'address'}
+			<Input type="text" bind:value={result}>
+				<span slot="label">{component.nameMeta || component.name} ({type})</span>
+				<span slot="description"
+					>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
+				>
+			</Input>
+		{/if}
 	{/if}
 {/if}
 {#if !settings.onlyConfig}
@@ -100,7 +111,7 @@
 				<div class="text-sm">{component.descriptionMeta}</div>
 			{/if}
 		</div>
-		<Parser signer={$signer} bind:vmStateConfig on:save on:load />
+		<Parser signer={$signer} bind:vmStateConfig on:save on:load on:expand />
 	{:else if type == 'struct StateConfig[]'}
 		<div>
 			{#if component.nameMeta}
@@ -112,7 +123,7 @@
 		</div>
 		{#each $stateConfigsStore as instance (instance.id)}
 			<div class="flex flex-col gap-y-2">
-				<Parser signer={$signer} bind:vmStateConfig={instance.store} on:save on:load />
+				<Parser signer={$signer} bind:vmStateConfig={instance.store} on:save on:load on:expand />
 				<button
 					class="self-end text-xs underline cursor-pointer"
 					on:click={() => {
@@ -148,6 +159,7 @@
 						bind:result={arrayedComponent.compResult[subComponent.name]}
 						on:save
 						on:load
+						on:expand
 					/>
 				{/if}
 			{/each}
@@ -173,6 +185,7 @@
 					bind:result={result[subComponent.name]}
 					on:save
 					on:load
+					on:expand
 				/>
 			{/if}
 		{/each}

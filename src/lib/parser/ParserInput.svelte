@@ -6,6 +6,7 @@
 	import { writable, type Writable } from 'svelte/store';
 	import type { StateConfig } from '@beehiveinnovation/rainlang';
 	import { deserialize, getFlatRanges, serialize } from '$lib/parser/parserHelpers';
+	import { onMount } from 'svelte';
 
 	const editor = withSvelte(createEditor());
 
@@ -16,10 +17,6 @@
 	export let error: string = '';
 	export let readOnly: boolean = false;
 
-	export const loadRaw = (raw: string) => {
-		value = deserialize(raw);
-	};
-
 	let value = [
 		{
 			type: 'expression',
@@ -27,12 +24,18 @@
 		}
 	];
 
+	export const loadRaw = (raw: string) => {
+		value = deserialize(raw);
+	};
+
+	if (raw !== '') loadRaw(raw);
+
 	$: raw = serialize(value);
 
 	$: $vmStateConfig = (() => {
 		if (raw !== '') {
 			const [tree, sc] = Parser.get(raw, rainterpreterOpMeta);
-			error = tree?.[0]?.tree[0].error || '';
+			error = tree?.[0]?.tree?.[0].error || '';
 			if (!error) return sc;
 			else return emptySc;
 		} else return emptySc;
@@ -59,7 +62,7 @@
 	};
 </script>
 
-<div class="h-full">
+<div class="h-full flex-grow">
 	<Slate {editor} bind:value>
 		<Editable
 			{Leaf}

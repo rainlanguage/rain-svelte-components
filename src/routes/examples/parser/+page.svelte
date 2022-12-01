@@ -24,8 +24,11 @@
 
 	const loadEvent = ({ detail }: CustomEvent<{ loadRaw: Function }>) => {
 		events = ['A load event was emitted.', ...events];
-		console.log(detail);
 		detail.loadRaw(rawToLoad);
+	};
+
+	const expandEvent = ({ detail }: CustomEvent<{ loadRaw: Function }>) => {
+		events = ['An expand event was emitted.', ...events];
 	};
 </script>
 
@@ -36,7 +39,7 @@
 	<Example>
 		<ExampleComponent>
 			<div class="flex flex-col gap-y-2">
-				<div class="overflow-hidden bg-gray-100 dark:bg-gray-800">
+				<div class="bg-gray-100 dark:bg-gray-800 h-[100px] overflow-scroll flex flex-col">
 					<ParserInput {vmStateConfig} bind:raw />
 				</div>
 				<span>Simulated output</span>
@@ -54,21 +57,30 @@
 
 	<ExampleHeading>Full parser</ExampleHeading>
 	<div class="dark:text-white">
-		<div>
-			Component will emit <span class="font-mono">load</span> and
-			<span class="font-mono">save</span> events when the buttons are pressed.
-		</div>
-		<div>The save event has the raw expression text in its detail.</div>
-		<div>To load raw text into the parser, use Parser.loadRaw(text).</div>
-		<div>The load event will have the loadRaw function for that parser in its detail.</div>
+		<p>
+			Component will emit <span class="font-mono">load</span>,
+			<span class="font-mono">save</span> and <span class="font-mono">expand</span> events when the buttons
+			are pressed.
+		</p>
+		<p>The save event has the raw expression text in its detail.</p>
+		<p>To load raw text into the parser, use Parser.loadRaw(text).</p>
+		<p>The load event will have the loadRaw function for that parser in its detail.</p>
+		<p>The expand event has the loadRaw function and the raw text in its detail.</p>
 	</div>
 	<Example>
 		<ExampleComponent>
 			<div class="flex flex-col gap-y-4">
-				<Input bind:value={rawToLoad}>
+				<Input type="textarea" bind:value={rawToLoad}>
 					<span slot="label">Enter raw text to load into parser here.</span>
 				</Input>
-				<Parser on:save={saveEvent} on:load={loadEvent} signer={$signer} />
+				<div class="min-h-[150px] flex flex-col">
+					<Parser
+						on:save={saveEvent}
+						on:load={loadEvent}
+						on:expand={expandEvent}
+						signer={$signer}
+					/>
+				</div>
 				<div class="flex flex-col gap-y-2">
 					{#each events as event}
 						<span>{event}</span>

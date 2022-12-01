@@ -15,7 +15,7 @@
 	const simulate = async () => {
 		error = null;
 		simulatedResult = null;
-		if ($vmStateConfig?.sources[0]) {
+		if ($vmStateConfig?.sources?.[0]) {
 			const simulator = new RainJSVM($vmStateConfig, { signer });
 			try {
 				simulatedResult = await simulator.run({ context: [await signer.getAddress()] });

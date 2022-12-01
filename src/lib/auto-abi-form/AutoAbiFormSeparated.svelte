@@ -11,6 +11,9 @@
 	export let result: any = [];
 	export let metadata: ContractMetadata;
 
+	// config
+	export let showInterpreterFields: boolean = false;
+
 	let expressionsResult: any, configResult: any;
 
 	const hasExpressions = (abi: Abi): boolean => {
@@ -52,6 +55,7 @@
 					onlyExpressions
 					on:save
 					on:load
+					on:expand
 				/>
 			</SectionBody>
 		</Section>
@@ -59,7 +63,14 @@
 	<Section>
 		<SectionHeading>Configuration</SectionHeading>
 		<SectionBody>
-			<AutoAbiForm {abi} {methodName} bind:result={configResult} {metadata} onlyConfig />
+			<AutoAbiForm
+				{abi}
+				{methodName}
+				bind:result={configResult}
+				{metadata}
+				onlyConfig
+				{showInterpreterFields}
+			/>
 		</SectionBody>
 	</Section>
 </div>

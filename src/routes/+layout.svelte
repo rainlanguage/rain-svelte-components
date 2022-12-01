@@ -38,9 +38,6 @@
 		<NavItem link="/">
 			<span class="title">Home</span>
 		</NavItem>
-		<NavItem>
-			<span class="title">Forms</span>
-		</NavItem>
 		<NavItem link="/examples/button">
 			<span class="link">Button</span>
 		</NavItem>
@@ -59,14 +56,17 @@
 		<NavItem link="/examples/formatter">
 			<span class="link">Formatter</span>
 		</NavItem>
+		<NavItem link="/examples/auto-abi-form">
+			<span class="link">Auto ABI Form</span>
+		</NavItem>
+		<NavItem link="/examples/op-docs">
+			<span class="link">Op Docs</span>
+		</NavItem>
 		<NavItem link="/examples/select">
 			<span class="link">Select</span>
 		</NavItem>
 		<NavItem link="/examples/hoverTooltip">
 			<span class="link">Hover Tooltip</span>
-		</NavItem>
-		<NavItem link="/examples/auto-abi-form">
-			<span class="link">Auto ABI Form</span>
 		</NavItem>
 		<NavItem link="/examples/jazzicon">
 			<span class="link">Jazzicon</span>
