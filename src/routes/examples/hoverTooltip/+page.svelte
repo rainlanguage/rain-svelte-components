@@ -10,18 +10,20 @@
 <div class="flex flex-col gap-y-4">
 	<PageHeading>Hover Tooltip</PageHeading>
 	<ExampleHeading>Placeholder</ExampleHeading>
-		<div class="dark:text-white">
-			You can provide a placeholder that will be displayed when hovering over the element.
-			If no placeholder is provided, the text "Info" will be used
-		</div>
+	<div class="dark:text-white">
+		You can provide a placeholder that will be displayed when hovering over the element. If no
+		placeholder is provided, the text "Info" will be used. Use prop<span class="font-mono"
+			>class</span
+		> to add any required additional classes to the wrapper element (useful if there's issues with alignment/flex).
+	</div>
 	<Example>
 		<ExampleComponent>
 			<div class="wrapper-fixed">
 				<HoverTooltip placeHolder="You mouse is hover over me">
-						<svg
-						fill='gray'
+					<svg
+						fill="gray"
 						class="font-black"
-						width=30
+						width="30"
 						viewBox="0 0 17 17"
 						xmlns="http://www.w3.org/2000/svg"
 					>
@@ -40,7 +42,7 @@
 			</div>
 		</ExampleComponent>
 		<ExampleUsage>
-{`<div>
+			{`<div>
 	<HoverTooltip placeHolder="You mouse is hover over me">
 		<img>
 	</HoverTooltip>
@@ -50,13 +52,11 @@
 	<Example>
 		<ExampleComponent>
 			<div>
-				<HoverTooltip placeHolder="Your text">
-					Your text
-				</HoverTooltip>
+				<HoverTooltip placeHolder="Your text">Your text</HoverTooltip>
 			</div>
 		</ExampleComponent>
 		<ExampleUsage>
-{`<div>
+			{`<div>
 	<HoverTooltip placeHolder="Your text">
 		Your text
 	</HoverTooltip>
@@ -67,6 +67,6 @@
 
 <style>
 	.wrapper-fixed {
-		width: 30px
+		width: 30px;
 	}
 </style>
