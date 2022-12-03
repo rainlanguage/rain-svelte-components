@@ -35,7 +35,7 @@
 	$: $vmStateConfig = (() => {
 		if (raw !== '') {
 			const [tree, sc] = Parser.get(raw, rainterpreterOpMeta);
-			error = tree?.[0]?.tree?.[0].error || '';
+			error = tree?.[0]?.tree?.[0]?.error || '';
 			if (!error) return sc;
 			else return emptySc;
 		} else return emptySc;
