@@ -29,10 +29,10 @@
 	toggleFilter(0);
 </script>
 
-<div class="flex gap-x-2">
+<div class="flex gap-x-2 flex-wrap">
 	{#each options as option, i}
 		<span
-			class="cursor-pointer rounded-2xl py-2 px-3 transition-colors whitespace-nowrap flex-wrap"
+			class="cursor-pointer rounded-2xl py-2 px-3 transition-colors whitespace-nowrap"
 			class:toggledOn={filterStatuses[i]}
 			class:toggledOff={!filterStatuses[i]}
 			on:click={() => {
