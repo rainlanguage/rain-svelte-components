@@ -29,7 +29,7 @@
 	toggleFilter(0);
 </script>
 
-<div class="flex gap-x-2 flex-wrap">
+<div class="flex gap-2 flex-wrap">
 	{#each options as option, i}
 		<span
 			class="cursor-pointer rounded-2xl py-2 px-3 transition-colors whitespace-nowrap"
