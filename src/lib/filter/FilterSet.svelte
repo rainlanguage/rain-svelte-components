@@ -32,7 +32,7 @@
 <div class="flex gap-x-2">
 	{#each options as option, i}
 		<span
-			class="cursor-pointer rounded-2xl py-2 px-3 transition-colors whitespace-nowrap"
+			class="cursor-pointer rounded-2xl py-2 px-3 transition-colors whitespace-nowrap flex-wrap"
 			class:toggledOn={filterStatuses[i]}
 			class:toggledOff={!filterStatuses[i]}
 			on:click={() => {
