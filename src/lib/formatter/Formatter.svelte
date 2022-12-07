@@ -19,7 +19,7 @@
 	});
 
 	if (!padding) {
-		padding = 'p-4';
+		padding_class = 'p-4';
 	} else {
 		padding_class = `p-[${padding}]`;
 	}
