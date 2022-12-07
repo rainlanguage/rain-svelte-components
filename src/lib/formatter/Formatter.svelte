@@ -25,7 +25,7 @@
 </script>
 
 {#if showFormatter}
-	<div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
+<div class={`bg-gray-100 dark:bg-gray-800 rounded-lg ${padding}`}>
 		<ParserInput {readOnly} bind:this={formatter} />
 	</div>
 {/if}
