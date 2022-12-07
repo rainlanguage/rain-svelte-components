@@ -7,6 +7,7 @@
 	export let raw: string | null = null;
 	export let stateConfig: StateConfig | null = null;
 	export let padding: string | null = null;
+  let padding_class:string
 
 	let formatter: ParserInput;
 	let showFormatter: boolean = true;
@@ -18,14 +19,14 @@
 	});
 
 	if (!padding) {
-		padding = 'p-4'
+		padding = 'p-4';
 	} else {
-		padding = `p-[${padding}]`
+		padding_class = `p-[${padding}]`;
 	}
 </script>
 
 {#if showFormatter}
-<div class={`bg-gray-100 dark:bg-gray-800 rounded-lg ${padding}`}>
+	<div class={`bg-gray-100 dark:bg-gray-800 rounded-lg ${padding_class}`}>
 		<ParserInput {readOnly} bind:this={formatter} />
 	</div>
 {/if}
