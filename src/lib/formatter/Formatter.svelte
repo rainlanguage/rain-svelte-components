@@ -6,9 +6,9 @@
 	export let readOnly: boolean = true;
 	export let raw: string | null = null;
 	export let stateConfig: StateConfig | null = null;
+	export let padding: string | null = null;
 
 	let formatter: ParserInput;
-
 	let showFormatter: boolean = true;
 
 	onMount(() => {
@@ -16,6 +16,12 @@
 		if (raw) formatter.loadRaw(raw.toLowerCase());
 		if (!raw && !stateConfig) showFormatter = false;
 	});
+
+	if (!padding) {
+		padding = 'p-4'
+	} else {
+		padding = `p-[${padding}]`
+	}
 </script>
 
 {#if showFormatter}
