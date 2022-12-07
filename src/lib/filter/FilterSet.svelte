@@ -4,7 +4,8 @@
 		label: string;
 	}[];
 	export let exclusive: boolean = false;
-
+	export let exclusiveOptions: number[] | null = null;
+	export let defaultOption: number | null = null;
 	export let value: any[] = [];
 
 	let exclusiveValue: any;
@@ -16,17 +17,19 @@
 	let filterStatuses = options.map((filter) => false);
 
 	const toggleFilter = (i: number) => {
-		if (exclusive) filterStatuses = options.map((filter) => false);
+		if (exclusive || exclusiveOptions?.includes(i)) filterStatuses = options.map((filter) => false);
 		if (exclusive) {
 			filterStatuses[i] = true;
 		} else {
 			filterStatuses[i] = !filterStatuses[i];
 		}
+		if (exclusiveOptions && !exclusiveOptions.includes(i))
+			filterStatuses = filterStatuses.map((e, i) => (exclusiveOptions?.includes(i) ? false : e));
 		exclusiveValue = options[i]?.value || options[i].label;
 	};
 
 	// set the default
-	toggleFilter(0);
+	if (defaultOption) toggleFilter(0);
 </script>
 
 <div class="flex gap-2 flex-wrap">

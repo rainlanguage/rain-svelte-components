@@ -16,6 +16,7 @@
 	let filterGroupFilters: any[];
 	let value: any;
 	let exclusiveValue: any;
+	let withExclusiveOptions: any;
 
 	let filterSetOptions = [
 		{ label: 'Option 1' },
@@ -110,6 +111,40 @@
 
 <div>
 	<FilterSet options={filterSetOptions} exclusive />
+	<p><strong>Selected values:</strong>{values}</p>
+</div>`}
+		</ExampleUsage>
+	</Example>
+
+	<ExampleHeading>Some exclusive options</ExampleHeading>
+	<div class="dark:text-white">
+		You can make one or more filter options always exclusive, even if overall they are not
+		exclusive, by passing their indexes to the exclusiveOptions prop. e.g. [0, 1]. Selecting these
+		options will deselect all other options, and selection any other options will deselect all the
+		exclusive options. Note that doing this while the 'exclusive' prop is true will have no effect.
+	</div>
+	<Example>
+		<ExampleComponent>
+			<FilterSet
+				exclusiveOptions={[0, 1]}
+				options={exclusiveFilterSetOptions}
+				bind:value={withExclusiveOptions}
+			/>
+			<p class="mt-4"><strong>Selected value:</strong> {withExclusiveOptions}</p>
+		</ExampleComponent>
+		<ExampleUsage>
+			{`<script>
+	const options = [
+		{ label: 'Option 1', value: 1 },
+		{ label: 'Option 2', value: 2 },
+		{ label: 'Option 3', value: 3 },
+		{ label: 'Option 4', value: 4 }
+	];
+	let values;
+</script>
+
+<div>
+	<FilterSet options={filterSetOptions} exclusiveOptions={[0,1]} />
 	<p><strong>Selected values:</strong>{values}</p>
 </div>`}
 		</ExampleUsage>
