@@ -43,6 +43,30 @@
 		<ExampleUsage>example usage here</ExampleUsage>
 	</Example>
 
+	<ExampleHeading>Dual button</ExampleHeading>
+	<Example>
+		<ExampleComponent>
+			<div class="flex flex-col gap-y-3">
+				<div class="flex">
+					<Button variant="transparent" dual={'left'}>Left</Button>
+					<Button variant="transparent" dual={'right'}>Right</Button>
+				</div>
+				<div class="flex">
+					<Button variant="transparent" dual={'left'} size="small">Left</Button>
+					<Button variant="transparent" dual={'right'} size="small">Right</Button>
+				</div>
+			</div>
+		</ExampleComponent>
+		<ExampleUsage
+			>{`
+<div class="flex">
+	<Button variant="transparent" dual={'left'} size="small">Left</Button>
+	<Button variant="transparent" dual={'right'} size="small">Right</Button>
+</div>
+		`}</ExampleUsage
+		>
+	</Example>
+
 	<ExampleHeading>Additional classes</ExampleHeading>
 	<Example>
 		<ExampleComponent>
