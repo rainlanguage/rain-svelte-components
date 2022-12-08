@@ -8,6 +8,8 @@
 	export let icon: IconSource | undefined = undefined;
 	export let solidIcon: boolean = false;
 	export let classes: string = '';
+	export let dual: 'right' | 'left' | null = null;
+
 	let iconStyle: string;
 
 	if (size === 'small') {
@@ -28,7 +30,9 @@
 <button
 	{disabled}
 	on:click
-	class={`button ${variantCalc} ${size} ${classes} ${icon ? 'withIcon' : ''}`}
+	class={`button ${variantCalc} ${size} ${classes} ${dual ?? 'rounded-[10px]'} ${
+		icon ? 'withIcon' : ''
+	}`}
 >
 	{#if icon != undefined}
 		<Icon src={icon} class={iconStyle} theme={solidIcon ? 'solid' : ''} />
@@ -38,7 +42,14 @@
 
 <style lang="postcss">
 	.button {
-		@apply leading-none rounded-[10px] transition-colors text-white;
+		@apply leading-none transition-colors text-white;
+	}
+
+	.right {
+		@apply rounded-r-[10px];
+	}
+	.left {
+		@apply rounded-l-[10px];
 	}
 
 	.withIcon {
