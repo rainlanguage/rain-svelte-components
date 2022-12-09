@@ -1,4 +1,4 @@
-import { Parser, rainterpreterOpMeta, type Comment, type Node as TreeNode, type ParseTree } from '@beehiveinnovation/rainlang';
+import { Parser, rainterpreterOpMeta, type Comment, type Node as TreeNode } from '@beehiveinnovation/rainlang';
 import { Node } from 'slate';
 
 // Define a serializing function that takes a value and returns a string.
@@ -28,11 +28,20 @@ export const deserialize = (string: string) => {
     return nodes
 }
 
+let textCache: any = null
+let parseTreeCache: any = null
+
 export const getFlatRanges = (value: Node[]) => {
     const text = serialize(value);
     let tree
     try {
-        tree = Parser.getParseTree(text, rainterpreterOpMeta);
+        if (text == textCache) {
+            tree = parseTreeCache
+        } else {
+            tree = Parser.getParseTree(text, rainterpreterOpMeta);
+            parseTreeCache = tree
+            textCache = text
+        }
     } catch {
         return []
     }
