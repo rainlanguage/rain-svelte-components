@@ -1,72 +1,106 @@
 {
-	"name": "Flow ERC20 Factory",
-	"description": "Description",
-	"type": "Factory",
-	"source": "https://github.com/beehive-innovation/rain-protocol",
-	"commit": "253c5fb2184b886216b682cae6076597f5e8e086",
-	"version": {
-		"major": 0,
-		"minor": 0
-	},
-	"addresses": [
-		{
-			"chainId": 1,
-			"knownAddresses": ["0x0"]
-		}
-	],
-	"expressions": [
-		{
-			"name": "Can transfer",
-			"description": "An expression that determines whether this token can be transferred.",
-			"path": "[5].inputs[0].components[2]",
-			"contextColumns": [
-				{
-					"name": "Base",
-					"cells": [
-						{
-							"name": "From"
-						},
-						{
-							"name": "To"
-						},
-						{
-							"name": "amount"
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "Flows",
-			"description": "The available flows for this token.",
-			"path": "[5].inputs[0].components[3].components[2]",
-			"contextColumns": [
-				{
-					"name": "Base",
-					"cells": [
-						{
-							"name": "From"
-						},
-						{
-							"name": "To"
-						},
-						{
-							"name": "amount"
-						}
-					]
-				}
-			]
-		}
-	],
-	"inputs": [
-		{
-			"name": "Name",
-			"description": "Name of the token",
-			"path": "[5].inputs[0].components[0]"
-		},
-		{
-			"name": "Flow config",
-			"path": "[5].inputs[0].components[3]"
-		}
-	]
+  "name": "Flow ERC20 Factory",
+  "type": "ERC20 Factory",
+  "commit": "208faf49a0e5aa391ef2f93b3de250eb7f9221ef",
+  "source": "https://github.com/beehive-innovation/rain-protocol",
+  "version": {
+    "major": 0,
+    "minor": 0
+  },
+  "addresses": [
+    {
+      "chainId": 80001,
+      "knownAddresses": ["0x83Ca48DFCb890D3fEC476233F16c58284adf6483"]
+    }
+  ],
+  "description": "An ERC20 token that can be minted using any of the deployed Flow expressions. This token can be made conditionally soulbound by using the 'can transfer' expression.",
+  "interpreterFields": {
+    "deployerFieldPath": "[5].inputs[0].components[3].components[0]",
+    "interpreterFieldPath": "[5].inputs[0].components[3].components[1]"
+  },
+  "inputs": [
+    {
+      "name": "Name",
+      "path": "[5].inputs[0].components[0]",
+      "description": "Name of the token"
+    },
+    {
+      "name": "Symbol",
+      "path": "[5].inputs[0].components[1]",
+      "description": "Name of the token"
+    }
+  ],
+  "expressions": [
+    {
+      "name": "Can transfer",
+      "path": "[5].inputs[0].components[2]",
+      "description": "An expression that determines whether this token can be transferred.",
+      "signedContext": false,
+      "contextColumns": [
+        {
+          "name": "Base",
+          "cells": [
+            {
+              "name": "From",
+              "alias": "from-address",
+              "description": "The address this token is being transferred from"
+            },
+            {
+              "name": "To",
+              "alias": "to-address",
+              "description": "The address this token is being transferred from"
+            },
+            {
+              "name": "amount",
+              "alias": "transfer-amount",
+              "description": "The amount of this token being transferred"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Flows",
+      "path": "[5].inputs[0].components[3].components[2]",
+      "description": "The available flows for this token.",
+      "signedContext": true,
+      "contextColumns": [
+        {
+          "name": "Base",
+          "cells": [
+            {
+              "name": "Flow ID",
+              "alias": "flow-id",
+              "description": "The address of this flow (flow id)"
+            },
+            {
+              "name": "ID",
+              "alias": "id",
+              "description": "The id passed in when flowing"
+            }
+          ]
+        },
+        {
+          "name": "Signers",
+          "cells": [
+            {
+              "name": "Column 1 signer",
+              "alias": "col-1-signer",
+              "description": "The signer of signed context column 1"
+            },
+            {
+              "name": "Column 2 signer",
+              "alias": "col-1-signer",
+              "description": "The signer of signed context column 2"
+            },
+            {
+              "name": "Column 3 signer",
+              "alias": "col-1-signer",
+              "description": "The signer of signed context column 3"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
