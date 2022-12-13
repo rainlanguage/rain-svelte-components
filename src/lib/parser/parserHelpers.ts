@@ -1,4 +1,5 @@
 import { Parser, rainterpreterOpMeta, type Comment, type Node as TreeNode } from '@beehiveinnovation/rainlang';
+import type { ParseTree } from 'rain-sdk';
 import { Node } from 'slate';
 
 // Define a serializing function that takes a value and returns a string.
@@ -28,26 +29,10 @@ export const deserialize = (string: string) => {
     return nodes
 }
 
-let textCache: any = null
-let parseTreeCache: any = null
+export const getFlatRanges = (tree: ParseTree) => {
 
-export const getFlatRanges = (value: Node[]) => {
-    const text = serialize(value);
-    let tree
-    try {
-        if (text == textCache) {
-            tree = parseTreeCache
-        } else {
-            tree = Parser.getParseTree(text, rainterpreterOpMeta);
-            parseTreeCache = tree
-            textCache = text
-        }
-    } catch {
-        return []
-    }
-    // console.log(tree)
     const ranges: any[] = [];
-    if (!Object.keys(tree).length) return ranges;
+    // if (!Object.keys(tree).length) return ranges;
 
     const explode = (el: TreeNode) => {
         if ("opcode" in el) {
@@ -57,6 +42,15 @@ export const getFlatRanges = (value: Node[]) => {
                 focus: { path: [], offset: el.opcode.position[1] + 1 },
                 op: true,
             });
+
+            if (el?.error && el.error == 'unknown opcode') {
+                ranges.push({
+                    el,
+                    anchor: { path: [], offset: el.opcode.position[0] },
+                    focus: { path: [], offset: el.opcode.position[1] },
+                    error: true,
+                });
+            }
         }
         else if ("value" in el) {
             ranges.push({
@@ -74,14 +68,14 @@ export const getFlatRanges = (value: Node[]) => {
                 name: true,
             });
         }
-        else if (el?.error) {
-            ranges.push({
-                el,
-                anchor: { path: [], offset: el.position[0] },
-                focus: { path: [], offset: el.position[1] + 1 },
-                error: true,
-            });
-        }
+        // if (el?.error && el.error == 'unknown opcode') {
+        //     ranges.push({
+        //         el,
+        //         anchor: { path: [], offset: el.opcode.position[0] },
+        //         focus: { path: [], offset: el.opcode.position[1] + 1 },
+        //         error: true,
+        //     });
+        // }
         if ("tag" in el && el.tag) {
             ranges.push({
                 el: el.tag,
