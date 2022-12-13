@@ -6,7 +6,7 @@
 	import { writable, type Writable } from 'svelte/store';
 	import type { StateConfig } from '@beehiveinnovation/rainlang';
 	import { deserialize, getFlatRanges, serialize } from '$lib/parser/parserHelpers';
-	import { onMount } from 'svelte';
+	import type { ParseTree } from 'rain-sdk';
 
 	const editor = withSvelte(createEditor());
 
@@ -32,23 +32,44 @@
 
 	$: raw = serialize(value);
 
-	$: $vmStateConfig = (() => {
-		if (raw !== '') {
-			try {
-				const [tree, sc] = Parser.get(raw, rainterpreterOpMeta);
-				error = tree?.[0]?.tree?.[0]?.error || '';
-				if (!error) return sc;
-				else return emptySc;
-			} catch {
-				error = 'Something went wrong.';
-				return emptySc;
-			}
+	const updateStateConfig = (text: string, tree: ParseTree, stateConfig: StateConfig) => {
+		if (text !== '') {
+			error = tree?.[0]?.tree?.[0]?.error || '';
+			if (!error) $vmStateConfig = stateConfig;
+			else return emptySc;
 		} else return emptySc;
-	})();
+	};
+
+	$: $vmStateConfig;
+
+	let textCache: any = null;
+	let parseTreeCache: any = null;
+
+	const parse = (value: Node[]) => {
+		const text = serialize(value);
+		let tree, stateConfig;
+		try {
+			if (text == textCache) {
+				tree = parseTreeCache;
+				// console.log(tree);
+			} else {
+				[tree, stateConfig] = Parser.get(text, rainterpreterOpMeta);
+				updateStateConfig(text, tree, stateConfig);
+				parseTreeCache = tree;
+				textCache = text;
+			}
+		} catch {
+			return;
+		} finally {
+			return tree;
+		}
+	};
 
 	const decorate = ([node, path]: any) => {
 		if (node.type == 'expression') {
-			const ranges = getFlatRanges(value);
+			const tree = parse(value);
+			if (!tree) return [];
+			const ranges = getFlatRanges(tree);
 			const prevSiblingsOffset = value
 				.slice(0, path[0])
 				.map((node) => Node.string(node).length)
