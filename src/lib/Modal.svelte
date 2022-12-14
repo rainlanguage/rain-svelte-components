@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
 	export let open: boolean = true;
 	let modalWrapper: HTMLDivElement, modalInner: HTMLDivElement;
 
@@ -12,7 +13,7 @@
 		if (target == modalInner) open = false;
 	};
 
-	$: document.body.classList.toggle('overflow-y-hidden', open);
+	$: if (browser) document.body.classList.toggle('overflow-y-hidden', open);
 </script>
 
 <div class="z-50" bind:this={modalWrapper}>
