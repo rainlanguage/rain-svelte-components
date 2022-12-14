@@ -11,10 +11,13 @@
 	const closeModal = ({ target }: Event) => {
 		if (target == modalInner) open = false;
 	};
+
+	$: document.body.classList.toggle('overflow-y-hidden', open);
 </script>
 
 <div class="z-50" bind:this={modalWrapper}>
 	{#if open}
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div
 			transition:fade={{ duration: 100 }}
 			on:click={closeModal}
