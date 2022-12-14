@@ -20,6 +20,7 @@
 	export let signer: Signer;
 	export let error: string = '';
 	export let readOnly: boolean = false;
+	export let componentName: string;
 
 	let parserInput: SvelteComponent;
 
@@ -36,7 +37,7 @@
 	};
 
 	const load = () => {
-		dispatch('load', { loadRaw });
+		dispatch('load', { loadRaw, componentName });
 	};
 
 	const expand = () => {
