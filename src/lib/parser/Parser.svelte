@@ -41,7 +41,7 @@
 	};
 
 	const expand = () => {
-		dispatch('expand', { loadRaw, raw });
+		dispatch('expand', { loadRaw, raw, componentName });
 	};
 </script>
 
