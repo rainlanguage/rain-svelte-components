@@ -7,6 +7,14 @@
   resolved "https://registry.yarnpkg.com/@aicacia/debounce/-/debounce-0.1.19.tgz#107678b420985856ab1a1c0e1096f53a90865eaf"
   integrity sha512-GU9J0A2wQ1jEOocazGrEOYTocASfKuX0CRvahVCUk+Z6NTz2gG2gRtlGr2dUUe7dIh/fSJywVQVuH0YSR0syeg==
 
+"@beehiveinnovation/rain-interpreter-ts@https://github.com/beehive-innovation/rain-interpreter-ts#25f39c924e2f2536146a9e70e6dd03ec52998b61":
+  version "0.0.0"
+  resolved "https://github.com/beehive-innovation/rain-interpreter-ts#25f39c924e2f2536146a9e70e6dd03ec52998b61"
+  dependencies:
+    dotenv "^16.0.3"
+    ethers "^5.7.2"
+    prettier "^2.7.1"
+
 "@beehiveinnovation/rainlang@https://github.com/beehive-innovation/rainlang#e17dc1d8a0b19c43be59907f6b02bccd51acf707":
   version "1.0.0"
   resolved "https://github.com/beehive-innovation/rainlang#e17dc1d8a0b19c43be59907f6b02bccd51acf707"
@@ -1158,6 +1166,11 @@ doctrine@^3.0.0:
   integrity sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==
   dependencies:
     esutils "^2.0.2"
+
+dotenv@^16.0.3:
+  version "16.0.3"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.3.tgz#115aec42bac5053db3c456db30cc243a5a836a07"
+  integrity sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==
 
 electron-to-chromium@^1.4.251:
   version "1.4.283"
