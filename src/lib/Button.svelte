@@ -9,6 +9,7 @@
 	export let solidIcon: boolean = false;
 	export let classes: string = '';
 	export let dual: 'right' | 'left' | null = null;
+	export let type: string | null = null;
 
 	let iconStyle: string;
 
@@ -30,6 +31,7 @@
 <button
 	{disabled}
 	on:click
+	{type}
 	class={`button ${variantCalc} ${size} ${classes} ${dual ?? 'rounded-[10px]'} ${
 		icon ? 'withIcon' : ''
 	}`}
