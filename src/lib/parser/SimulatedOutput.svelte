@@ -25,7 +25,8 @@
 		error = null;
 		simulatedResult = null;
 		if ($vmStateConfig?.sources?.[0]) {
-			const simulator = await RainInterpreterTs.init(
+			console.log($vmStateConfig)
+			const simulator = new RainInterpreterTs(
 				'0xF4d1dbA59eABac89a9C37eB5F5bbC5F5b7Ab6B8c',
 				80001,
 				rainterpreterClosures
@@ -38,6 +39,7 @@
 					sender: '0xF4d1dbA59eABac89a9C37eB5F5bbC5F5b7Ab6B8c',
 					namespace: 'none'
 				});
+				console.log(simulatedResult)
 				// simulatedResult = await simulator.run({ context: [await signer.getAddress()] });
 			} catch (err: any) {
 				console.log(err);
@@ -54,10 +56,16 @@
 		<span class="text-red-500 text-xs leading-tight">{error}</span>
 	{/if}
 	{#if simulatedResult}
-		{#each simulatedResult as result, i}
+		<!-- {#each simulatedResult as result, i}
 			<div>
 				Stack {i}: {result.toString()}
 			</div>
-		{/each}
+		{/each} -->
+		<div>
+			Stack: {simulatedResult.finalStack.map((v) => v.toHexString())}
+			Block Number: {simulatedResult.blockNumber}
+			Block Timestamp: {simulatedResult.blockTimestamp}
+		</div>
 	{/if}
 </div>
+
