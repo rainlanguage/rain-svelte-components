@@ -21,14 +21,18 @@
 
 	$: if ($vmStateConfig && signer) simulate();
 
+	$: if (signer) console.log('reacting to signer');
+	$: if ($vmStateConfig) console.log('reacting to sc');
+
 	const simulate = async () => {
+		console.log('running simulate');
 		error = null;
 		simulatedResult = null;
 		if ($vmStateConfig?.sources?.[0]) {
-			console.log($vmStateConfig)
+			console.log($vmStateConfig);
 			const simulator = new RainInterpreterTs(
 				'0xF4d1dbA59eABac89a9C37eB5F5bbC5F5b7Ab6B8c',
-				80001,
+				signer.provider,
 				rainterpreterClosures
 			);
 			simulator.addExpression($vmStateConfig);
@@ -39,7 +43,7 @@
 					sender: '0xF4d1dbA59eABac89a9C37eB5F5bbC5F5b7Ab6B8c',
 					namespace: 'none'
 				});
-				console.log(simulatedResult)
+				console.log(simulatedResult);
 				// simulatedResult = await simulator.run({ context: [await signer.getAddress()] });
 			} catch (err: any) {
 				console.log(err);
@@ -62,10 +66,9 @@
 			</div>
 		{/each} -->
 		<div>
-			Stack: {simulatedResult.finalStack.map((v) => v.toHexString())}
+			Stack: {simulatedResult.finalStack.map((v) => v.toString())}
 			Block Number: {simulatedResult.blockNumber}
 			Block Timestamp: {simulatedResult.blockTimestamp}
 		</div>
 	{/if}
 </div>
-
