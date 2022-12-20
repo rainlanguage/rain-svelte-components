@@ -1,11 +1,11 @@
 <script lang="ts">
 	import {
 		RainInterpreterTs,
-		rainterpreterClosures,
+		rainterpreterOpConfigs,
 		Simulation
 	} from '@beehiveinnovation/rain-interpreter-ts';
 	import type { StateConfig } from 'rain-sdk';
-	import { BigNumber, type Signer } from 'ethers';
+	import { BigNumber, VoidSigner, type Signer } from 'ethers';
 	import { ethers } from 'ethers';
 	import type { Writable } from 'svelte/store';
 
@@ -19,7 +19,7 @@
 		blockTimestamp: number;
 	} | null;
 
-	$: if ($vmStateConfig && signer) simulate();
+	$: if ($vmStateConfig) simulate();
 
 	$: if (signer) console.log('reacting to signer');
 	$: if ($vmStateConfig) console.log('reacting to sc');
@@ -29,13 +29,16 @@
 		error = null;
 		simulatedResult = null;
 		if ($vmStateConfig?.sources?.[0]) {
+			console.log(await signer.provider?.getNetwork())
 			console.log($vmStateConfig);
 			const simulator = new RainInterpreterTs(
 				'0xF4d1dbA59eABac89a9C37eB5F5bbC5F5b7Ab6B8c',
-				signer.provider,
-				rainterpreterClosures
+				signer.provider!,
+				rainterpreterOpConfigs,
+				undefined,
+				[$vmStateConfig]
 			);
-			simulator.addExpression($vmStateConfig);
+			//simulator.addExpression($vmStateConfig);
 			// const simulator = Simulation.rainterpreter(80001, [{interpreterAddress: '0xF4d1dbA59eABac89a9C37eB5F5bbC5F5b7Ab6B8c', stateConfigs: [$vmStateConfig]}])
 			try {
 				simulatedResult = await simulator.run(await signer.getAddress(), {

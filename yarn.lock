@@ -7,9 +7,9 @@
   resolved "https://registry.yarnpkg.com/@aicacia/debounce/-/debounce-0.1.19.tgz#107678b420985856ab1a1c0e1096f53a90865eaf"
   integrity sha512-GU9J0A2wQ1jEOocazGrEOYTocASfKuX0CRvahVCUk+Z6NTz2gG2gRtlGr2dUUe7dIh/fSJywVQVuH0YSR0syeg==
 
-"@beehiveinnovation/rain-interpreter-ts@https://github.com/beehive-innovation/rain-interpreter-ts#0d7d97e9cc29e06fd18d922cbdff1b7d02ade9df":
+"@beehiveinnovation/rain-interpreter-ts@https://github.com/beehive-innovation/rain-interpreter-ts#983ec73b3a94d220fbd277c1842f9668e2ecd370":
   version "0.0.0"
-  resolved "https://github.com/beehive-innovation/rain-interpreter-ts#0d7d97e9cc29e06fd18d922cbdff1b7d02ade9df"
+  resolved "https://github.com/beehive-innovation/rain-interpreter-ts#983ec73b3a94d220fbd277c1842f9668e2ecd370"
   dependencies:
     ethers "^5.7.2"
     prettier "^2.7.1"
