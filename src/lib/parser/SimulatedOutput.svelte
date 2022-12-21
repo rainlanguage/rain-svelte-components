@@ -1,16 +1,13 @@
 <script lang="ts">
-	import {
-		RainInterpreterTs,
-		rainterpreterOpConfigs,
-		Simulation
-	} from '@rainprotocol/interpreter-ts';
+	import { RainInterpreterTs, rainterpreterOpConfigs } from '@rainprotocol/interpreter-ts';
 	import type { StateConfig } from 'rain-sdk';
-	import { BigNumber, VoidSigner, type Signer } from 'ethers';
+	import { BigNumber, type Signer } from 'ethers';
 	import { ethers } from 'ethers';
 	import type { Writable } from 'svelte/store';
 
 	export let vmStateConfig: Writable<StateConfig>;
 	export let signer: Signer = new ethers.VoidSigner('0x8ba1f109551bD432803012645Ac136ddd64DBA72');
+	export let chainId: number = 80001;
 	let error: string | null;
 
 	let simulatedResult: {
@@ -19,27 +16,21 @@
 		blockTimestamp: number;
 	} | null;
 
-	$: if ($vmStateConfig) simulate();
+	$: simulate($vmStateConfig);
 
-	$: if (signer) console.log('reacting to signer');
-	$: if ($vmStateConfig) console.log('reacting to sc');
-
-	const simulate = async () => {
-		console.log('running simulate');
+	const simulate = async (vmStateConfig: StateConfig | null) => {
+		console.log(vmStateConfig);
 		error = null;
 		simulatedResult = null;
-		if ($vmStateConfig?.sources?.[0]) {
-			console.log(await signer.provider?.getNetwork())
-			console.log($vmStateConfig);
+		if (!vmStateConfig) return;
+		if (vmStateConfig?.sources?.[0]) {
 			const simulator = new RainInterpreterTs(
 				'0xF4d1dbA59eABac89a9C37eB5F5bbC5F5b7Ab6B8c',
-				signer.provider!,
+				chainId,
 				rainterpreterOpConfigs,
 				undefined,
-				[$vmStateConfig]
+				[vmStateConfig]
 			);
-			//simulator.addExpression($vmStateConfig);
-			// const simulator = Simulation.rainterpreter(80001, [{interpreterAddress: '0xF4d1dbA59eABac89a9C37eB5F5bbC5F5b7Ab6B8c', stateConfigs: [$vmStateConfig]}])
 			try {
 				simulatedResult = await simulator.run(await signer.getAddress(), {
 					context: [[BigNumber.from(1)]],
@@ -47,7 +38,6 @@
 					namespace: 'none'
 				});
 				console.log(simulatedResult);
-				// simulatedResult = await simulator.run({ context: [await signer.getAddress()] });
 			} catch (err: any) {
 				console.log(err);
 				if (String(err).startsWith('Error: missing provider')) {
@@ -58,20 +48,29 @@
 	};
 </script>
 
-<div class="font-mono text-gray-800 dark:text-gray-200">
+<div class="font-mono text-gray-800 dark:text-gray-200 text-sm">
 	{#if error}
 		<span class="text-red-500 text-xs leading-tight">{error}</span>
 	{/if}
-	{#if simulatedResult}
-		<!-- {#each simulatedResult as result, i}
-			<div>
-				Stack {i}: {result.toString()}
-			</div>
-		{/each} -->
-		<div>
-			Stack: {simulatedResult.finalStack.map((v) => v.toString())}
-			Block Number: {simulatedResult.blockNumber}
-			Block Timestamp: {simulatedResult.blockTimestamp}
+
+	<div class="flex flex-col gap-y-2">
+		<div class="flex flex-col">
+			<span class="font-semibold"> Stack</span>
+			{#if simulatedResult}
+				{#each simulatedResult.finalStack.map((v) => v.toString()) as result, i}
+					<span>
+						{i}: <span class="text-blue-600">{result}</span>
+					</span>
+				{/each}
+			{/if}
 		</div>
-	{/if}
+		<div class="text-xs flex flex-col text-gray-600">
+			<span>
+				Block Number: {#if simulatedResult}{simulatedResult.blockNumber}{/if}
+			</span>
+			<span>
+				Block Timestamp: {#if simulatedResult}{simulatedResult.blockTimestamp}{/if}
+			</span>
+		</div>
+	</div>
 </div>

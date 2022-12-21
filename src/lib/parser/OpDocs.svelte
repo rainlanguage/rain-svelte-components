@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { rainterpreterOpMeta } from '@beehiveinnovation/rainlang';
+	import { rainterpreterOpMeta } from '@rainprotocol/rainlang';
 	import { MagnifyingGlass } from '@steeze-ui/heroicons';
 	import { Icon } from '@steeze-ui/svelte-icon';
 	import { onMount } from 'svelte';

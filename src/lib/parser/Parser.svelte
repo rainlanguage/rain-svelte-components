@@ -21,6 +21,7 @@
 	export let error: string = '';
 	export let readOnly: boolean = false;
 	export let componentName: string;
+	export let chainId: number = 80001;
 
 	let parserInput: SvelteComponent;
 
@@ -58,7 +59,7 @@
 		<div class="flex flex-col w-1/3">
 			<div class="heading">Simulated output</div>
 			<div class="p-2">
-				<SimulatedOutput {vmStateConfig} {signer} />
+				<SimulatedOutput {vmStateConfig} {signer} {chainId} />
 			</div>
 		</div>
 	</div>

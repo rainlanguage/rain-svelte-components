@@ -1,4 +1,4 @@
-import { Parser, rainterpreterOpMeta, type Comment, type Node as TreeNode } from '@beehiveinnovation/rainlang';
+import { Parser, rainterpreterOpMeta, type Comment, type Node as TreeNode } from '@rainprotocol/rainlang';
 import type { ParseTree } from 'rain-sdk';
 import { Node } from 'slate';
 

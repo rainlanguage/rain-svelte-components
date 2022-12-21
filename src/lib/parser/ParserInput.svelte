@@ -2,9 +2,9 @@
 	import Leaf from './Leaf.svelte';
 	import { Slate, withSvelte, Editable } from 'svelte-slate';
 	import { createEditor, Node } from 'slate';
-	import { Parser, rainterpreterOpMeta } from '@beehiveinnovation/rainlang';
+	import { Parser, rainterpreterOpMeta } from '@rainprotocol/rainlang';
 	import { writable, type Writable } from 'svelte/store';
-	import type { StateConfig } from '@beehiveinnovation/rainlang';
+	import type { StateConfig } from '@rainprotocol/rainlang';
 	import { deserialize, getFlatRanges, serialize } from '$lib/parser/parserHelpers';
 	import type { ParseTree } from 'rain-sdk';
 
@@ -35,12 +35,10 @@
 	const updateStateConfig = (text: string, tree: ParseTree, stateConfig: StateConfig) => {
 		if (text !== '') {
 			error = tree?.[0]?.tree?.[0]?.error || '';
-			if (!error) $vmStateConfig = stateConfig;
+			if (!error) return stateConfig;
 			else return emptySc;
 		} else return emptySc;
 	};
-
-	$: $vmStateConfig;
 
 	let textCache: any = null;
 	let parseTreeCache: any = null;
@@ -54,7 +52,8 @@
 				// console.log(tree);
 			} else {
 				[tree, stateConfig] = Parser.get(text, rainterpreterOpMeta);
-				updateStateConfig(text, tree, stateConfig);
+				console.log(tree);
+				$vmStateConfig = updateStateConfig(text, tree, stateConfig);
 				parseTreeCache = tree;
 				textCache = text;
 			}
