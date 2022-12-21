@@ -7,13 +7,6 @@
   resolved "https://registry.yarnpkg.com/@aicacia/debounce/-/debounce-0.1.19.tgz#107678b420985856ab1a1c0e1096f53a90865eaf"
   integrity sha512-GU9J0A2wQ1jEOocazGrEOYTocASfKuX0CRvahVCUk+Z6NTz2gG2gRtlGr2dUUe7dIh/fSJywVQVuH0YSR0syeg==
 
-"@beehiveinnovation/rain-interpreter-ts@https://github.com/beehive-innovation/rain-interpreter-ts#983ec73b3a94d220fbd277c1842f9668e2ecd370":
-  version "0.0.0"
-  resolved "https://github.com/beehive-innovation/rain-interpreter-ts#983ec73b3a94d220fbd277c1842f9668e2ecd370"
-  dependencies:
-    ethers "^5.7.2"
-    prettier "^2.7.1"
-
 "@beehiveinnovation/rainlang@https://github.com/beehive-innovation/rainlang#e17dc1d8a0b19c43be59907f6b02bccd51acf707":
   version "1.0.0"
   resolved "https://github.com/beehive-innovation/rainlang#e17dc1d8a0b19c43be59907f6b02bccd51acf707"
@@ -514,6 +507,13 @@
   version "1.0.0-next.21"
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
+
+"@rainprotocol/interpreter-ts@https://github.com/rainprotocol/interpreter-ts.git#76a58ca0fb98ab3ccde44b406ca39f46bf6043ab":
+  version "0.0.0"
+  resolved "https://github.com/rainprotocol/interpreter-ts.git#76a58ca0fb98ab3ccde44b406ca39f46bf6043ab"
+  dependencies:
+    ethers "^5.7.2"
+    prettier "^2.7.1"
 
 "@rollup/pluginutils@^4.2.1":
   version "4.2.1"

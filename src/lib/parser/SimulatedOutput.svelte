@@ -3,7 +3,7 @@
 		RainInterpreterTs,
 		rainterpreterOpConfigs,
 		Simulation
-	} from '@beehiveinnovation/rain-interpreter-ts';
+	} from '@rainprotocol/interpreter-ts';
 	import type { StateConfig } from 'rain-sdk';
 	import { BigNumber, VoidSigner, type Signer } from 'ethers';
 	import { ethers } from 'ethers';
