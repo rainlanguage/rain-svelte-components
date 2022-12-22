@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { RainInterpreterTs, rainterpreterOpConfigs } from '@rainprotocol/interpreter-ts';
 	import type { StateConfig } from 'rain-sdk';
-	import { BigNumber, type Signer } from 'ethers';
+	import type { BigNumber, Signer } from 'ethers';
 	import { ethers } from 'ethers';
 	import type { Writable } from 'svelte/store';
 
@@ -29,7 +29,6 @@
 	$: simulate($vmStateConfig);
 
 	const simulate = async (vmStateConfig: StateConfig | null) => {
-		console.log(vmStateConfig);
 		error = null;
 		resultState = ResultState.Calculating;
 		if (!vmStateConfig || !vmStateConfig?.sources?.[0]) {
