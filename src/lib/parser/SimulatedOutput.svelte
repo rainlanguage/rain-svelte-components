@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { RainInterpreterTs, rainterpreterOpConfigs } from '@rainprotocol/interpreter-ts';
 	import type { StateConfig } from 'rain-sdk';
-	import type { BigNumber, Signer } from 'ethers';
+	import { BigNumber, type Signer } from 'ethers';
 	import { ethers } from 'ethers';
 	import type { Writable } from 'svelte/store';
 
