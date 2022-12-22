@@ -52,7 +52,7 @@
 				// console.log(tree);
 			} else {
 				[tree, stateConfig] = Parser.get(text, rainterpreterOpMeta);
-				console.log(tree);
+				// console.log(tree);
 				$vmStateConfig = updateStateConfig(text, tree, stateConfig);
 				parseTreeCache = tree;
 				textCache = text;
