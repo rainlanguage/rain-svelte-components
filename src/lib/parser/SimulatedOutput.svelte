@@ -8,6 +8,7 @@
 	export let vmStateConfig: Writable<StateConfig>;
 	export let signer: Signer = new ethers.VoidSigner('0x8ba1f109551bD432803012645Ac136ddd64DBA72');
 	export let chainId: number = 80001;
+	export let context: BigNumber[][] = [];
 	let error: string | null;
 
 	enum ResultState {
@@ -44,7 +45,7 @@
 		);
 		try {
 			simulatedResult = await simulator.run(await signer.getAddress(), {
-				context: [],
+				context,
 				namespace: 'none'
 			});
 			resultState = ResultState.Ready;
