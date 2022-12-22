@@ -501,9 +501,9 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
-"@rainprotocol/interpreter-ts@https://github.com/rainprotocol/interpreter-ts.git#76a58ca0fb98ab3ccde44b406ca39f46bf6043ab":
+"@rainprotocol/interpreter-ts@https://github.com/rainprotocol/interpreter-ts.git#0937d92eccb4721777b0f1f486e1e45b468c7d16":
   version "0.0.0"
-  resolved "https://github.com/rainprotocol/interpreter-ts.git#76a58ca0fb98ab3ccde44b406ca39f46bf6043ab"
+  resolved "https://github.com/rainprotocol/interpreter-ts.git#0937d92eccb4721777b0f1f486e1e45b468c7d16"
   dependencies:
     ethers "^5.7.2"
     prettier "^2.7.1"

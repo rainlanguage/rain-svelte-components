@@ -43,7 +43,7 @@
 	"svelte": "./index.js",
 	"dependencies": {
 		"@rainprotocol/rainlang": "https://github.com/rainprotocol/rainlang#b8a9aeed1e534838d4624ada3135dd2ec04fd69d",
-		"@rainprotocol/interpreter-ts": "https://github.com/rainprotocol/interpreter-ts.git#76a58ca0fb98ab3ccde44b406ca39f46bf6043ab",
+		"@rainprotocol/interpreter-ts": "https://github.com/rainprotocol/interpreter-ts.git#0937d92eccb4721777b0f1f486e1e45b468c7d16",
 		"@formkit/auto-animate": "^1.0.0-beta.3",
 		"@metamask/jazzicon": "^2.0.0",
 		"@steeze-ui/heroicons": "^2.1.0",
