@@ -26,9 +26,9 @@
 		blockTimestamp: number;
 	};
 
-	$: simulate($vmStateConfig);
+	$: simulate($vmStateConfig, context);
 
-	const simulate = async (vmStateConfig: StateConfig | null) => {
+	const simulate = async (vmStateConfig: StateConfig | null, _context: BigNumber[][]) => {
 		error = null;
 		resultState = ResultState.Calculating;
 		if (!vmStateConfig || !vmStateConfig?.sources?.[0]) {
@@ -44,7 +44,7 @@
 		);
 		try {
 			simulatedResult = await simulator.run(await signer.getAddress(), {
-				context,
+				context: _context,
 				namespace: 'none'
 			});
 			resultState = ResultState.Ready;
