@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Vapour721A from './Vapour721A.json';
 	import FlowERC20Factory from './FlowERC20Factory.json';
-	import OrderBook from './OrderBook.json';
-	import OrderBookMetadata from './OrderBookMetadata.json';
+	import LobbyFactory from './LobbyFactory.json';
+	import LobbyFactoryMetadata from './LobbyFactoryMetadata.json';
 	import FlowERC20FactoryMetadata from './FlowERC20FactoryMetadata.json';
 	import AutoAbiForm from '$lib/auto-abi-form/AutoAbiForm.svelte';
 	import PageHeading from '$lib/_docs/PageHeading.svelte';
@@ -73,10 +73,10 @@
 				<div class="col-span-2">
 					<div class="text-xl mb-2">Method name: createChildTyped</div>
 					<AutoAbiFormSeparated
-						abi={OrderBook.abi}
-						metadata={OrderBookMetadata}
+						abi={LobbyFactory.abi}
+						metadata={LobbyFactoryMetadata}
 						bind:result={resultMerged}
-						methodName="addOrder"
+						methodName="createChildTyped"
 						showInterpreterFields={false}
 						on:save={({ detail }) => {
 							console.log(detail);

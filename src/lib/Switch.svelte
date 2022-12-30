@@ -3,10 +3,22 @@
 	export let color = '#2196F3';
 </script>
 
-<label class="switch" style="--theme-color: {color}">
-	<input type="checkbox" bind:checked on:change />
-	<span class="slider" />
-</label>
+<div class="flex flex-col gap-y-2">
+	{#if $$slots.label}
+		<div class=" text-gray-500 dark:text-gray-200 text-sm font-medium">
+			<slot name="label" />
+		</div>
+	{/if}
+	{#if $$slots.description}
+		<span class="text-gray-600 dark:text-gray-400 text-sm">
+			<slot name="description" />
+		</span>
+	{/if}
+	<label class="switch" style="--theme-color: {color}">
+		<input type="checkbox" bind:checked on:change />
+		<span class="slider" />
+	</label>
+</div>
 
 <style>
 	.switch {

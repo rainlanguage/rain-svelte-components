@@ -7,6 +7,7 @@
 	import type { StateConfig } from 'rain-sdk';
 	import Button from '$lib/Button.svelte';
 	import { createEventDispatcher, getContext } from 'svelte';
+	import Switch from '$lib/Switch.svelte';
 
 	export let component: AbiParameter & {
 		nameMeta?: string;
@@ -98,6 +99,13 @@
 					>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
 				>
 			</Input>
+		{:else if type == 'bool'}
+			<Switch bind:checked={result}>
+				<span slot="label">{component.nameMeta || component.name} ({type})</span>
+				<span slot="description"
+					>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
+				>
+			</Switch>
 		{/if}
 	{/if}
 {/if}
