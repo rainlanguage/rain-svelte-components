@@ -106,6 +106,13 @@
 					>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
 				>
 			</Switch>
+		{:else if type == 'bytes'}
+			<Input type="text" bind:value={result}>
+				<span slot="label">{component.nameMeta || component.name} ({type})</span>
+				<span slot="description"
+					>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
+				>
+			</Input>
 		{/if}
 	{/if}
 {/if}
