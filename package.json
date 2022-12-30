@@ -42,7 +42,8 @@
 	},
 	"svelte": "./index.js",
 	"dependencies": {
-		"@beehiveinnovation/rainlang": "https://github.com/beehive-innovation/rainlang#e17dc1d8a0b19c43be59907f6b02bccd51acf707",
+		"@rainprotocol/rainlang": "https://github.com/rainprotocol/rainlang#b8a9aeed1e534838d4624ada3135dd2ec04fd69d",
+		"@rainprotocol/interpreter-ts": "https://github.com/rainprotocol/interpreter-ts.git#a7e3257dc121729884d17bd141c2682c451d2510",
 		"@formkit/auto-animate": "^1.0.0-beta.3",
 		"@metamask/jazzicon": "^2.0.0",
 		"@steeze-ui/heroicons": "^2.1.0",
@@ -52,8 +53,8 @@
 		"ajv": "^8.11.0",
 		"ethers": "^5.7.1",
 		"lodash-es": "^4.17.21",
-		"rain-metadata": "git+https://github.com/beehive-innovation/rain-metadata.git#40dc5c105a9db4169586c3826dd977c15b626228",
-		"rain-sdk": "git+https://github.com/beehive-innovation/rain-sdk.git#f6710e64a7d6c47110e3e584cd17e947c1d7313a",
+		"rain-metadata": "git+https://github.com/rainprotocol/rain-metadata.git#40dc5c105a9db4169586c3826dd977c15b626228",
+		"rain-sdk": "git+https://github.com/rainprotocol/rain-sdk.git#f6710e64a7d6c47110e3e584cd17e947c1d7313a",
 		"slate": "^0.85.0",
 		"svelte-ethers-store": "^2.5.8",
 		"svelte-slate": "^0.1.62"

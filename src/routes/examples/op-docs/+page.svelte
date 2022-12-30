@@ -5,7 +5,7 @@
 	import ExampleHeading from '$lib/_docs/ExampleHeading.svelte';
 	import PageHeading from '$lib/_docs/PageHeading.svelte';
 	import OpDocs from '$lib/parser/OpDocs.svelte';
-	import { rainterpreterOpMeta } from '@beehiveinnovation/rainlang';
+	import { rainterpreterOpMeta } from '@rainprotocol/rainlang';
 </script>
 
 <div class="flex flex-col gap-y-4">

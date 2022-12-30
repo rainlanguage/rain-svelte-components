@@ -32,8 +32,8 @@
 			schema defined at
 			<a
 				class="underline"
-				href="https://github.com/beehive-innovation/rain-metadata/blob/master/json-schemas/contract.json"
-				>https://github.com/beehive-innovation/rain-metadata/blob/master/json-schemas/contract.json</a
+				href="https://github.com/rainprotocol/rain-metadata/blob/master/json-schemas/contract.json"
+				>https://github.com/rainprotocol/rain-metadata/blob/master/json-schemas/contract.json</a
 			>
 		</div>
 	</div>

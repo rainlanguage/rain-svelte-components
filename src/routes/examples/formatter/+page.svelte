@@ -5,7 +5,7 @@
 	import ExampleHeading from '$lib/_docs/ExampleHeading.svelte';
 	import ExampleUsage from '$lib/_docs/ExampleUsage.svelte';
 	import PageHeading from '$lib/_docs/PageHeading.svelte';
-	import { Parser } from '@beehiveinnovation/rainlang';
+	import { Parser } from '@rainprotocol/rainlang';
 	import { arrayify, hexlify } from 'ethers/lib/utils';
 
 	let raw = '_: add(2 3)';

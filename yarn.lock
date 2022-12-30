@@ -7,13 +7,6 @@
   resolved "https://registry.yarnpkg.com/@aicacia/debounce/-/debounce-0.1.19.tgz#107678b420985856ab1a1c0e1096f53a90865eaf"
   integrity sha512-GU9J0A2wQ1jEOocazGrEOYTocASfKuX0CRvahVCUk+Z6NTz2gG2gRtlGr2dUUe7dIh/fSJywVQVuH0YSR0syeg==
 
-"@beehiveinnovation/rainlang@https://github.com/beehive-innovation/rainlang#e17dc1d8a0b19c43be59907f6b02bccd51acf707":
-  version "1.0.0"
-  resolved "https://github.com/beehive-innovation/rainlang#e17dc1d8a0b19c43be59907f6b02bccd51acf707"
-  dependencies:
-    ethers "^5.7.2"
-    prettier "^2.7.1"
-
 "@cloudflare/workers-types@^3.14.0":
   version "3.17.0"
   resolved "https://registry.yarnpkg.com/@cloudflare/workers-types/-/workers-types-3.17.0.tgz#8cee4499019daa6a23c9cc5501aa8382bb94d4da"
@@ -507,6 +500,20 @@
   version "1.0.0-next.21"
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
+
+"@rainprotocol/interpreter-ts@https://github.com/rainprotocol/interpreter-ts.git#a7e3257dc121729884d17bd141c2682c451d2510":
+  version "0.0.0"
+  resolved "https://github.com/rainprotocol/interpreter-ts.git#a7e3257dc121729884d17bd141c2682c451d2510"
+  dependencies:
+    ethers "^5.7.2"
+    prettier "^2.7.1"
+
+"@rainprotocol/rainlang@https://github.com/rainprotocol/rainlang#b8a9aeed1e534838d4624ada3135dd2ec04fd69d":
+  version "1.0.0"
+  resolved "https://github.com/rainprotocol/rainlang#b8a9aeed1e534838d4624ada3135dd2ec04fd69d"
+  dependencies:
+    ethers "^5.7.2"
+    prettier "^2.7.1"
 
 "@rollup/pluginutils@^4.2.1":
   version "4.2.1"
@@ -2298,13 +2305,13 @@ quick-lru@^5.1.1:
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-5.1.1.tgz#366493e6b3e42a3a6885e2e99d18f80fb7a8c932"
   integrity sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==
 
-"rain-metadata@git+https://github.com/beehive-innovation/rain-metadata.git#40dc5c105a9db4169586c3826dd977c15b626228":
+"rain-metadata@git+https://github.com/rainprotocol/rain-metadata.git#40dc5c105a9db4169586c3826dd977c15b626228":
   version "0.0.0"
-  resolved "git+https://github.com/beehive-innovation/rain-metadata.git#40dc5c105a9db4169586c3826dd977c15b626228"
+  resolved "git+https://github.com/rainprotocol/rain-metadata.git#40dc5c105a9db4169586c3826dd977c15b626228"
 
-"rain-sdk@git+https://github.com/beehive-innovation/rain-sdk.git#f6710e64a7d6c47110e3e584cd17e947c1d7313a":
+"rain-sdk@git+https://github.com/rainprotocol/rain-sdk.git#f6710e64a7d6c47110e3e584cd17e947c1d7313a":
   version "2.1.2-beta"
-  resolved "git+https://github.com/beehive-innovation/rain-sdk.git#f6710e64a7d6c47110e3e584cd17e947c1d7313a"
+  resolved "git+https://github.com/rainprotocol/rain-sdk.git#f6710e64a7d6c47110e3e584cd17e947c1d7313a"
   dependencies:
     ethers "^5.5.2"
     prettier "^2.6.2"

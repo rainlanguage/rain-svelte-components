@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ParserInput from '$lib/parser/ParserInput.svelte';
 	import { onMount } from 'svelte';
-	import { Formatter, rainterpreterOpMeta, type StateConfig } from '@beehiveinnovation/rainlang';
+	import { Formatter, rainterpreterOpMeta, type StateConfig } from '@rainprotocol/rainlang';
 
 	export let readOnly: boolean = true;
 	export let raw: string | null = null;
