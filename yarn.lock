@@ -508,9 +508,9 @@
     ethers "^5.7.2"
     prettier "^2.7.1"
 
-"@rainprotocol/rainlang@https://github.com/rainprotocol/rainlang#b8a9aeed1e534838d4624ada3135dd2ec04fd69d":
+"@rainprotocol/rainlang@https://github.com/rainprotocol/rainlang#0a5b41016d89ba1d0a375a52a75a0ada3b2c6ec1":
   version "1.0.0"
-  resolved "https://github.com/rainprotocol/rainlang#b8a9aeed1e534838d4624ada3135dd2ec04fd69d"
+  resolved "https://github.com/rainprotocol/rainlang#0a5b41016d89ba1d0a375a52a75a0ada3b2c6ec1"
   dependencies:
     ethers "^5.7.2"
     prettier "^2.7.1"
