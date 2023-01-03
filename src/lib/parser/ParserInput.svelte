@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Leaf from './Leaf.svelte';
 	import { Slate, withSvelte, Editable } from 'svelte-slate';
+	import { withHistory } from 'slate-history';
 	import { createEditor, Node } from 'slate';
 	import { Parser, rainterpreterOpMeta } from '@rainprotocol/rainlang';
 	import { writable, type Writable } from 'svelte/store';
@@ -8,7 +9,7 @@
 	import { deserialize, getFlatRanges, serialize } from '$lib/parser/parserHelpers';
 	import type { ParseTree } from 'rain-sdk';
 
-	const editor = withSvelte(createEditor());
+	const editor = withHistory(withSvelte(createEditor()));
 
 	const emptySc = { sources: [], constants: [] };
 
