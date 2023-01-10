@@ -1,15 +1,26 @@
 <script lang="ts">
-	import { RainInterpreterTs, rainterpreterOpConfigs } from '@rainprotocol/interpreter-ts';
+	import {
+		defaultProvidersUrls,
+		RainInterpreterTs,
+		rainterpreterOpConfigs
+	} from '@rainprotocol/interpreter-ts';
 	import type { StateConfig } from 'rain-sdk';
 	import type { BigNumber, Signer } from 'ethers';
 	import { ethers } from 'ethers';
 	import type { Writable } from 'svelte/store';
+	import { allChainsData } from 'svelte-ethers-store';
+	import Select from '$lib/Select.svelte';
 
 	export let vmStateConfig: Writable<StateConfig>;
 	export let signer: Signer = new ethers.VoidSigner('0x8ba1f109551bD432803012645Ac136ddd64DBA72');
 	export let chainId: number = 80001;
 	export let context: BigNumber[][] = [];
 	let error: string | null;
+
+	const providers = Object.keys(defaultProvidersUrls).map((chainId) => ({
+		value: parseInt(chainId),
+		label: allChainsData.find((chain) => chain.chainId == parseInt(chainId))?.name || 'Unknown'
+	}));
 
 	enum ResultState {
 		EmptyOrNoStateConfig,
@@ -29,9 +40,13 @@
 		}[];
 	};
 
-	$: simulate($vmStateConfig, context);
+	$: simulate($vmStateConfig, context, chainId);
 
-	const simulate = async (vmStateConfig: StateConfig | null, _context: BigNumber[][]) => {
+	const simulate = async (
+		vmStateConfig: StateConfig | null,
+		_context: BigNumber[][],
+		_chainId: number
+	) => {
 		error = null;
 		resultState = ResultState.Calculating;
 		if (!vmStateConfig || !vmStateConfig?.sources?.[0]) {
@@ -40,7 +55,7 @@
 		}
 		const simulator = new RainInterpreterTs(
 			'0xF4d1dbA59eABac89a9C37eB5F5bbC5F5b7Ab6B8c',
-			chainId,
+			_chainId,
 			rainterpreterOpConfigs,
 			undefined,
 			[vmStateConfig]
@@ -70,7 +85,10 @@
 	};
 </script>
 
-<div class="font-mono text-gray-800 dark:text-gray-200 text-sm">
+<div class="text-gray-800 dark:text-gray-200 text-sm flex flex-col gap-y-2">
+	<div class="self-start">
+		<Select items={providers} bind:value={chainId} small />
+	</div>
 	{#if resultState == ResultState.EmptyOrNoStateConfig}
 		<div class="flex flex-col gap-y-2">
 			<div>Nothing to simulate.</div>
@@ -81,19 +99,19 @@
 	{:else if resultState == ResultState.Calculating}
 		<div class="animate-pulse">calculating...</div>
 	{:else if resultState == ResultState.Ready}
-		<div class="flex flex-col gap-y-2">
+		<div class="flex flex-col gap-y-2 font-mono">
 			{#if simulatedResults}
 				{#each simulatedResults.results as result, i}
 					<div class="flex flex-col">
 						<span class="font-semibold">Stack (Source {i})</span>
 						{#each result.finalStack.map((v) => v.toString()) as stackItem, i}
 							<span class="truncate text-ellipsis">
-								{i}: <span class="text-blue-600">{stackItem}</span>
+								{i}: <span class="text-blue-600 dark:text-blue-400">{stackItem}</span>
 							</span>
 						{/each}
 					</div>
 					{#if !simulatedResults.matchingBlocks || i == simulatedResults.results.length - 1}
-						<div class="text-xs flex flex-col text-gray-600">
+						<div class="text-xs flex flex-col text-gray-600 dark:text-gray-100">
 							<span>
 								Block Number: {result.blockNumber}
 							</span>
