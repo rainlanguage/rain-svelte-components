@@ -10,6 +10,8 @@
 	import type { Writable } from 'svelte/store';
 	import { allChainsData } from 'svelte-ethers-store';
 	import Select from '$lib/Select.svelte';
+	import { Icon } from '@steeze-ui/svelte-icon';
+	import { ArrowPath } from '@steeze-ui/heroicons';
 
 	export let vmStateConfig: Writable<StateConfig>;
 	export let signer: Signer = new ethers.VoidSigner('0x8ba1f109551bD432803012645Ac136ddd64DBA72');
@@ -41,6 +43,10 @@
 	};
 
 	$: simulate($vmStateConfig, context, chainId);
+
+	const run = () => {
+		simulate($vmStateConfig, context, chainId);
+	};
 
 	const simulate = async (
 		vmStateConfig: StateConfig | null,
@@ -86,8 +92,18 @@
 </script>
 
 <div class="text-gray-800 dark:text-gray-200 text-sm flex flex-col gap-y-2">
-	<div class="self-start">
-		<Select items={providers} bind:value={chainId} small />
+	<div class="flex justify-between border-b border-gray-300 pb-2">
+		<div class="self-start">
+			<Select items={providers} bind:value={chainId} small />
+		</div>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<div
+			on:click={run}
+			class="w-4 cursor-pointer"
+			class:animate-spin={resultState == ResultState.Calculating}
+		>
+			<Icon src={ArrowPath} />
+		</div>
 	</div>
 	{#if resultState == ResultState.EmptyOrNoStateConfig}
 		<div class="flex flex-col gap-y-2">
