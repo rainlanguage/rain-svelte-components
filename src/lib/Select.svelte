@@ -7,6 +7,8 @@
 	export let items: Item[] = [];
 	export let value: any = -1;
 
+	export let small: boolean = false;
+
 	export let disabled = false;
 
 	export const validate = () => {
@@ -15,34 +17,34 @@
 			value
 		};
 	};
-
-	const isOpened = () => {
-		opened = !opened;
-	}
-
-	$: opened = false;
 </script>
 
-	<div class={`w-full`}>
-		<select
-			{disabled}
-			bind:value
-			on:change
-			on:click={isOpened}
-			on:blur={isOpened}
-			class={`default  ${opened ? "border-neutral-300 bg-white rounded-t-lg" : "border-neutral-100 bg-neutral-100 rounded-md" }`}
-			class:disabled
-		>
-			<option value={-1} hidden selected>Select</option>
-			{#each items as item, i}
-				<option value={item?.value || i}>{item.label}</option>
-			{/each}
-		</select>
-	</div>
+<div class={`w-full`}>
+	<select
+		{disabled}
+		bind:value
+		on:change
+		class={`default ${small ? 'small' : 'large'}`}
+		class:disabled
+	>
+		<option value={-1} hidden selected>Select</option>
+		{#each items as item, i}
+			<option value={item?.value || i}>{item.label}</option>
+		{/each}
+	</select>
+</div>
 
 <style lang="postcss">
 	.default {
-		@apply w-full px-4 py-2 text-neutral-600 border;
+		@apply w-full text-neutral-600 border border-neutral-100 bg-white rounded-md;
+	}
+
+	.small {
+		@apply px-0 py-1;
+	}
+
+	.large {
+		@apply px-4 py-2;
 	}
 
 	.disabled {
