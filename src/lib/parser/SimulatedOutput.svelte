@@ -20,10 +20,13 @@
 
 	let resultState: ResultState = ResultState.EmptyOrNoStateConfig;
 
-	let simulatedResult: {
-		finalStack: BigNumber[];
-		blockNumber: number;
-		blockTimestamp: number;
+	let simulatedResults: {
+		matchingBlocks: boolean;
+		results: {
+			finalStack: BigNumber[];
+			blockNumber: number;
+			blockTimestamp: number;
+		}[];
 	};
 
 	$: simulate($vmStateConfig, context);
@@ -43,18 +46,26 @@
 			[vmStateConfig]
 		);
 		try {
-			simulatedResult = await simulator.run(await signer.getAddress(), {
-				context: _context,
-				namespace: 'none'
-			});
+			const resultPromises = vmStateConfig.sources.map(async (source, i) => ({
+				...(await simulator.run(
+					await signer.getAddress(),
+					{
+						context: _context,
+						namespace: 'none'
+					},
+					{ entrypoint: i }
+				))
+			}));
+			const results = await Promise.all(resultPromises);
+			const matchingBlocks = results.every(
+				(result) => result.blockNumber == results[0].blockNumber
+			);
+			simulatedResults = { matchingBlocks, results };
 			resultState = ResultState.Ready;
 		} catch (err: any) {
 			error = err;
 			resultState = ResultState.Error;
 			console.log(err);
-			if (String(err).startsWith('Error: missing provider')) {
-				error = 'This expression requires a connected wallet.';
-			}
 		}
 	};
 </script>
@@ -71,26 +82,28 @@
 		<div class="animate-pulse">calculating...</div>
 	{:else if resultState == ResultState.Ready}
 		<div class="flex flex-col gap-y-2">
-			<div class="flex flex-col">
-				<span class="font-semibold"> Stack</span>
-				{#if simulatedResult}
-					{#each simulatedResult.finalStack.map((v) => v.toString()) as result, i}
-						<span class="truncate text-ellipsis">
-							{i}: <span class="text-blue-600">{result}</span>
-						</span>
-					{/each}
-				{/if}
-			</div>
-			<div class="text-xs flex flex-col text-gray-600">
-				<span>
-					Block Number: {#if simulatedResult}{simulatedResult.blockNumber}{/if}
-				</span>
-				<span>
-					Block Time: {#if simulatedResult}{new Date(
-							simulatedResult.blockTimestamp * 1000
-						).toLocaleTimeString()}{/if}
-				</span>
-			</div>
+			{#if simulatedResults}
+				{#each simulatedResults.results as result, i}
+					<div class="flex flex-col">
+						<span class="font-semibold">Stack (Source {i})</span>
+						{#each result.finalStack.map((v) => v.toString()) as stackItem, i}
+							<span class="truncate text-ellipsis">
+								{i}: <span class="text-blue-600">{stackItem}</span>
+							</span>
+						{/each}
+					</div>
+					{#if !simulatedResults.matchingBlocks || i == simulatedResults.results.length - 1}
+						<div class="text-xs flex flex-col text-gray-600">
+							<span>
+								Block Number: {result.blockNumber}
+							</span>
+							<span>
+								Block Time: {new Date(result.blockTimestamp * 1000).toLocaleTimeString()}
+							</span>
+						</div>
+					{/if}
+				{/each}
+			{/if}
 		</div>
 	{/if}
 </div>
