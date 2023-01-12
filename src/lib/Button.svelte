@@ -91,4 +91,12 @@
 	.disabled {
 		@apply cursor-not-allowed bg-gray-400;
 	}
+
+	.rain-primary {
+		@apply bg-rainprimary;
+	}
+
+	.rain-secondary {
+		@apply bg-rainsecondary;
+	}
 </style>
