@@ -132,6 +132,7 @@
 			on:save
 			on:load
 			on:expand
+			on:help
 			componentName={component.nameMeta || component.name}
 		/>
 	{:else if type == 'struct StateConfig[]'}
@@ -151,6 +152,7 @@
 					on:save
 					on:load
 					on:expand
+					on:help
 					componentName={component.nameMeta || component.name}
 				/>
 				<button
@@ -189,6 +191,7 @@
 						on:save
 						on:load
 						on:expand
+						on:help
 					/>
 				{/if}
 			{/each}
@@ -215,6 +218,7 @@
 					on:save
 					on:load
 					on:expand
+					on:help
 				/>
 			{/if}
 		{/each}

@@ -48,6 +48,9 @@
 						metadata={FlowERC20FactoryMetadata}
 						bind:result
 						methodName="createChildTyped"
+						on:help={(event) => {
+							console.log('help clicked');
+						}}
 					/>
 				</div>
 				<div class="p-4">
@@ -84,6 +87,9 @@
 						on:load={(event) => {
 							console.log(event);
 						}}
+						on:help={(event) => {
+							console.log('help clicked');
+						}}
 					/>
 				</div>
 				<div class="p-4">
@@ -102,7 +108,14 @@
 			<div class="grid grid-cols-3">
 				<div class="col-span-2">
 					<div class="text-xl mb-2">Method name: safeTransferFrom</div>
-					<AutoAbiForm abi={Vapour721A.abi} bind:result={result2} methodName="safeTransferFrom" />
+					<AutoAbiForm
+						abi={Vapour721A.abi}
+						bind:result={result2}
+						methodName="safeTransferFrom"
+						on:help={(event) => {
+							console.log('help clicked');
+						}}
+					/>
 				</div>
 				<div class="p-4">
 					<span>Result</span>

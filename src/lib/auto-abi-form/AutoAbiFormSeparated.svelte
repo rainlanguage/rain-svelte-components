@@ -56,6 +56,7 @@
 					on:save
 					on:load
 					on:expand
+					on:help
 				/>
 			</SectionBody>
 		</Section>
