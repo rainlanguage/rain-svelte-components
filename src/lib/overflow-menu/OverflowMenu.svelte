@@ -4,6 +4,9 @@
 	import { Icon } from '@steeze-ui/svelte-icon';
 	import { EllipsisVertical } from '@steeze-ui/heroicons';
 
+	export let position: 'left' | 'right' = 'left';
+	export let onHover: boolean = false;
+
 	let open: boolean;
 	let buttonRef: HTMLDivElement;
 	let menuRef: HTMLDivElement;
@@ -12,9 +15,23 @@
 		open = !open;
 	};
 
+	const handleClick = () => {
+		if (!onHover) {
+			toggle();
+		}
+	};
+
+	const handleHover = () => {
+		if (onHover) {
+			toggle();
+		}
+	};
+
 	setContext('overflow-menu', {
 		toggle
 	});
+
+	console.log(position);
 </script>
 
 <svelte:window
@@ -28,8 +45,9 @@
 	}}
 />
 
-<div class="relative inline-flex">
-	<div class:noButton={!$$slots.button} on:click={toggle} bind:this={buttonRef}>
+<div on:mouseenter={handleHover} on:mouseleave={handleHover} class="relative inline-flex">
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<div class:noButton={!$$slots.button} on:click={handleClick} bind:this={buttonRef}>
 		{#if !$$slots.button}
 			<span class="w-6">
 				<Icon src={EllipsisVertical} />
@@ -42,9 +60,16 @@
 		<div
 			transition:fade={{ duration: 70 }}
 			bind:this={menuRef}
-			class="absolute top-full left-0 z-10 mt-1 flex flex-col items-stretch overflow-hidden rounded-md border border-gray-100 bg-white p-2 w-48 filter shadow-md dark:bg-gray-900 dark:border-gray-800"
+			class={`
+			${position == 'left' ? 'left-0' : 'right-0'} 
+			absolute top-full z-10 pt-1
+			`}
 		>
-			<slot />
+			<div
+				class="flex flex-col items-stretch overflow-hidden rounded-md border border-gray-100 bg-white p-2 w-48 filter shadow-md dark:bg-gray-900 dark:border-gray-800"
+			>
+				<slot />
+			</div>
 		</div>
 	{/if}
 </div>
