@@ -20,8 +20,12 @@
 	export let signer: Signer;
 	export let error: string = '';
 	export let readOnly: boolean = false;
-	export let componentName: string;
+	export let componentName: string | null = null;
 	export let chainId: number = 80001;
+	export let hideLoad: boolean = false;
+	export let hideExpand: boolean = false;
+	export let hideSave: boolean = false;
+	export let hideHelp: boolean = false;
 
 	let parserInput: SvelteComponent;
 
@@ -43,6 +47,10 @@
 
 	const expand = () => {
 		dispatch('expand', { loadRaw, raw, componentName });
+	};
+
+	const help = () => {
+		dispatch('help');
 	};
 </script>
 
@@ -70,34 +78,43 @@
 			{/if}
 		</div>
 		<div class="gap-x-3 flex items-center text-gray-600">
-			<div class="parser-button">
-				<span class="text-xs">Help</span>
-				<span class="w-4">
-					<Icon src={QuestionMarkCircle} />
-				</span>
-			</div>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<div on:click={load} class="parser-button">
-				<span class="text-xs">Load</span>
-				<span class="w-4">
-					<Icon src={CloudArrowDown} />
-				</span>
-			</div>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<div on:click={save} class="parser-button">
-				<span class="text-xs">Save</span>
-				<span class="w-4">
-					<Icon src={CloudArrowUp} />
-				</span>
-			</div>
-			<div class="h-full border-l border-gray-300" />
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<div on:click={expand} class="parser-button">
-				<span class="text-xs">Detailed view</span>
-				<span class="w-4">
-					<Icon src={ArrowsPointingOut} />
-				</span>
-			</div>
+			{#if !hideHelp}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<div on:click={help} class="parser-button">
+					<span class="text-xs">Help</span>
+					<span class="w-4">
+						<Icon src={QuestionMarkCircle} />
+					</span>
+				</div>
+			{/if}
+			{#if !hideLoad}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<div on:click={load} class="parser-button">
+					<span class="text-xs">Load</span>
+					<span class="w-4">
+						<Icon src={CloudArrowDown} />
+					</span>
+				</div>
+			{/if}
+			{#if !hideSave}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<div on:click={save} class="parser-button">
+					<span class="text-xs">Save</span>
+					<span class="w-4">
+						<Icon src={CloudArrowUp} />
+					</span>
+				</div>
+			{/if}
+			{#if !hideExpand}
+				<div class="h-full border-l border-gray-300" />
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<div on:click={expand} class="parser-button">
+					<span class="text-xs">Detailed view</span>
+					<span class="w-4">
+						<Icon src={ArrowsPointingOut} />
+					</span>
+				</div>
+			{/if}
 		</div>
 	</div>
 </div>

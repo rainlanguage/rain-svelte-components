@@ -56,7 +56,7 @@
 	</Example>
 
 	<ExampleHeading>Full parser</ExampleHeading>
-	<div class="dark:text-white">
+	<div class="dark:text-white flex flex-col gap-y-2">
 		<p>
 			Component will emit <span class="font-mono">load</span>,
 			<span class="font-mono">save</span> and <span class="font-mono">expand</span> events when the buttons
@@ -66,6 +66,8 @@
 		<p>To load raw text into the parser, use Parser.loadRaw(text).</p>
 		<p>The load event will have the loadRaw function for that parser in its detail.</p>
 		<p>The expand event has the loadRaw function and the raw text in its detail.</p>
+		<p>The help event has no detail.</p>
+		<p>Hide the buttons by setting hideHelp, hideLoad, hideSave or hideExpand props to true.</p>
 	</div>
 	<Example>
 		<ExampleComponent>
@@ -88,6 +90,6 @@
 				</div>
 			</div>
 		</ExampleComponent>
-		<ExampleUsage>example usage here</ExampleUsage>
+		<ExampleUsage />
 	</Example>
 </div>
