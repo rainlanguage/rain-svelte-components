@@ -6,6 +6,7 @@
 
 	export let position: 'left' | 'right' = 'left';
 	export let onHover: boolean = false;
+	export let autoWidth: boolean = false;
 
 	let open: boolean;
 	let buttonRef: HTMLDivElement;
@@ -66,7 +67,9 @@
 			`}
 		>
 			<div
-				class="flex flex-col items-stretch overflow-hidden rounded-md border border-gray-100 bg-white p-2 w-48 filter shadow-md dark:bg-gray-900 dark:border-gray-800"
+				class={`
+				${autoWidth ? 'w-auto' : 'w-48'}
+				flex flex-col items-stretch overflow-hidden rounded-md border border-gray-100 bg-white p-2 filter shadow-md dark:bg-gray-900 dark:border-gray-800`}
 			>
 				<slot />
 			</div>
