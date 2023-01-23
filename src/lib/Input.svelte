@@ -14,6 +14,7 @@
 	export let min = '';
 	export let max = '';
 	export let disabled = false;
+	export let name = '';
 
 	export let icon: IconSource | undefined = undefined;
 	export let iconPos: 'start' | 'end' = 'start';
@@ -96,6 +97,7 @@
 		{/if}
 		{#if type !== 'textarea'}
 			<input
+				{name}
 				{type}
 				{value}
 				{placeholder}
@@ -111,6 +113,7 @@
 			/>
 		{:else}
 			<textarea
+				{name}
 				{value}
 				{placeholder}
 				on:input={handleInput}
