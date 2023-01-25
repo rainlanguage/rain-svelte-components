@@ -85,7 +85,7 @@
 	}
 
 	.transparent {
-		@apply text-neutral-600 border border-neutral-300 hover:bg-neutral-300;
+		@apply text-neutral-600 border border-neutral-300 hover:bg-neutral-100;
 	}
 
 	.disabled {
