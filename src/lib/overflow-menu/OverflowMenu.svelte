@@ -39,7 +39,7 @@
 	on:click={({ target }) => {
 		if (target) {
 			if (buttonRef && buttonRef.contains(target)) return;
-			if (menuRef && !menuRef.contains(target)) {
+			if (open && menuRef && !menuRef.contains(target)) {
 				toggle();
 			}
 		}
