@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { Trash } from '@steeze-ui/heroicons';
+
 	import { fade } from 'svelte/transition';
 	import ExampleComponent from '$lib/_docs/ExampleComponent.svelte';
 	import ExampleUsage from '$lib/_docs/ExampleUsage.svelte';
@@ -37,8 +39,11 @@
 		<ExampleComponent>
 			<OverflowMenu>
 				<OverflowMenuItem on:click={editEvent}>Edit</OverflowMenuItem>
-				<OverflowMenuItem on:click={deleteEvent}
-					><span class="text-red-600">Delete</span></OverflowMenuItem
+				<OverflowMenuItem icon={Trash} on:click={deleteEvent} classes="text-red-600"
+					>Delete</OverflowMenuItem
+				>
+				<OverflowMenuItem href="https://google.com" target="_blank" classes="text-fuchsia-600"
+					>Google</OverflowMenuItem
 				>
 			</OverflowMenu>
 			<div class="flex flex-col gap-y-1 mt-4 text-gray-700 dark:text-gray-300">
@@ -59,8 +64,13 @@
 	}
 </script>
 <OverflowMenu>
-	<OverflowMenuItem on:click={item1}>Edit</OverflowMenuItem>
-	<OverflowMenuItem on:click={item2}>Delete</OverflowMenuItem>
+	<OverflowMenuItem on:click={editEvent}>Edit</OverflowMenuItem>
+	<OverflowMenuItem icon={Trash} on:click={deleteEvent} classes="text-red-600">
+		Delete
+	</OverflowMenuItem>
+	<OverflowMenuItem href="https://google.com" target="_blank" classes="text-fuchsia-600">
+		Google
+	</OverflowMenuItem>
 </OverflowMenu>
 		`}</ExampleUsage
 		>
