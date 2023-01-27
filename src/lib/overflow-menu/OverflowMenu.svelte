@@ -31,8 +31,6 @@
 	setContext('overflow-menu', {
 		toggle
 	});
-
-	console.log(position);
 </script>
 
 <svelte:window
