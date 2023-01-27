@@ -6,6 +6,7 @@
 	import PageHeading from '$lib/_docs/PageHeading.svelte';
 	import Button from '$lib/Button.svelte';
 	import { Heart, Square2Stack } from '@steeze-ui/heroicons';
+	import OverflowMenu from '$lib/overflow-menu/OverflowMenu.svelte';
 </script>
 
 <div class="flex flex-col gap-y-4">
@@ -83,6 +84,8 @@
 				<Button icon={Square2Stack} size={'small'}>Copy this expression</Button>
 				<Button icon={Square2Stack} size={'small'} variant={'primary'}>Copy this expression</Button>
 				<Button icon={Square2Stack} variant={'black'}>Copy this expression</Button>
+				<div>Only icon</div>
+				<Button icon={Heart} size={'small'} variant={'black'} />
 			</div>
 		</ExampleComponent>
 		<ExampleUsage>
