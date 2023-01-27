@@ -13,19 +13,25 @@
 
 	let iconStyle: string;
 
+	$: variantCalc = disabled ? 'disabled' : variant;
+
+	const iconOnly = icon && $$slots.default == undefined;
+	console.log(size);
+	// console.log(iconOnly, size, $$slots.default, variant, icon);
+	if (size === 'small' && iconOnly) size = 'small-icon-only';
+	console.log(size);
 	if (size === 'small') {
-		iconStyle = 'w-6 h-5 py-0.5 mr-1.5';
+		iconStyle = `w-5 h-5 py-0.5 ${iconOnly ? '' : 'mr-1.5'}`;
 	} else {
 		// Always setting a good value
-		size = 'regular';
-		iconStyle = 'w-6 h-6 py-0.5 mr-1.5';
+		// size = 'regular';
+		iconStyle = `w-6 h-6 py-0.5 ${iconOnly ? '' : 'mr-1.5'}`;
 	}
 
 	if (variant === 'transparent') {
 		iconStyle += ' text-black';
+		// console.log(iconStyle, iconOnly, size);
 	}
-
-	$: variantCalc = disabled ? 'disabled' : variant;
 </script>
 
 <button
@@ -59,18 +65,22 @@
 	}
 
 	.icon {
-		@apply w-6 h-6 mr-1.5;
+		@apply w-6 h-6;
 	}
 
 	.small {
 		@apply px-2.5 py-[5px] text-sm;
+	}
+
+	.small-icon-only {
+		@apply h-8 w-8 flex items-center justify-center rounded-md;
 	}
 	.regular {
 		@apply px-5 py-2.5 text-base;
 	}
 
 	.default {
-		@apply bg-gray-700 hover:bg-gray-600;
+		@apply bg-gray-900 hover:bg-gray-800;
 	}
 	.primary {
 		@apply bg-blue-700 hover:bg-blue-600 dark:bg-blue-300 dark:hover:bg-blue-200;
@@ -81,11 +91,11 @@
 	}
 
 	.black {
-		@apply bg-neutral-800 hover:bg-neutral-600;
+		@apply bg-neutral-900 hover:bg-neutral-800;
 	}
 
 	.transparent {
-		@apply text-neutral-600 border border-neutral-300 hover:bg-neutral-100;
+		@apply text-neutral-600 border border-neutral-200 hover:bg-neutral-100;
 	}
 
 	.disabled {
