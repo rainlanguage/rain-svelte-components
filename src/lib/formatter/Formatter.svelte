@@ -9,6 +9,7 @@
 	export let raw: string | null = null;
 	export let stateConfig: StateConfig | null = null;
 	export let showFork: boolean = true;
+	export let showForkLabel: boolean = false;
 	export let maxHeight: string | null = null;
 
 	let formatter: ParserInput;
@@ -35,7 +36,11 @@
 		</div>
 		{#if showFork}
 			<div class="bottom-0 right-0 p-2 absolute bg-gray-100 dark:bg-gray-800">
-				<Button icon={DocumentDuplicate} on:click={handleFork} size="small">Fork</Button>
+				{#if showForkLabel}
+					<Button icon={DocumentDuplicate} on:click={handleFork} size="small">Fork</Button>
+				{:else}
+					<Button icon={DocumentDuplicate} on:click={handleFork} size="small" />
+				{/if}
 			</div>
 		{/if}
 	</div>

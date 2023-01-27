@@ -16,10 +16,9 @@
 	$: variantCalc = disabled ? 'disabled' : variant;
 
 	const iconOnly = icon && $$slots.default == undefined;
-	console.log(size);
-	// console.log(iconOnly, size, $$slots.default, variant, icon);
+
 	if (size === 'small' && iconOnly) size = 'small-icon-only';
-	console.log(size);
+
 	if (size === 'small') {
 		iconStyle = `w-5 h-5 py-0.5 ${iconOnly ? '' : 'mr-1.5'}`;
 	} else {
@@ -30,7 +29,6 @@
 
 	if (variant === 'transparent') {
 		iconStyle += ' text-black';
-		// console.log(iconStyle, iconOnly, size);
 	}
 </script>
 
