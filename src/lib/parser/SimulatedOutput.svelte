@@ -17,6 +17,7 @@
 	export let signer: Signer = new ethers.VoidSigner('0x8ba1f109551bD432803012645Ac136ddd64DBA72');
 	export let chainId: number = 80001;
 	export let context: BigNumber[][] = [];
+	export let externalError: string;
 	let error: string | null;
 
 	const providers = Object.keys(defaultProvidersUrls).map((chainId) => ({
@@ -54,11 +55,12 @@
 		_chainId: number
 	) => {
 		error = null;
-		resultState = ResultState.Calculating;
 		if (!vmStateConfig || !vmStateConfig?.sources?.[0]) {
 			resultState = ResultState.EmptyOrNoStateConfig;
 			return;
 		}
+
+		resultState = ResultState.Calculating;
 		const simulator = new RainInterpreterTs(
 			'0xF4d1dbA59eABac89a9C37eB5F5bbC5F5b7Ab6B8c',
 			_chainId,
@@ -105,13 +107,12 @@
 			<Icon src={ArrowPath} />
 		</div>
 	</div>
-	{#if resultState == ResultState.EmptyOrNoStateConfig}
+	{#if error || externalError}
+		<div class="text-red-500 text-xs leading-tight pb-2">{error || externalError}</div>
+	{:else if resultState == ResultState.EmptyOrNoStateConfig}
 		<div class="flex flex-col gap-y-2">
 			<div>Nothing to simulate.</div>
-			<div>(If you're expecting to see something here, check your expression for errors.)</div>
 		</div>
-	{:else if resultState == ResultState.Error}
-		<div class="text-red-500 text-xs leading-tight pb-2">{error}</div>
 	{:else if resultState == ResultState.Calculating}
 		<div class="animate-pulse">calculating...</div>
 	{:else if resultState == ResultState.Ready}

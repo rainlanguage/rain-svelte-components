@@ -14,9 +14,14 @@
 		CloudArrowDown
 	} from '@steeze-ui/heroicons';
 	import { createEventDispatcher, onMount, SvelteComponent } from 'svelte';
+	import type { EvaluableAddresses, EvaluableConfig } from '$lib/parser/types';
+	import Select from '$lib/Select.svelte';
+
+	export let evaluableConfig: EvaluableConfig;
 
 	export let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
 	export let raw: string = '';
+
 	export let signer: Signer;
 	export let error: string = '';
 	export let readOnly: boolean = false;
@@ -26,6 +31,27 @@
 	export let hideExpand: boolean = false;
 	export let hideSave: boolean = false;
 	export let hideHelp: boolean = false;
+
+	export let evaluableAddresses: EvaluableAddresses[] = [
+		{
+			store: 'store1',
+			deployer: 'deployer1',
+			interpreter: 'interpreter1'
+		},
+		{
+			store: 'store2',
+			deployer: 'deployer2',
+			interpreter: 'interpreter2'
+		}
+	];
+
+	let evaluableAddressOptions: { label: string; value: EvaluableAddresses }[] =
+		evaluableAddresses.map((e) => ({
+			label: e.interpreter,
+			value: e
+		}));
+	let selectedEvaluableAddresses: EvaluableAddresses = evaluableAddressOptions[0].value;
+	$: evaluableConfig = { expressionConfig: $vmStateConfig, ...selectedEvaluableAddresses };
 
 	let parserInput: SvelteComponent;
 
@@ -67,15 +93,18 @@
 		<div class="flex flex-col w-1/3">
 			<div class="heading">Simulated output</div>
 			<div class="p-2">
-				<SimulatedOutput {vmStateConfig} {signer} {chainId} />
+				<SimulatedOutput {vmStateConfig} {signer} {chainId} externalError={error} />
 			</div>
 		</div>
 	</div>
-	<div class="bg-gray-200 dark:bg-gray-800 flex justify-between px-2">
-		<div class="text-red-500 text-xs font-regular h-4 p-2">
-			{#if error}
-				Error: {error}
-			{/if}
+	<div class="bg-gray-200 dark:bg-gray-800 flex justify-between px-2 items-center">
+		<div class="justify-self-start flex items-center py-1">
+			<Select
+				items={evaluableAddressOptions}
+				bind:value={selectedEvaluableAddresses}
+				small
+				label="Select interpreter"
+			/>
 		</div>
 		<div class="gap-x-3 flex items-center text-gray-600">
 			{#if !hideHelp}

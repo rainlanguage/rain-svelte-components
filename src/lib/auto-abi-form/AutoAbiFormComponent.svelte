@@ -8,6 +8,7 @@
 	import Button from '$lib/Button.svelte';
 	import { createEventDispatcher, getContext } from 'svelte';
 	import Switch from '$lib/Switch.svelte';
+	import type { EvaluableConfig } from '$lib/parser/types';
 
 	export let component: AbiParameter & {
 		nameMeta?: string;
@@ -33,7 +34,7 @@
 	$: if (arrayedComponents) updateResult();
 
 	const updateResult = () => {
-		if (type?.endsWith('[]') && type !== 'StateConfig[]' && !settings.onlyExpressions) {
+		if (type?.endsWith('[]') && type !== 'EvaluableConfig[]' && !settings.onlyExpressions) {
 			result = arrayedComponents.map((comp) => comp.compResult);
 		}
 	};
@@ -51,6 +52,7 @@
 
 	// we need to handle the Parser differently as it binds to a store, not a regular value
 	let vmStateConfig = writable({ sources: [], constants: [] });
+	let evaluableConfig: EvaluableConfig;
 	let stateConfigsStore: Writable<{ id: number; store: Writable<StateConfig> }[]> = writable([
 		{ id: 0, store: writable({ sources: [], constants: [] }) }
 	]);
@@ -59,8 +61,8 @@
 		(x) => x
 	);
 
-	$: if (type == 'struct StateConfig') result = $vmStateConfig;
-	$: if (type == 'struct StateConfig[]') result = $stateConfigsArray;
+	$: if (type == 'struct EvaluableConfig') result = evaluableConfig;
+	$: if (type == 'struct EvaluableConfig[]') result.expressionConfig = $stateConfigsArray;
 
 	let expressionId = 0;
 	const addExpression = () => {
@@ -117,7 +119,7 @@
 	{/if}
 {/if}
 {#if !settings.onlyConfig}
-	{#if type == 'struct StateConfig'}
+	{#if type == 'struct EvaluableConfig'}
 		<div>
 			{#if component.nameMeta}
 				<div class="font-medium">{component.nameMeta}</div>
@@ -128,14 +130,14 @@
 		</div>
 		<Parser
 			signer={$signer}
-			bind:vmStateConfig
+			bind:evaluableConfig
 			on:save
 			on:load
 			on:expand
 			on:help
 			componentName={component.nameMeta || component.name}
 		/>
-	{:else if type == 'struct StateConfig[]'}
+	{:else if type == 'struct EvaluableConfig[]'}
 		<div>
 			{#if component.nameMeta}
 				<div class="font-medium">{component.nameMeta}</div>
@@ -170,7 +172,7 @@
 		</div>
 	{/if}
 {/if}
-{#if type?.startsWith('struct') && 'components' in component && type !== 'struct StateConfig' && type !== 'struct StateConfig[]'}
+{#if type?.startsWith('struct') && 'components' in component && type !== 'struct EvaluableConfig' && type !== 'struct EvaluableConfig[]'}
 	{#if !settings.onlyExpressions}
 		{#if component.nameMeta}
 			<div class="font-medium col-span-full">{component.nameMeta}</div>
@@ -181,7 +183,7 @@
 			<div class="text-sm col-span-full">{component.descriptionMeta}</div>
 		{/if}
 	{/if}
-	{#if type?.endsWith('[]') && type !== 'struct StateConfig[]' && !settings.onlyExpressions}
+	{#if type?.endsWith('[]') && type !== 'struct EvaluableConfig[]' && !settings.onlyExpressions}
 		{#each arrayedComponents as arrayedComponent (arrayedComponent.id)}
 			{#each component.components as subComponent}
 				{#if subComponent}

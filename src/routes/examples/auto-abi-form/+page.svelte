@@ -11,6 +11,8 @@
 	import ExampleComponent from '$lib/_docs/ExampleComponent.svelte';
 	import ExampleUsage from '$lib/_docs/ExampleUsage.svelte';
 	import AutoAbiFormSeparated from '$lib/auto-abi-form/AutoAbiFormSeparated.svelte';
+	import OrderBook from './OrderBook.json';
+	import OrderBookMetadata from './OrderBookMetadata.json';
 
 	let result: any, resultMerged: any, result2: any;
 </script>
@@ -37,6 +39,44 @@
 			>
 		</div>
 	</div>
+	<ExampleHeading id="separated">Separated expressions and config</ExampleHeading>
+	<div class="dark:text-white">
+		Hide the interpreter and deployer address fields as defined in the metadata by setting the prop <span
+			class="font-mono">showInterpreterFields</span
+		>
+		to <span class="font-mono">false</span>
+	</div>
+	<Example>
+		<ExampleComponent>
+			<div class="grid grid-cols-3">
+				<div class="col-span-2">
+					<div class="text-xl mb-2">Method name: addOrder</div>
+					<AutoAbiFormSeparated
+						abi={OrderBook.abi}
+						metadata={OrderBookMetadata}
+						bind:result={resultMerged}
+						methodName="addOrder"
+						on:save={({ detail }) => {
+							console.log(detail);
+						}}
+						on:load={(event) => {
+							console.log(event);
+						}}
+						on:help={(event) => {
+							console.log('help clicked');
+						}}
+					/>
+				</div>
+				<div class="p-4">
+					<span>Result</span>
+					<pre>
+						{JSON.stringify(resultMerged, null, 2)}
+					</pre>
+				</div>
+			</div>
+		</ExampleComponent>
+		<ExampleUsage>example usage here</ExampleUsage>
+	</Example>
 	<ExampleHeading id="with-parser">With parser</ExampleHeading>
 	<Example>
 		<ExampleComponent>
@@ -57,45 +97,6 @@
 					<span>Result</span>
 					<pre>
 						{JSON.stringify(result, null, 2)}
-					</pre>
-				</div>
-			</div>
-		</ExampleComponent>
-		<ExampleUsage>example usage here</ExampleUsage>
-	</Example>
-	<ExampleHeading id="separated">Separated expressions and config</ExampleHeading>
-	<div class="dark:text-white">
-		Hide the interpreter and deployer address fields as defined in the metadata by setting the prop <span
-			class="font-mono">showInterpreterFields</span
-		>
-		to <span class="font-mono">false</span>
-	</div>
-	<Example>
-		<ExampleComponent>
-			<div class="grid grid-cols-3">
-				<div class="col-span-2">
-					<div class="text-xl mb-2">Method name: createChildTyped</div>
-					<AutoAbiFormSeparated
-						abi={LobbyFactory.abi}
-						metadata={LobbyFactoryMetadata}
-						bind:result={resultMerged}
-						methodName="createChildTyped"
-						showInterpreterFields={false}
-						on:save={({ detail }) => {
-							console.log(detail);
-						}}
-						on:load={(event) => {
-							console.log(event);
-						}}
-						on:help={(event) => {
-							console.log('help clicked');
-						}}
-					/>
-				</div>
-				<div class="p-4">
-					<span>Result</span>
-					<pre>
-						{JSON.stringify(resultMerged, null, 2)}
 					</pre>
 				</div>
 			</div>

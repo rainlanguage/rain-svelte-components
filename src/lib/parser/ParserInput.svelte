@@ -15,7 +15,7 @@
 
 	export let vmStateConfig: Writable<StateConfig> = writable(emptySc);
 	export let raw: string = '';
-	export let error: string = '';
+	export let error: string | null = '';
 	export let readOnly: boolean = false;
 
 	let value = [
@@ -38,7 +38,10 @@
 			error = tree?.[0]?.tree?.[0]?.error || '';
 			if (!error) return stateConfig;
 			else return emptySc;
-		} else return emptySc;
+		} else {
+			error = null;
+			return emptySc;
+		}
 	};
 
 	let textCache: any = null;

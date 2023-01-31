@@ -21,8 +21,8 @@
 		const findExpression = (component: AbiParameter) => {
 			if ('internalType' in component) {
 				if (
-					component.internalType == 'struct StateConfig' ||
-					component.internalType == 'struct StateConfig[]'
+					component.internalType == 'struct EvaluableConfig' ||
+					component.internalType == 'struct EvaluableConfig[]'
 				) {
 					expressions = true;
 				}
