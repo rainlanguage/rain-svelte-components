@@ -13,8 +13,22 @@
 	import AutoAbiFormSeparated from '$lib/auto-abi-form/AutoAbiFormSeparated.svelte';
 	import OrderBook from './OrderBook.json';
 	import OrderBookMetadata from './OrderBookMetadata.json';
+	import { setContext } from 'svelte';
 
 	let result: any, resultMerged: any, result2: any, resultMergedFlow: any;
+
+	setContext('EVALUABLE_ADDRESSES', [
+		{
+			store: 'store1',
+			deployer: 'deployer1',
+			interpreter: 'interpreter1'
+		},
+		{
+			store: 'store2',
+			deployer: 'deployer2',
+			interpreter: 'interpreter2'
+		}
+	]);
 </script>
 
 <div class="flex flex-col gap-y-4 dark:text-gray-100">

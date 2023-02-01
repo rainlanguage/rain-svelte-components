@@ -13,24 +13,11 @@
 		CloudArrowUp,
 		CloudArrowDown
 	} from '@steeze-ui/heroicons';
-	import { createEventDispatcher, onMount, SvelteComponent } from 'svelte';
+	import { createEventDispatcher, getContext, onMount, SvelteComponent } from 'svelte';
 	import type { EvaluableAddresses, EvaluableConfig } from '$lib/parser/types';
 	import Select from '$lib/Select.svelte';
 
 	export let evaluableConfig: EvaluableConfig;
-
-	export let evaluableAddresses: EvaluableAddresses[] = [
-		{
-			store: 'store1',
-			deployer: 'deployer1',
-			interpreter: 'interpreter1'
-		},
-		{
-			store: 'store2',
-			deployer: 'deployer2',
-			interpreter: 'interpreter2'
-		}
-	];
 
 	export let raw: string = '';
 	export let signer: Signer;
@@ -43,6 +30,8 @@
 	export let hideSave: boolean = false;
 	export let hideHelp: boolean = false;
 
+	export let evaluableAddresses: EvaluableAddresses[] = getContext('EVALUABLE_ADDRESSES') || [];
+
 	let evaluableAddressOptions: { label: string; value: EvaluableAddresses }[] =
 		evaluableAddresses.map((e) => ({
 			label: e.interpreter,
@@ -50,18 +39,19 @@
 		}));
 
 	export let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
-	export let selectedEvaluableAddresses: Writable<EvaluableAddresses> = writable(
-		evaluableAddressOptions[0].value
-	);
+	export let selectedEvaluableAddresses: Writable<EvaluableAddresses> = writable();
 
-	// let selectedEvaluableAddresses: EvaluableAddresses = evaluableAddressOptions[0].value;
 	$: evaluableConfig = { expressionConfig: $vmStateConfig, ...$selectedEvaluableAddresses };
-	let parserInput: SvelteComponent;
 
+	let parserInput: SvelteComponent;
 	export let loadRaw: any = null;
 
 	onMount(() => {
 		loadRaw = parserInput.loadRaw;
+
+		// setting a default interpreter
+		if (evaluableAddressOptions.length)
+			$selectedEvaluableAddresses = evaluableAddressOptions[0].value;
 	});
 
 	const dispatch = createEventDispatcher();
