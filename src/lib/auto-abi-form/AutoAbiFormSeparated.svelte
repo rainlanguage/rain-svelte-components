@@ -39,7 +39,7 @@
 
 	$: expressions = hasExpressions(abi);
 
-	$: result = merge([], expressionsResult, configResult);
+	$: result = merge([], configResult, expressionsResult);
 </script>
 
 <div class="flex flex-col gap-y-8">

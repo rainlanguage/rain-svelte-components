@@ -3,12 +3,10 @@
 	import Input from '$lib/Input.svelte';
 	import Parser from '$lib/parser/Parser.svelte';
 	import type { AbiParameter } from 'abitype';
-	import { derived, writable, type Writable } from 'svelte/store';
-	import type { StateConfig } from 'rain-sdk';
 	import Button from '$lib/Button.svelte';
-	import { createEventDispatcher, getContext } from 'svelte';
+	import { getContext, onMount } from 'svelte';
 	import Switch from '$lib/Switch.svelte';
-	import type { EvaluableConfig } from '$lib/parser/types';
+	import { constructEvaluableConfig, type EvaluableConfig } from '$lib/parser/types';
 
 	export let component: AbiParameter & {
 		nameMeta?: string;
@@ -17,8 +15,6 @@
 		isDeployerField?: boolean;
 	};
 	export let result: any = 'components' in component ? {} : undefined;
-
-	const dispatch = createEventDispatcher();
 
 	const settings: {
 		onlyConfig: boolean;
@@ -51,31 +47,35 @@
 	};
 
 	// we need to handle the Parser differently as it binds to a store, not a regular value
-	let vmStateConfig = writable({ sources: [], constants: [] });
 	let evaluableConfig: EvaluableConfig;
-	let stateConfigsStore: Writable<{ id: number; store: Writable<StateConfig> }[]> = writable([
-		{ id: 0, store: writable({ sources: [], constants: [] }) }
-	]);
-	$: stateConfigsArray = derived(
-		$stateConfigsStore.map((s) => s.store),
-		(x) => x
-	);
+
+	// code for handling arrays of expressions
+
+	// we need to include an id so svelte will properly destroy the component when we remove one from the array
+	// init one to start
+	let evaluableConfigs: { id: number; evaluableConfig: EvaluableConfig }[] = [];
 
 	$: if (type == 'struct EvaluableConfig') result = evaluableConfig;
-	$: if (type == 'struct EvaluableConfig[]') result.expressionConfig = $stateConfigsArray;
+	$: if (type == 'struct EvaluableConfig[]')
+		result = evaluableConfigs.map((e) => e.evaluableConfig);
 
-	let expressionId = 0;
+	let evaluableConfigId = 0;
 	const addExpression = () => {
-		expressionId++;
-		$stateConfigsStore = [
-			...$stateConfigsStore,
-			{ id: expressionId, store: writable({ sources: [], constants: [] }) }
+		evaluableConfigs = [
+			...evaluableConfigs,
+			{ id: evaluableConfigId, evaluableConfig: constructEvaluableConfig() }
 		];
+		evaluableConfigId++;
 	};
 
 	const removeExpression = (instance: any) => {
-		$stateConfigsStore = $stateConfigsStore.filter((x) => x.id !== instance.id);
+		evaluableConfigs = evaluableConfigs.filter((x) => x.id !== instance.id);
 	};
+
+	// if this component is a list of expressions, add the first one
+	onMount(() => {
+		if (type == 'struct EvaluableConfig[]' && !settings.onlyConfig) addExpression();
+	});
 </script>
 
 {#if !((component?.isInterpreterField || component?.isDeployerField) && !settings.showInterpreterFields)}
@@ -146,11 +146,11 @@
 				<div class="text-sm">{component.descriptionMeta}</div>
 			{/if}
 		</div>
-		{#each $stateConfigsStore as instance (instance.id)}
+		{#each evaluableConfigs as instance (instance.id)}
 			<div class="flex flex-col gap-y-2">
 				<Parser
 					signer={$signer}
-					bind:vmStateConfig={instance.store}
+					bind:evaluableConfig={instance.evaluableConfig}
 					on:save
 					on:load
 					on:expand

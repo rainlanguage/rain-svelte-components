@@ -19,19 +19,6 @@
 
 	export let evaluableConfig: EvaluableConfig;
 
-	export let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
-	export let raw: string = '';
-
-	export let signer: Signer;
-	export let error: string = '';
-	export let readOnly: boolean = false;
-	export let componentName: string | null = null;
-	export let chainId: number = 80001;
-	export let hideLoad: boolean = false;
-	export let hideExpand: boolean = false;
-	export let hideSave: boolean = false;
-	export let hideHelp: boolean = false;
-
 	export let evaluableAddresses: EvaluableAddresses[] = [
 		{
 			store: 'store1',
@@ -45,14 +32,30 @@
 		}
 	];
 
+	export let raw: string = '';
+	export let signer: Signer;
+	export let error: string = '';
+	export let readOnly: boolean = false;
+	export let componentName: string | null = null;
+	export let chainId: number = 80001;
+	export let hideLoad: boolean = false;
+	export let hideExpand: boolean = false;
+	export let hideSave: boolean = false;
+	export let hideHelp: boolean = false;
+
 	let evaluableAddressOptions: { label: string; value: EvaluableAddresses }[] =
 		evaluableAddresses.map((e) => ({
 			label: e.interpreter,
 			value: e
 		}));
-	let selectedEvaluableAddresses: EvaluableAddresses = evaluableAddressOptions[0].value;
-	$: evaluableConfig = { expressionConfig: $vmStateConfig, ...selectedEvaluableAddresses };
 
+	export let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
+	export let selectedEvaluableAddresses: Writable<EvaluableAddresses> = writable(
+		evaluableAddressOptions[0].value
+	);
+
+	// let selectedEvaluableAddresses: EvaluableAddresses = evaluableAddressOptions[0].value;
+	$: evaluableConfig = { expressionConfig: $vmStateConfig, ...$selectedEvaluableAddresses };
 	let parserInput: SvelteComponent;
 
 	export let loadRaw: any = null;
@@ -101,7 +104,7 @@
 		<div class="justify-self-start flex items-center py-1">
 			<Select
 				items={evaluableAddressOptions}
-				bind:value={selectedEvaluableAddresses}
+				bind:value={$selectedEvaluableAddresses}
 				small
 				label="Select interpreter"
 			/>
