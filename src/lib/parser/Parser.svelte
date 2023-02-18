@@ -37,7 +37,7 @@
 
 	const formatEvaluableAddressOptions = (addresses_: any[]): EvaluableAddressOption[] => {
 		return addresses_.map((e) => ({
-			label: e.interpreter,
+			label: e,
 			value: e
 		}));
 	};
