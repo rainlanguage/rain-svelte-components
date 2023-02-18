@@ -13,7 +13,7 @@
 		CloudArrowUp,
 		CloudArrowDown
 	} from '@steeze-ui/heroicons';
-	import { createEventDispatcher, getContext, onMount, SvelteComponent } from 'svelte';
+	import { createEventDispatcher, getContext, onMount, setContext, SvelteComponent } from 'svelte';
 	import type { EvaluableAddresses, EvaluableConfig } from '$lib/parser/types';
 	import Select from '$lib/Select.svelte';
 
@@ -30,13 +30,21 @@
 	export let hideSave: boolean = false;
 	export let hideHelp: boolean = false;
 
-	export let evaluableAddresses: EvaluableAddresses[] = getContext('EVALUABLE_ADDRESSES') || [];
+	type EvaluableAddressOption = { label: string; value: EvaluableAddresses };
 
-	let evaluableAddressOptions: { label: string; value: EvaluableAddresses }[] =
-		evaluableAddresses.map((e) => ({
+	const { getAddresses } = getContext('EVALUABLE_ADDRESSES');
+
+	const formatEvaluableAddressOptions = (addresses_: any[]): EvaluableAddressOption[] => {
+		return addresses_.map((e) => ({
 			label: e.interpreter,
 			value: e
 		}));
+	};
+
+	export let evaluableAddresses: EvaluableAddresses[] = [];
+
+	let evaluableAddressOptions: EvaluableAddressOption[] =
+		formatEvaluableAddressOptions(evaluableAddresses);
 
 	export let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
 	export let selectedEvaluableAddresses: Writable<EvaluableAddresses> = writable();
@@ -45,6 +53,12 @@
 
 	let parserInput: SvelteComponent;
 	export let loadRaw: any = null;
+
+	onMount(async () => {
+		const addresses = await getAddresses();
+
+		evaluableAddressOptions = formatEvaluableAddressOptions(addresses);
+	});
 
 	onMount(() => {
 		loadRaw = parserInput.loadRaw;
