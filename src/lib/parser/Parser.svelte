@@ -32,6 +32,7 @@
 
 	type EvaluableAddressOption = { label: string; value: EvaluableAddresses };
 
+	// User should add an function that retrieve the array with addresses
 	const { getAddresses } = getContext('EVALUABLE_ADDRESSES');
 
 	const formatEvaluableAddressOptions = (addresses_: any[]): EvaluableAddressOption[] => {
@@ -47,9 +48,13 @@
 		formatEvaluableAddressOptions(evaluableAddresses);
 
 	export let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
-	export let selectedEvaluableAddresses: Writable<EvaluableAddresses> = writable();
+	export let selectedEvaluableAddresses: Writable<string> = writable();
 
-	$: evaluableConfig = { expressionConfig: $vmStateConfig, ...$selectedEvaluableAddresses };
+	$: evaluableConfig = {
+		constants: $vmStateConfig.constants,
+		sources: $vmStateConfig.sources,
+		IExpressionDeployerV1: $selectedEvaluableAddresses
+	};
 
 	let parserInput: SvelteComponent;
 	export let loadRaw: any = null;
