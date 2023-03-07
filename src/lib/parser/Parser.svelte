@@ -13,8 +13,8 @@
 		CloudArrowUp,
 		CloudArrowDown
 	} from '@steeze-ui/heroicons';
-	import { createEventDispatcher, getContext, onMount, setContext, SvelteComponent } from 'svelte';
-	import type { EvaluableAddresses, EvaluableConfig } from '$lib/parser/types';
+	import { createEventDispatcher, getContext, onMount, SvelteComponent } from 'svelte';
+	import type { Deployer, EvaluableConfig, GetDeployers } from '$lib/parser/types';
 	import Select from '$lib/Select.svelte';
 
 	export let evaluableConfig: EvaluableConfig;
@@ -30,47 +30,55 @@
 	export let hideSave: boolean = false;
 	export let hideHelp: boolean = false;
 
-	type EvaluableAddressOption = { label: string; value: EvaluableAddresses };
+	let noDeployers = false;
+
+	type DeployerOption = { label: string; value: Deployer };
 
 	// User should add an function that retrieve the array with addresses
-	const { getAddresses } = getContext('EVALUABLE_ADDRESSES');
+	const { getDeployers } = getContext('EVALUABLE_ADDRESSES') as { getDeployers: GetDeployers };
 
-	const formatEvaluableAddressOptions = (addresses_: any[]): EvaluableAddressOption[] => {
-		return addresses_.map((e) => ({
-			label: e,
+	const formatDeployerOptions = (deployers: Deployer[]): DeployerOption[] => {
+		return deployers.map((e) => ({
+			label: e.address,
 			value: e
 		}));
 	};
 
-	export let evaluableAddresses: EvaluableAddresses[] = [];
+	export let deployers: Deployer[] = [];
 
-	let evaluableAddressOptions: EvaluableAddressOption[] =
-		formatEvaluableAddressOptions(evaluableAddresses);
+	let deployerOptions: DeployerOption[] = formatDeployerOptions(deployers);
 
 	export let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
-	export let selectedEvaluableAddresses: Writable<string> = writable();
+	export let selectedDeployer: Writable<Deployer> = writable();
 
 	$: evaluableConfig = {
 		constants: $vmStateConfig.constants,
 		sources: $vmStateConfig.sources,
-		IExpressionDeployerV1: $selectedEvaluableAddresses
+		IExpressionDeployerV1: $selectedDeployer?.address
 	};
 
 	let parserInput: SvelteComponent;
 	export let loadRaw: any = null;
 
 	onMount(async () => {
-		const addresses = await getAddresses();
-
-		evaluableAddressOptions = formatEvaluableAddressOptions(addresses);
+		if (!getDeployers) {
+			noDeployers = true;
+			return;
+		}
+		const deployers = await getDeployers();
+		if (!deployers) {
+			noDeployers = true;
+			return;
+		}
+		deployerOptions = formatDeployerOptions(deployers);
+		console.log(deployerOptions);
 	});
 
 	onMount(() => {
 		loadRaw = parserInput.loadRaw;
 
 		// setting a default interpreter
-		if (evaluableAddressOptions.length)
-			$selectedEvaluableAddresses = evaluableAddressOptions[0].value;
+		if (deployerOptions.length) $selectedDeployer = deployerOptions[0].value;
 	});
 
 	const dispatch = createEventDispatcher();
@@ -111,12 +119,16 @@
 	</div>
 	<div class="bg-gray-200 dark:bg-gray-800 flex justify-between px-2 items-center">
 		<div class="justify-self-start flex items-center py-1">
-			<Select
-				items={evaluableAddressOptions}
-				bind:value={$selectedEvaluableAddresses}
-				small
-				label="Select interpreter"
-			/>
+			{#if noDeployers}
+				<span>No deployers found!</span>
+			{:else}
+				<Select
+					items={deployerOptions}
+					bind:value={$selectedDeployer}
+					small
+					label="Select interpreter"
+				/>
+			{/if}
 		</div>
 		<div class="gap-x-3 flex items-center text-gray-600">
 			{#if !hideHelp}

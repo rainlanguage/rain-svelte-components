@@ -1,10 +1,9 @@
 <script lang="ts">
 	import AutoAbiFormComponent from '$lib/auto-abi-form/AutoAbiFormComponent.svelte';
-	import type { ContractMetadata } from 'rain-metadata/metadata-types/contract';
-	// import * as Ajv from 'ajv';
+	import type { ContractMetadata } from 'rain-metadata/type-definitions/contract';
 	import { set } from 'lodash-es';
 	import type { Abi } from 'abitype';
-	import { createEventDispatcher, setContext } from 'svelte';
+	import { setContext } from 'svelte';
 
 	export let abi: Abi;
 	export let methodName: string = 'createChildTyped';
@@ -19,32 +18,29 @@
 
 	// metadata
 	export let metadata: ContractMetadata;
-	let valid: boolean = true;
 
 	$: method = abi.find((method) => method.type == 'function' && method?.name == methodName);
 	$: inputs = method?.type == 'function' ? method.inputs : null;
 
-	if (metadata) {
-		if (metadata.expressions) {
-			metadata.expressions.forEach((expression) => {
-				set(abi, expression.path + '.nameMeta', expression.name);
-				set(abi, expression.path + '.descriptionMeta', expression.description);
-			});
-		}
-		if (metadata.inputs) {
-			metadata.inputs.forEach((input) => {
-				set(abi, input.path + '.nameMeta', input.name);
-				set(abi, input.path + '.descriptionMeta', input.description);
-			});
-		}
-		if (metadata.interpreterFields) {
-			set(abi, metadata.interpreterFields.interpreterFieldPath + '.isInterpreterField', true);
-			set(abi, metadata.interpreterFields.deployerFieldPath + '.isDeployerField', true);
-		}
+	if (metadata && metadata.methods) {
+		metadata.methods.forEach((method) => {
+			if (method.expressions) {
+				method.expressions.forEach((expression) => {
+					set(abi, expression.path + '.nameMeta', expression.name);
+					set(abi, expression.path + '.descriptionMeta', expression.desc);
+				});
+			}
+			if (method.inputs) {
+				method.inputs.forEach((input) => {
+					set(abi, input.path + '.nameMeta', input.name);
+					set(abi, input.path + '.descriptionMeta', input.desc);
+				});
+			}
+		});
 	}
 </script>
 
-{#if (metadata && valid) || !metadata}
+{#if metadata || !metadata}
 	{#if inputs}
 		<div class:onlyConfig class:normalForm={!onlyConfig}>
 			{#each inputs as component, i}
