@@ -14,7 +14,7 @@
 		CloudArrowDown
 	} from '@steeze-ui/heroicons';
 	import { createEventDispatcher, getContext, onMount, SvelteComponent } from 'svelte';
-	import type { EvaluableAddresses, EvaluableConfig } from '$lib/parser/types';
+	import type { Deployer, EvaluableConfig, GetDeployers } from '$lib/parser/types';
 	import Select from '$lib/Select.svelte';
 
 	export let evaluableConfig: EvaluableConfig;
@@ -30,28 +30,55 @@
 	export let hideSave: boolean = false;
 	export let hideHelp: boolean = false;
 
-	export let evaluableAddresses: EvaluableAddresses[] = getContext('EVALUABLE_ADDRESSES') || [];
+	let noDeployers = false;
 
-	let evaluableAddressOptions: { label: string; value: EvaluableAddresses }[] =
-		evaluableAddresses.map((e) => ({
-			label: e.interpreter,
+	type DeployerOption = { label: string; value: Deployer };
+
+	// User should add an function that retrieve the array with addresses
+	const { getDeployers } = getContext('EVALUABLE_ADDRESSES') as { getDeployers: GetDeployers };
+
+	const formatDeployerOptions = (deployers: Deployer[]): DeployerOption[] => {
+		return deployers.map((e) => ({
+			label: e.address,
 			value: e
 		}));
+	};
+
+	export let deployers: Deployer[] = [];
+
+	let deployerOptions: DeployerOption[] = formatDeployerOptions(deployers);
 
 	export let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
-	export let selectedEvaluableAddresses: Writable<EvaluableAddresses> = writable();
+	export let selectedDeployer: Writable<Deployer> = writable();
 
-	$: evaluableConfig = { expressionConfig: $vmStateConfig, ...$selectedEvaluableAddresses };
+	$: evaluableConfig = {
+		constants: $vmStateConfig.constants,
+		sources: $vmStateConfig.sources,
+		IExpressionDeployerV1: $selectedDeployer?.address
+	};
 
 	let parserInput: SvelteComponent;
 	export let loadRaw: any = null;
+
+	onMount(async () => {
+		if (!getDeployers) {
+			noDeployers = true;
+			return;
+		}
+		const deployers = await getDeployers();
+		if (!deployers) {
+			noDeployers = true;
+			return;
+		}
+		deployerOptions = formatDeployerOptions(deployers);
+		console.log(deployerOptions);
+	});
 
 	onMount(() => {
 		loadRaw = parserInput.loadRaw;
 
 		// setting a default interpreter
-		if (evaluableAddressOptions.length)
-			$selectedEvaluableAddresses = evaluableAddressOptions[0].value;
+		if (deployerOptions.length) $selectedDeployer = deployerOptions[0].value;
 	});
 
 	const dispatch = createEventDispatcher();
@@ -92,12 +119,16 @@
 	</div>
 	<div class="bg-gray-200 dark:bg-gray-800 flex justify-between px-2 items-center">
 		<div class="justify-self-start flex items-center py-1">
-			<Select
-				items={evaluableAddressOptions}
-				bind:value={$selectedEvaluableAddresses}
-				small
-				label="Select interpreter"
-			/>
+			{#if noDeployers}
+				<span>No deployers found!</span>
+			{:else}
+				<Select
+					items={deployerOptions}
+					bind:value={$selectedDeployer}
+					small
+					label="Select interpreter"
+				/>
+			{/if}
 		</div>
 		<div class="gap-x-3 flex items-center text-gray-600">
 			{#if !hideHelp}

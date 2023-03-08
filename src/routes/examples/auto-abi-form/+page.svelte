@@ -12,23 +12,24 @@
 	import ExampleUsage from '$lib/_docs/ExampleUsage.svelte';
 	import AutoAbiFormSeparated from '$lib/auto-abi-form/AutoAbiFormSeparated.svelte';
 	import OrderBook from './OrderBook.json';
-	import OrderBookMetadata from './OrderBookMetadata.json';
+	import OrderBookMetadata from './OrderBook.meta.json';
 	import { setContext } from 'svelte';
 
 	let result: any, resultMerged: any, result2: any, resultMergedFlow: any;
 
-	setContext('EVALUABLE_ADDRESSES', [
-		{
-			store: 'store1',
-			deployer: 'deployer1',
-			interpreter: 'interpreter1'
-		},
-		{
-			store: 'store2',
-			deployer: 'deployer2',
-			interpreter: 'interpreter2'
+	setContext('EVALUABLE_ADDRESSES', {
+		getDeployers: async () => {
+			// const resp = await fetch('www.some_endpoint.com/get_addresses', {
+			// 	method: 'GET'
+			// });
+			// if (resp.ok) {
+			// 	const { interpreterAddresses } = await resp.json();
+			// 	return interpreterAddresses;
+			// }
+
+			return [{ address: '0xDummyAddress1' }, { address: '0xDummyAddress2' }];
 		}
-	]);
+	});
 </script>
 
 <div class="flex flex-col gap-y-4 dark:text-gray-100">
@@ -91,7 +92,7 @@
 		</ExampleComponent>
 		<ExampleUsage>example usage here</ExampleUsage>
 	</Example>
-	<Example>
+	<!-- <Example>
 		<ExampleComponent>
 			<div class="grid grid-cols-3">
 				<div class="col-span-2">
@@ -172,5 +173,5 @@
 			</div>
 		</ExampleComponent>
 		<ExampleUsage>example usage here</ExampleUsage>
-	</Example>
+	</Example> -->
 </div>

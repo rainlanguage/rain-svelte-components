@@ -1,26 +1,22 @@
-import type { StateConfig } from "@rainprotocol/rainlang"
+import type { OpMeta } from "rain-metadata/type-definitions/op";
 
 export type EvaluableConfig = {
-    interpreter: string,
-    deployer: string,
-    store: string,
-    expressionConfig: StateConfig
-}
+	IExpressionDeployerV1: string;
+	sources: any[];
+	constants: any[];
+};
 
 export const constructEvaluableConfig: () => EvaluableConfig = () => {
-    return {
-        interpreter: '',
-        deployer: '',
-        store: '',
-        expressionConfig: {
-            sources: [],
-            constants: []
-        }
-    }
+	return {
+		IExpressionDeployerV1: '',
+		sources: [],
+		constants: []
+	};
+};
+
+export type Deployer = {
+	address: string,
+	opmeta: OpMeta[]
 }
 
-export type EvaluableAddresses = {
-    interpreter: string,
-    deployer: string,
-    store: string
-}
+export type GetDeployers = () => Deployer[]

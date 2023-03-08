@@ -53,7 +53,7 @@
 		"ajv": "^8.11.0",
 		"ethers": "^5.7.1",
 		"lodash-es": "^4.17.21",
-		"rain-metadata": "git+https://github.com/rainprotocol/rain-metadata.git#40dc5c105a9db4169586c3826dd977c15b626228",
+		"rain-metadata": "git+https://github.com/rainprotocol/rain-metadata.git",
 		"rain-sdk": "git+https://github.com/rainprotocol/rain-sdk.git#f6710e64a7d6c47110e3e584cd17e947c1d7313a",
 		"slate": "^0.85.0",
 		"slate-history": "^0.86.0",
