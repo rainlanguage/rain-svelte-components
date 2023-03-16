@@ -12,6 +12,7 @@
 	import Parser from '$lib/parser/Parser.svelte';
 	import type { SvelteComponent } from 'svelte';
 	import Input from '$lib/Input.svelte';
+	import RainlangEditor from '$lib/parser/RainlangEditor.svelte';
 
 	let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
 	let raw: string;
@@ -39,8 +40,9 @@
 	<Example>
 		<ExampleComponent>
 			<div class="flex flex-col gap-y-2">
-				<div class="bg-gray-100 dark:bg-gray-800 h-[100px] overflow-scroll flex flex-col">
-					<ParserInput {vmStateConfig} bind:raw />
+				<div class="bg-gray-100 dark:bg-gray-800 h-[200px] overflow-auto flex flex-col">
+					<!-- <ParserInput {vmStateConfig} bind:raw /> -->
+					<RainlangEditor />
 				</div>
 				<span>Simulated output</span>
 				<div class="bg-gray-100 p-3 dark:bg-gray-800">
