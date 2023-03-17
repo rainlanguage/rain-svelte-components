@@ -8,13 +8,14 @@
 	import PageHeading from '$lib/_docs/PageHeading.svelte';
 	import { writable, type Writable } from 'svelte/store';
 	import SimulatedOutput from '$lib/parser/SimulatedOutput.svelte';
-	import type { StateConfig } from 'rain-sdk';
 	import Parser from '$lib/parser/Parser.svelte';
-	import type { SvelteComponent } from 'svelte';
 	import Input from '$lib/Input.svelte';
 	import RainlangEditor from '$lib/parser/RainlangEditor.svelte';
+	import { darkMode } from '$lib/darkModeAction';
 
-	let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
+	const emptySc: ExpressionConfig = { sources: [], constants: [] };
+
+	let vmStateConfig: Writable<ExpressionConfig> = writable(emptySc);
 	let raw: string;
 	let events: string[] = [];
 	let rawToLoad: string;
@@ -42,7 +43,7 @@
 			<div class="flex flex-col gap-y-2">
 				<div class="bg-gray-100 dark:bg-gray-800 h-[200px] overflow-auto flex flex-col">
 					<!-- <ParserInput {vmStateConfig} bind:raw /> -->
-					<RainlangEditor />
+					<RainlangEditor {vmStateConfig} bind:raw dark={$darkMode} />
 				</div>
 				<span>Simulated output</span>
 				<div class="bg-gray-100 p-3 dark:bg-gray-800">

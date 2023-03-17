@@ -1,45 +1,31 @@
 <script lang="ts">
-	import { javascript } from '@codemirror/lang-javascript';
-	import type { StateConfig } from 'rain-sdk';
 	import CodeMirror from 'svelte-codemirror-editor';
 	import { writable, type Writable } from 'svelte/store';
 
+	import type { Extension } from '@codemirror/state';
+
 	import {
-		lineNumbers,
-		highlightActiveLineGutter,
-		highlightSpecialChars,
-		drawSelection,
-		dropCursor,
-		rectangularSelection,
-		crosshairCursor,
-		highlightActiveLine,
-		keymap
-	} from '@codemirror/view';
-	export { EditorView } from '@codemirror/view';
-	import { EditorState } from '@codemirror/state';
-	import {
-		foldGutter,
-		codeFolding,
-		indentOnInput,
-		syntaxHighlighting,
-		defaultHighlightStyle,
-		bracketMatching,
-		foldKeymap
-	} from '@codemirror/language';
-	import { history, defaultKeymap, historyKeymap } from '@codemirror/commands';
-	import { highlightSelectionMatches, searchKeymap } from '@codemirror/search';
-	import {
-		closeBrackets,
 		autocompletion,
+		closeBrackets,
 		closeBracketsKeymap,
 		completionKeymap
 	} from '@codemirror/autocomplete';
-	import { lintKeymap } from '@codemirror/lint';
-	import { minimalSetup } from 'codemirror';
+	import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
+	import { javascript } from '@codemirror/lang-javascript';
+	import { defaultHighlightStyle, indentOnInput, syntaxHighlighting } from '@codemirror/language';
+	import { searchKeymap } from '@codemirror/search';
+	import {
+		drawSelection,
+		highlightActiveLineGutter,
+		highlightSpecialChars,
+		keymap,
+		lineNumbers
+	} from '@codemirror/view';
+	import { rainTheme } from './theme/rain';
 
-	const emptySc = { sources: [], constants: [] };
+	const emptySc: ExpressionConfig = { sources: [], constants: [] };
 
-	export let vmStateConfig: Writable<StateConfig> = writable(emptySc);
+	export let vmStateConfig: Writable<ExpressionConfig> = writable(emptySc);
 	export let raw: string = `const foo = () => {
   return {
     foo: "bar",
@@ -50,68 +36,71 @@
 	export let error: string = '';
 	export let readOnly = false;
 	export let editable = true;
+	export let dark = false;
 
-	// @see https://codemirror.net/docs/extensions/
+	$: raw && updateExpressionConfig();
 
-	// Editing
-	const whitespace = [indentOnInput()];
-	const editingHelpers = [
-		drawSelection(),
+	const updateExpressionConfig = () => {};
+
+	/// @see https://codemirror.net/docs/extensions/
+
+	/// Editing
+	const whitespace: Extension[] = [indentOnInput()];
+	const editingHelpers: Extension[] = [
 		autocompletion(),
 		closeBrackets(),
-		// codeFolding(),
+		drawSelection(),
 		history()
 	];
-	const editingExtensions = [...whitespace, ...editingHelpers];
+	const editingExtensions: Extension[] = [...whitespace, ...editingHelpers];
 
-	// Presentation
-	const styling = [];
-	const presentationFeatures = [];
-	const gutters = [
-		lineNumbers(),
-		// foldGutter(),
-		highlightActiveLineGutter()
+	/// Presentation
+	const styling: Extension[] = [];
+	const presentationFeatures: Extension[] = [highlightSpecialChars()];
+	const gutters: Extension[] = [highlightActiveLineGutter(), lineNumbers()];
+	const tooltips: Extension[] = [];
+	const presentationExtensions: Extension[] = [
+		...gutters,
+		...presentationFeatures,
+		...styling,
+		...tooltips
 	];
-	const tooltips = [];
-	const presentationExtensions = [...styling, ...presentationFeatures, ...gutters, ...tooltips];
 
-	// Input Handling
-	const keymapsExtension = keymap.of([
+	/// Input Handling
+	const keymapsExtension: Extension = keymap.of([
 		...closeBracketsKeymap,
-		...defaultKeymap,
-		...searchKeymap,
-		...historyKeymap,
-		...foldKeymap,
 		...completionKeymap,
-		...lintKeymap
+		...defaultKeymap,
+		...historyKeymap,
+		...searchKeymap
 	]);
-	const inputHandlingExtensions = [keymapsExtension];
+	const inputHandlingExtensions: Extension[] = [keymapsExtension];
 
-	// Language
-	const languageExtensions = [];
+	/// Language
+	const languageExtensions: Extension[] = [
+		syntaxHighlighting(defaultHighlightStyle, { fallback: true })
+	];
 
-	// Primitives
-	const transactions = [];
-	const primitivesExtensions = [...transactions];
-
-	// Extension Bundles
-	const extensionBundle = minimalSetup;
+	/// Primitives
+	const transactions: Extension[] = [];
+	const primitivesExtensions: Extension[] = [...transactions];
 </script>
 
 <div class="h-full flex-grow">
 	<CodeMirror
 		bind:value={raw}
-		basic={false}
+		placeholder={'Write a Rainlang expression'}
 		lang={javascript()}
 		readonly={readOnly}
 		{editable}
+		theme={rainTheme(dark)}
+		basic={false}
 		extensions={[
 			...editingExtensions,
 			...presentationExtensions,
 			...inputHandlingExtensions,
 			...languageExtensions,
-			...primitivesExtensions,
-			extensionBundle
+			...primitivesExtensions
 		]}
 	/>
 </div>
