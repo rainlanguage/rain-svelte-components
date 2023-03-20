@@ -13,9 +13,12 @@
 		CloudArrowUp,
 		CloudArrowDown
 	} from '@steeze-ui/heroicons';
-	import { createEventDispatcher, onMount, SvelteComponent } from 'svelte';
+	import { createEventDispatcher, getContext, onMount, SvelteComponent } from 'svelte';
+	import type { Deployer, EvaluableConfig, GetDeployers } from '$lib/parser/types';
+	import Select from '$lib/Select.svelte';
 
-	export let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
+	export let evaluableConfig: EvaluableConfig;
+
 	export let raw: string = '';
 	export let signer: Signer;
 	export let error: string = '';
@@ -27,12 +30,55 @@
 	export let hideSave: boolean = false;
 	export let hideHelp: boolean = false;
 
-	let parserInput: SvelteComponent;
+	let noDeployers = false;
 
+	type DeployerOption = { label: string; value: Deployer };
+
+	// User should add an function that retrieve the array with addresses
+	const { getDeployers } = getContext('EVALUABLE_ADDRESSES') as { getDeployers: GetDeployers };
+
+	const formatDeployerOptions = (deployers: Deployer[]): DeployerOption[] => {
+		return deployers.map((e) => ({
+			label: e.address,
+			value: e
+		}));
+	};
+
+	export let deployers: Deployer[] = [];
+
+	let deployerOptions: DeployerOption[] = formatDeployerOptions(deployers);
+
+	export let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
+	export let selectedDeployer: Writable<Deployer> = writable();
+
+	$: evaluableConfig = {
+		constants: $vmStateConfig.constants,
+		sources: $vmStateConfig.sources,
+		IExpressionDeployerV1: $selectedDeployer?.address
+	};
+
+	let parserInput: SvelteComponent;
 	export let loadRaw: any = null;
+
+	onMount(async () => {
+		if (!getDeployers) {
+			noDeployers = true;
+			return;
+		}
+		const deployers = await getDeployers();
+		if (!deployers) {
+			noDeployers = true;
+			return;
+		}
+		deployerOptions = formatDeployerOptions(deployers);
+		console.log(deployerOptions);
+	});
 
 	onMount(() => {
 		loadRaw = parserInput.loadRaw;
+
+		// setting a default interpreter
+		if (deployerOptions.length) $selectedDeployer = deployerOptions[0].value;
 	});
 
 	const dispatch = createEventDispatcher();
@@ -67,14 +113,21 @@
 		<div class="flex flex-col w-1/3">
 			<div class="heading">Simulated output</div>
 			<div class="p-2">
-				<SimulatedOutput {vmStateConfig} {signer} {chainId} />
+				<SimulatedOutput {vmStateConfig} {signer} {chainId} externalError={error} />
 			</div>
 		</div>
 	</div>
-	<div class="bg-gray-200 dark:bg-gray-800 flex justify-between px-2">
-		<div class="text-red-500 text-xs font-regular h-4 p-2">
-			{#if error}
-				Error: {error}
+	<div class="bg-gray-200 dark:bg-gray-800 flex justify-between px-2 items-center">
+		<div class="justify-self-start flex items-center py-1">
+			{#if noDeployers}
+				<span>No deployers found!</span>
+			{:else}
+				<Select
+					items={deployerOptions}
+					bind:value={$selectedDeployer}
+					small
+					label="Select interpreter"
+				/>
 			{/if}
 		</div>
 		<div class="gap-x-3 flex items-center text-gray-600">

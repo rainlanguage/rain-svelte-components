@@ -3,11 +3,10 @@
 	import Input from '$lib/Input.svelte';
 	import Parser from '$lib/parser/Parser.svelte';
 	import type { AbiParameter } from 'abitype';
-	import { derived, writable, type Writable } from 'svelte/store';
-	import type { StateConfig } from 'rain-sdk';
 	import Button from '$lib/Button.svelte';
-	import { createEventDispatcher, getContext } from 'svelte';
+	import { getContext, onMount } from 'svelte';
 	import Switch from '$lib/Switch.svelte';
+	import { constructEvaluableConfig, type EvaluableConfig } from '$lib/parser/types';
 
 	export let component: AbiParameter & {
 		nameMeta?: string;
@@ -16,8 +15,6 @@
 		isDeployerField?: boolean;
 	};
 	export let result: any = 'components' in component ? {} : undefined;
-
-	const dispatch = createEventDispatcher();
 
 	const settings: {
 		onlyConfig: boolean;
@@ -33,7 +30,7 @@
 	$: if (arrayedComponents) updateResult();
 
 	const updateResult = () => {
-		if (type?.endsWith('[]') && type !== 'StateConfig[]' && !settings.onlyExpressions) {
+		if (type?.endsWith('[]') && type !== 'EvaluableConfig[]' && !settings.onlyExpressions) {
 			result = arrayedComponents.map((comp) => comp.compResult);
 		}
 	};
@@ -50,30 +47,35 @@
 	};
 
 	// we need to handle the Parser differently as it binds to a store, not a regular value
-	let vmStateConfig = writable({ sources: [], constants: [] });
-	let stateConfigsStore: Writable<{ id: number; store: Writable<StateConfig> }[]> = writable([
-		{ id: 0, store: writable({ sources: [], constants: [] }) }
-	]);
-	$: stateConfigsArray = derived(
-		$stateConfigsStore.map((s) => s.store),
-		(x) => x
-	);
+	let evaluableConfig: EvaluableConfig;
 
-	$: if (type == 'struct StateConfig') result = $vmStateConfig;
-	$: if (type == 'struct StateConfig[]') result = $stateConfigsArray;
+	// code for handling arrays of expressions
 
-	let expressionId = 0;
+	// we need to include an id so svelte will properly destroy the component when we remove one from the array
+	// init one to start
+	let evaluableConfigs: { id: number; evaluableConfig: EvaluableConfig }[] = [];
+
+	$: if (type == 'struct EvaluableConfig') result = evaluableConfig;
+	$: if (type == 'struct EvaluableConfig[]')
+		result = evaluableConfigs.map((e) => e.evaluableConfig);
+
+	let evaluableConfigId = 0;
 	const addExpression = () => {
-		expressionId++;
-		$stateConfigsStore = [
-			...$stateConfigsStore,
-			{ id: expressionId, store: writable({ sources: [], constants: [] }) }
+		evaluableConfigs = [
+			...evaluableConfigs,
+			{ id: evaluableConfigId, evaluableConfig: constructEvaluableConfig() }
 		];
+		evaluableConfigId++;
 	};
 
 	const removeExpression = (instance: any) => {
-		$stateConfigsStore = $stateConfigsStore.filter((x) => x.id !== instance.id);
+		evaluableConfigs = evaluableConfigs.filter((x) => x.id !== instance.id);
 	};
+
+	// if this component is a list of expressions, add the first one
+	onMount(() => {
+		if (type == 'struct EvaluableConfig[]' && !settings.onlyConfig) addExpression();
+	});
 </script>
 
 {#if !((component?.isInterpreterField || component?.isDeployerField) && !settings.showInterpreterFields)}
@@ -117,7 +119,7 @@
 	{/if}
 {/if}
 {#if !settings.onlyConfig}
-	{#if type == 'struct StateConfig'}
+	{#if type == 'struct EvaluableConfig'}
 		<div>
 			{#if component.nameMeta}
 				<div class="font-medium">{component.nameMeta}</div>
@@ -128,14 +130,14 @@
 		</div>
 		<Parser
 			signer={$signer}
-			bind:vmStateConfig
+			bind:evaluableConfig
 			on:save
 			on:load
 			on:expand
 			on:help
 			componentName={component.nameMeta || component.name}
 		/>
-	{:else if type == 'struct StateConfig[]'}
+	{:else if type == 'struct EvaluableConfig[]'}
 		<div>
 			{#if component.nameMeta}
 				<div class="font-medium">{component.nameMeta}</div>
@@ -144,11 +146,11 @@
 				<div class="text-sm">{component.descriptionMeta}</div>
 			{/if}
 		</div>
-		{#each $stateConfigsStore as instance (instance.id)}
+		{#each evaluableConfigs as instance (instance.id)}
 			<div class="flex flex-col gap-y-2">
 				<Parser
 					signer={$signer}
-					bind:vmStateConfig={instance.store}
+					bind:evaluableConfig={instance.evaluableConfig}
 					on:save
 					on:load
 					on:expand
@@ -170,7 +172,7 @@
 		</div>
 	{/if}
 {/if}
-{#if type?.startsWith('struct') && 'components' in component && type !== 'struct StateConfig' && type !== 'struct StateConfig[]'}
+{#if type?.startsWith('struct') && 'components' in component && type !== 'struct EvaluableConfig' && type !== 'struct EvaluableConfig[]'}
 	{#if !settings.onlyExpressions}
 		{#if component.nameMeta}
 			<div class="font-medium col-span-full">{component.nameMeta}</div>
@@ -181,7 +183,7 @@
 			<div class="text-sm col-span-full">{component.descriptionMeta}</div>
 		{/if}
 	{/if}
-	{#if type?.endsWith('[]') && type !== 'struct StateConfig[]' && !settings.onlyExpressions}
+	{#if type?.endsWith('[]') && type !== 'struct EvaluableConfig[]' && !settings.onlyExpressions}
 		{#each arrayedComponents as arrayedComponent (arrayedComponent.id)}
 			{#each component.components as subComponent}
 				{#if subComponent}

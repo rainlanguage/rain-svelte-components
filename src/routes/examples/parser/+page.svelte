@@ -10,13 +10,27 @@
 	import SimulatedOutput from '$lib/parser/SimulatedOutput.svelte';
 	import type { StateConfig } from 'rain-sdk';
 	import Parser from '$lib/parser/Parser.svelte';
-	import type { SvelteComponent } from 'svelte';
+	import { setContext, type SvelteComponent } from 'svelte';
 	import Input from '$lib/Input.svelte';
 
 	let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
 	let raw: string;
 	let events: string[] = [];
 	let rawToLoad: string;
+
+	setContext('EVALUABLE_ADDRESSES', {
+		getAddresses: async () => {
+			const resp = await fetch('www.some_endpoint.com/get_addresses', {
+				method: 'GET'
+			});
+			if (resp.ok) {
+				const { interpreterAddresses } = await resp.json();
+				return interpreterAddresses;
+			}
+
+			return ['0xDummyAddress1', '0xDummyAddress2'];
+		}
+	});
 
 	const saveEvent = ({ detail }: CustomEvent<{ raw: string }>) => {
 		events = [`A save event was emitted with the raw string: ${detail.raw}`, ...events];
@@ -34,6 +48,26 @@
 
 <div class="flex flex-col gap-y-4">
 	<PageHeading>Parser</PageHeading>
+
+	To know which interpreter deployer addresses will be use to simulated or send the transaction, and
+	a getter function should be provide in context to allow the parser obtain them. You can set
+	whatever fill your needs.
+
+	<ExampleUsage>
+		{`setContext('EVALUABLE_ADDRESSES', {
+	getAddresses: async () => {
+		const resp = await fetch('www.some_endpoint.com/get_addresses', {
+			method: 'GET'
+		});
+		if (resp.ok) {
+			const { interpreterAddresses } = await resp.json();
+			return interpreterAddresses;
+		}
+
+		return [];
+	}
+});`}
+	</ExampleUsage>
 
 	<ExampleHeading>Default usage</ExampleHeading>
 	<Example>
