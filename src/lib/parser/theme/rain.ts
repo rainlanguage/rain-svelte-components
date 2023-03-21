@@ -6,13 +6,7 @@ import { tags as t } from '@lezer/highlight';
 /// @see https://codemirror.net/examples/styling/
 
 /// The editor theme styles for Rain theme.
-export const rainThemeStyle = (darkMode: boolean) => {
-	if (darkMode) {
-		return EditorView.theme({}, { dark: true });
-	} else {
-		return EditorView.theme({}, { dark: false });
-	}
-};
+export const rainThemeStyle = (darkMode: boolean) => EditorView.theme({}, { dark: darkMode });
 
 /// The highlighting style for code in the Rain theme.
 export const rainThemeHighlightStyle = (darkMode: boolean) => {
