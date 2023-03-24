@@ -3,52 +3,60 @@ import type { Extension } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { tags as t } from '@lezer/highlight';
 
+/// Theme template for fully customisable Codemirror theme.
+
 /// @see https://codemirror.net/examples/styling/
 
 /// The editor theme styles for Rain theme.
 export const rainThemeStyle = (darkMode: boolean) => {
 	if (darkMode) {
-		return EditorView.theme({
-		 "&": {
-		    color: "white",
-		    backgroundColor: "#034"
-		  },
-		  ".cm-content": {
-		    caretColor: "#0e9"
-		  },
-		  "&.cm-focused .cm-cursor": {
-		    borderLeftColor: "#0e9"
-		  },
-		  "&.cm-focused .cm-selectionBackground, ::selection": {
-		    backgroundColor: "#074"
-		  },
-		  ".cm-gutters": {
-		    backgroundColor: "#045",
-		    color: "#ddd",
-		    border: "none"
-		  }
-		}, { dark: true });
+		return EditorView.theme(
+			{
+				'&': {
+					color: 'white',
+					backgroundColor: '#034'
+				},
+				'.cm-content': {
+					caretColor: '#0e9'
+				},
+				'&.cm-focused .cm-cursor': {
+					borderLeftColor: '#0e9'
+				},
+				'&.cm-focused .cm-selectionBackground, ::selection': {
+					backgroundColor: '#074'
+				},
+				'.cm-gutters': {
+					backgroundColor: '#045',
+					color: '#ddd',
+					border: 'none'
+				}
+			},
+			{ dark: true }
+		);
 	} else {
-		return EditorView.theme({
-		"&": {
-		    color: "white",
-		    backgroundColor: "#034"
-		  },
-		  ".cm-content": {
-		    caretColor: "#0e9"
-		  },
-		  "&.cm-focused .cm-cursor": {
-		    borderLeftColor: "#0e9"
-		  },
-		  "&.cm-focused .cm-selectionBackground, ::selection": {
-		    backgroundColor: "#074"
-		  },
-		  ".cm-gutters": {
-		    backgroundColor: "#045",
-		    color: "#ddd",
-		    border: "none"
-		  }
-		}, { dark: false });
+		return EditorView.theme(
+			{
+				'&': {
+					color: 'white',
+					backgroundColor: '#034'
+				},
+				'.cm-content': {
+					caretColor: '#0e9'
+				},
+				'&.cm-focused .cm-cursor': {
+					borderLeftColor: '#0e9'
+				},
+				'&.cm-focused .cm-selectionBackground, ::selection': {
+					backgroundColor: '#074'
+				},
+				'.cm-gutters': {
+					backgroundColor: '#045',
+					color: '#ddd',
+					border: 'none'
+				}
+			},
+			{ dark: false }
+		);
 	}
 };
 

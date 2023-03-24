@@ -14,6 +14,8 @@
 		CloudArrowDown
 	} from '@steeze-ui/heroicons';
 	import { createEventDispatcher, onMount, SvelteComponent } from 'svelte';
+	import RainlangEditor from './RainlangEditor.svelte';
+	import { darkMode } from '$lib/darkModeAction';
 
 	export let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
 	export let raw: string = '';
@@ -61,7 +63,16 @@
 			<div
 				class="border-r border-gray-300 dark:border-gray-600 p-2 parser-wrapper flex-grow flex flex-col"
 			>
-				<ParserInput {vmStateConfig} {readOnly} bind:error bind:raw bind:this={parserInput} />
+				<!-- <ParserInput {vmStateConfig} {readOnly} bind:error bind:raw bind:this={parserInput} /> -->
+				<RainlangEditor
+					{vmStateConfig}
+					{readOnly}
+					bind:error
+					bind:raw
+					bind:this={parserInput}
+					dark={$darkMode}
+					minHeight="150px"
+				/>
 			</div>
 		</div>
 		<div class="flex flex-col w-1/3">

@@ -21,7 +21,8 @@
 		keymap,
 		lineNumbers
 	} from '@codemirror/view';
-	import { rainTheme } from './theme/rain';
+	import { lightTheme } from './theme/light';
+	import { darkTheme } from './theme/dark';
 
 	const emptySc: ExpressionConfig = { sources: [], constants: [] };
 
@@ -37,6 +38,7 @@
 	export let readOnly = false;
 	export let editable = true;
 	export let dark = false;
+	export let minHeight: string = '0px';
 
 	$: raw && updateExpressionConfig();
 
@@ -93,7 +95,13 @@
 		lang={javascript()}
 		readonly={readOnly}
 		{editable}
-		theme={rainTheme(dark)}
+		theme={dark ? darkTheme : lightTheme}
+		styles={{
+			'.cm-scroller': {
+				overflow: 'auto',
+				minHeight
+			}
+		}}
 		basic={false}
 		extensions={[
 			...editingExtensions,
