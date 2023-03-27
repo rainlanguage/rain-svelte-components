@@ -16,8 +16,9 @@
 	import { createEventDispatcher, onMount, SvelteComponent } from 'svelte';
 	import RainlangEditor from './RainlangEditor.svelte';
 	import { darkMode } from '$lib/darkModeAction';
+	import { getOpMetaFromSg } from '@rainprotocol/rainlang';
 
-	export let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
+	export let vmExpressionConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
 	export let raw: string = '';
 	export let signer: Signer;
 	export let error: string = '';
@@ -63,22 +64,25 @@
 			<div
 				class="border-r border-gray-300 dark:border-gray-600 p-2 parser-wrapper flex-grow flex flex-col"
 			>
-				<!-- <ParserInput {vmStateConfig} {readOnly} bind:error bind:raw bind:this={parserInput} /> -->
-				<RainlangEditor
-					{vmStateConfig}
-					{readOnly}
-					bind:error
-					bind:raw
-					bind:this={parserInput}
-					dark={$darkMode}
-					minHeight="150px"
-				/>
+				<!-- <ParserInput {vmExpressionConfig} {readOnly} bind:error bind:raw bind:this={parserInput} /> -->
+				{#await getOpMetaFromSg('0x01D5611c2D6FB7Bb1bFa9df2f524196743f59F2a', 524289) then opmeta}
+					<RainlangEditor
+						{vmExpressionConfig}
+						{readOnly}
+						bind:error
+						bind:raw
+						bind:this={parserInput}
+						dark={$darkMode}
+						minHeight="150px"
+						{opmeta}
+					/>
+				{/await}
 			</div>
 		</div>
 		<div class="flex flex-col w-1/3">
 			<div class="heading">Simulated output</div>
 			<div class="p-2">
-				<SimulatedOutput {vmStateConfig} {signer} {chainId} />
+				<SimulatedOutput {vmExpressionConfig} {signer} {chainId} />
 			</div>
 		</div>
 	</div>

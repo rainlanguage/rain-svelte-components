@@ -1,6 +1,7 @@
 <script lang="ts">
 	import CodeMirror from 'svelte-codemirror-editor';
 	import { writable, type Writable } from 'svelte/store';
+	import { RainlangCodemirror } from '@rainprotocol/rainlang-codemirror';
 
 	import type { Extension } from '@codemirror/state';
 
@@ -23,10 +24,11 @@
 	} from '@codemirror/view';
 	import { lightTheme } from './theme/light';
 	import { darkTheme } from './theme/dark';
+	import type { ExpressionConfig } from '@rainprotocol/rainlang';
 
 	const emptySc: ExpressionConfig = { sources: [], constants: [] };
 
-	export let vmStateConfig: Writable<ExpressionConfig> = writable(emptySc);
+	export let vmExpressionConfig: Writable<ExpressionConfig> = writable(emptySc);
 	export let raw: string = `const foo = () => {
   return {
     foo: "bar",
@@ -39,10 +41,15 @@
 	export let editable = true;
 	export let dark = false;
 	export let minHeight: string = '0px';
+	export let opmeta: string;
 
-	$: raw && updateExpressionConfig();
+	const rainlangCodemirror = new RainlangCodemirror(opmeta);
 
-	const updateExpressionConfig = () => {};
+	$: opmeta && rainlangCodemirror.updateOpMeta(opmeta);
+
+	$: raw && onRawChange();
+
+	const onRawChange = () => {};
 
 	/// @see https://codemirror.net/docs/extensions/
 

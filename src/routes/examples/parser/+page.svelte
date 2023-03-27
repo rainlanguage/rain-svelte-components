@@ -43,7 +43,12 @@
 			<div class="flex flex-col gap-y-2">
 				<div class="bg-gray-100 dark:bg-gray-800 h-[200px] overflow-auto flex flex-col">
 					<!-- <ParserInput {vmStateConfig} bind:raw /> -->
-					<RainlangEditor {vmStateConfig} bind:raw dark={$darkMode} minHeight="200px" />
+					<RainlangEditor
+						vmExpressionConfig={vmStateConfig}
+						bind:raw
+						dark={$darkMode}
+						minHeight="200px"
+					/>
 				</div>
 				<span>Simulated output</span>
 				<div class="bg-gray-100 p-3 dark:bg-gray-800">
