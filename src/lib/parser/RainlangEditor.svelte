@@ -49,7 +49,11 @@
 
 	$: raw && onRawChange();
 
-	const onRawChange = () => {};
+	const onRawChange = () => {
+		const _config = rainlangCodemirror.getRainDocument()?.getExpressionConfig();
+		console.log({ _config });
+		if (_config) vmExpressionConfig.set(_config);
+	};
 
 	/// @see https://codemirror.net/docs/extensions/
 
@@ -115,7 +119,8 @@
 			...presentationExtensions,
 			...inputHandlingExtensions,
 			...languageExtensions,
-			...primitivesExtensions
+			...primitivesExtensions,
+			...rainlangCodemirror.extensions
 		]}
 	/>
 </div>

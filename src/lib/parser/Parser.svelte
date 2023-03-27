@@ -65,7 +65,9 @@
 				class="border-r border-gray-300 dark:border-gray-600 p-2 parser-wrapper flex-grow flex flex-col"
 			>
 				<!-- <ParserInput {vmExpressionConfig} {readOnly} bind:error bind:raw bind:this={parserInput} /> -->
-				{#await getOpMetaFromSg('0x01D5611c2D6FB7Bb1bFa9df2f524196743f59F2a', 524289) then opmeta}
+				{#await getOpMetaFromSg('0x01D5611c2D6FB7Bb1bFa9df2f524196743f59F2a', 524289)}
+					<!-- promise is pending -->
+				{:then opmeta}
 					<RainlangEditor
 						{vmExpressionConfig}
 						{readOnly}
@@ -76,6 +78,8 @@
 						minHeight="150px"
 						{opmeta}
 					/>
+				{:catch error}
+					<!-- promise was rejected -->
 				{/await}
 			</div>
 		</div>

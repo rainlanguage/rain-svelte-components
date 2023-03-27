@@ -626,9 +626,9 @@
     ethers "^5.7.2"
     prettier "^2.7.1"
 
-"@rainprotocol/rainlang-codemirror@git+https://github.com/rainprotocol/rainlang-codemirror#a267230d68d685c04a5a384208d27d7babbec70b":
+"@rainprotocol/rainlang-codemirror@git+https://github.com/rainprotocol/rainlang-codemirror#8a8bea2e8e7ecfaeaa6faaeb23dd2f6cb69de705":
   version "0.0.1"
-  resolved "git+https://github.com/rainprotocol/rainlang-codemirror#a267230d68d685c04a5a384208d27d7babbec70b"
+  resolved "git+https://github.com/rainprotocol/rainlang-codemirror#8a8bea2e8e7ecfaeaa6faaeb23dd2f6cb69de705"
   dependencies:
     "@codemirror/autocomplete" "^6.4.2"
     "@codemirror/lint" "^6.2.0"

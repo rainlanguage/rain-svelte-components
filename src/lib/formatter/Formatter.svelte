@@ -1,13 +1,13 @@
 <script lang="ts">
 	import ParserInput from '$lib/parser/ParserInput.svelte';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import { Formatter, rainterpreterOpMeta, type StateConfig } from '@rainprotocol/rainlang';
+	import { Formatter, rainterpreterOpMeta, type ExpressionConfig } from '@rainprotocol/rainlang';
 	import Button from '$lib/Button.svelte';
 	import { DocumentDuplicate } from '@steeze-ui/heroicons';
 
 	export let readOnly: boolean = true;
 	export let raw: string | null = null;
-	export let stateConfig: StateConfig | null = null;
+	export let expressionConfig: ExpressionConfig | null = null;
 	export let showFork: boolean = true;
 	export let showForkLabel: boolean = false;
 	export let maxHeight: string | null = null;
@@ -19,9 +19,9 @@
 	const dispatch = createEventDispatcher();
 
 	onMount(() => {
-		if (stateConfig) raw = Formatter.get(stateConfig, { opmeta: rainterpreterOpMeta });
+		if (expressionConfig) raw = Formatter.get(expressionConfig, { opmeta: rainterpreterOpMeta });
 		if (raw) formatter.loadRaw(raw.toLowerCase());
-		if (!raw && !stateConfig) showFormatter = false;
+		if (!raw && !expressionConfig) showFormatter = false;
 	});
 
 	const handleFork = () => {
