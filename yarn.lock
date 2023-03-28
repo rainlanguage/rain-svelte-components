@@ -626,9 +626,9 @@
     ethers "^5.7.2"
     prettier "^2.7.1"
 
-"@rainprotocol/rainlang-codemirror@git+https://github.com/rainprotocol/rainlang-codemirror#8a8bea2e8e7ecfaeaa6faaeb23dd2f6cb69de705":
-  version "0.0.1"
-  resolved "git+https://github.com/rainprotocol/rainlang-codemirror#8a8bea2e8e7ecfaeaa6faaeb23dd2f6cb69de705"
+"@rainprotocol/rainlang-codemirror@git+https://github.com/rainprotocol/rainlang-codemirror#1c9378cc5f4fc014633376f4950e73ebb7bf512b":
+  version "0.0.3"
+  resolved "git+https://github.com/rainprotocol/rainlang-codemirror#1c9378cc5f4fc014633376f4950e73ebb7bf512b"
   dependencies:
     "@codemirror/autocomplete" "^6.4.2"
     "@codemirror/lint" "^6.2.0"
@@ -636,11 +636,29 @@
     "@codemirror/view" "^6.9.3"
     "@lezer/highlight" "^1.1.3"
     "@lezer/lr" "^1.3.3"
-    "@rainprotocol/rainlang" "git+https://github.com/rainprotocol/rainlang#29484fabd2a8b7c5be713d7d034c6c93034f8fc4"
+    "@rainprotocol/rainlang" "git+https://github.com/rainprotocol/rainlang#cc6382e69b725197f8e930fefa08a4d0ce736f1f"
 
 "@rainprotocol/rainlang@git+https://github.com/rainprotocol/rainlang#29484fabd2a8b7c5be713d7d034c6c93034f8fc4":
   version "1.2.2"
   resolved "git+https://github.com/rainprotocol/rainlang#29484fabd2a8b7c5be713d7d034c6c93034f8fc4"
+  dependencies:
+    ajv "^8.12.0"
+    algebra.js rouzwelt/algebra.js
+    buffer "^6.0.3"
+    cbor-web "https://gitpkg.now.sh/rouzwelt/node-cbor/packages/cbor-web?4f8d212f058a84ca40993e7db523b80ed6cefc19"
+    ethers "^5.7.2"
+    graphql "^16.6.0"
+    graphql-request "^5.2.0"
+    pako "^2.1.0"
+    prettier "^2.8.3"
+    prettier-standalone "^1.3.1-0"
+    string-math "^1.2.2"
+    vscode-languageserver-textdocument "^1.0.8"
+    vscode-languageserver-types "^3.17.3"
+
+"@rainprotocol/rainlang@git+https://github.com/rainprotocol/rainlang#cc6382e69b725197f8e930fefa08a4d0ce736f1f":
+  version "1.2.3"
+  resolved "git+https://github.com/rainprotocol/rainlang#cc6382e69b725197f8e930fefa08a4d0ce736f1f"
   dependencies:
     ajv "^8.12.0"
     algebra.js rouzwelt/algebra.js

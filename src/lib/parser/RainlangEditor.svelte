@@ -1,7 +1,7 @@
 <script lang="ts">
 	import CodeMirror from 'svelte-codemirror-editor';
 	import { writable, type Writable } from 'svelte/store';
-	import { RainlangCodemirror } from '@rainprotocol/rainlang-codemirror';
+	import { RainlangExtension } from '@rainprotocol/rainlang-codemirror';
 
 	import type { Extension } from '@codemirror/state';
 
@@ -12,7 +12,6 @@
 		completionKeymap
 	} from '@codemirror/autocomplete';
 	import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
-	import { javascript } from '@codemirror/lang-javascript';
 	import { defaultHighlightStyle, indentOnInput, syntaxHighlighting } from '@codemirror/language';
 	import { searchKeymap } from '@codemirror/search';
 	import {
@@ -26,33 +25,29 @@
 	import { darkTheme } from './theme/dark';
 	import type { ExpressionConfig } from '@rainprotocol/rainlang';
 
-	const emptySc: ExpressionConfig = { sources: [], constants: [] };
+	const emptySc: Writable<ExpressionConfig> = writable({ sources: [], constants: [] });
 
-	export let vmExpressionConfig: Writable<ExpressionConfig> = writable(emptySc);
-	export let raw: string = `const foo = () => {
-  return {
-    foo: "bar",
-    baz: 123
-  }
-};
-`;
-	export let error: string = '';
+	export let expressionConfig: ExpressionConfig | null = emptySc;
+	export let raw: string | null = `_: add(1 2);`;
+	export let error: string = ''; // TODO: list of errors
 	export let readOnly = false;
 	export let editable = true;
 	export let dark = false;
 	export let minHeight: string = '0px';
-	export let opmeta: string;
+	export let opMeta: string;
 
-	const rainlangCodemirror = new RainlangCodemirror(opmeta);
+	const rainlangCodemirror = new RainlangExtension({
+		hover: false,
+		completion: false,
+		initialOpMeta: opMeta
+	});
 
-	$: opmeta && rainlangCodemirror.updateOpMeta(opmeta);
+	$: opMeta && rainlangCodemirror.updateOpMeta(opMeta);
 
 	$: raw && onRawChange();
 
 	const onRawChange = () => {
-		const _config = rainlangCodemirror.getRainDocument()?.getExpressionConfig();
-		console.log({ _config });
-		if (_config) vmExpressionConfig.set(_config);
+		// vmExpressionConfig.set();
 	};
 
 	/// @see https://codemirror.net/docs/extensions/
@@ -65,19 +60,14 @@
 		drawSelection(),
 		history()
 	];
-	const editingExtensions: Extension[] = [...whitespace, ...editingHelpers];
+	const editingExtension: Extension[] = [whitespace, editingHelpers];
 
 	/// Presentation
 	const styling: Extension[] = [];
 	const presentationFeatures: Extension[] = [highlightSpecialChars()];
 	const gutters: Extension[] = [highlightActiveLineGutter(), lineNumbers()];
 	const tooltips: Extension[] = [];
-	const presentationExtensions: Extension[] = [
-		...gutters,
-		...presentationFeatures,
-		...styling,
-		...tooltips
-	];
+	const presentationExtension: Extension[] = [gutters, presentationFeatures, styling, tooltips];
 
 	/// Input Handling
 	const keymapsExtension: Extension = keymap.of([
@@ -87,23 +77,22 @@
 		...historyKeymap,
 		...searchKeymap
 	]);
-	const inputHandlingExtensions: Extension[] = [keymapsExtension];
+	const inputHandlingExtension: Extension[] = [keymapsExtension];
 
 	/// Language
-	const languageExtensions: Extension[] = [
+	const languageExtension: Extension[] = [
 		syntaxHighlighting(defaultHighlightStyle, { fallback: true })
 	];
 
 	/// Primitives
 	const transactions: Extension[] = [];
-	const primitivesExtensions: Extension[] = [...transactions];
+	const primitivesExtension: Extension[] = [transactions];
 </script>
 
 <div class="h-full flex-grow">
 	<CodeMirror
 		bind:value={raw}
 		placeholder={'Write a Rainlang expression'}
-		lang={javascript()}
 		readonly={readOnly}
 		{editable}
 		theme={dark ? darkTheme : lightTheme}
@@ -115,12 +104,12 @@
 		}}
 		basic={false}
 		extensions={[
-			...editingExtensions,
-			...presentationExtensions,
-			...inputHandlingExtensions,
-			...languageExtensions,
-			...primitivesExtensions,
-			...rainlangCodemirror.extensions
+			editingExtension,
+			presentationExtension,
+			inputHandlingExtension,
+			languageExtension,
+			primitivesExtension,
+			rainlangCodemirror.extension
 		]}
 	/>
 </div>

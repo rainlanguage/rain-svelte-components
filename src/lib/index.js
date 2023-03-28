@@ -16,5 +16,3 @@ export { Tab, TabList, TabPanel, Tabs };
 
 // parser stuff
 export { default as Parser } from './parser/Parser.svelte';
-export { default as OpDocs } from './parser/OpDocs.svelte';
-export { default as ParserInput } from './parser/ParserInput.svelte';

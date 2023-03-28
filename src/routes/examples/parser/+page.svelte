@@ -1,5 +1,4 @@
 <script lang="ts">
-	import ParserInput from '$lib/parser/ParserInput.svelte';
 	import { signer } from 'svelte-ethers-store';
 	import ExampleComponent from '$lib/_docs/ExampleComponent.svelte';
 	import ExampleUsage from '$lib/_docs/ExampleUsage.svelte';
@@ -12,8 +11,9 @@
 	import Input from '$lib/Input.svelte';
 	import RainlangEditor from '$lib/parser/RainlangEditor.svelte';
 	import { darkMode } from '$lib/darkModeAction';
+	import type { ExpressionConfig } from '@rainprotocol/rainlang';
 
-	const emptySc: ExpressionConfig = { sources: [], constants: [] };
+	const emptySc: Writable<ExpressionConfig> = writable({ sources: [], constants: [] });
 
 	let vmStateConfig: Writable<ExpressionConfig> = writable(emptySc);
 	let raw: string;
@@ -44,7 +44,7 @@
 				<div class="bg-gray-100 dark:bg-gray-800 h-[200px] overflow-auto flex flex-col">
 					<!-- <ParserInput {vmStateConfig} bind:raw /> -->
 					<RainlangEditor
-						vmExpressionConfig={vmStateConfig}
+						expressionConfig={vmStateConfig}
 						bind:raw
 						dark={$darkMode}
 						minHeight="200px"
@@ -52,7 +52,7 @@
 				</div>
 				<span>Simulated output</span>
 				<div class="bg-gray-100 p-3 dark:bg-gray-800">
-					<SimulatedOutput {vmStateConfig} signer={$signer} />
+					<SimulatedOutput expressionConfig={vmStateConfig} signer={$signer} />
 				</div>
 				<span>Raw text</span>
 				<div class="bg-gray-100 dark:bg-gray-800 p-3">

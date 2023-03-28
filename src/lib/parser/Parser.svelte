@@ -1,24 +1,25 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
-	import SimulatedOutput from '$lib/parser/SimulatedOutput.svelte';
-	import type { Signer } from 'ethers';
-	import type { StateConfig } from 'rain-sdk';
-	import { writable, type Writable } from 'svelte/store';
-	import ParserInput from './ParserInput.svelte';
-	import { Icon } from '@steeze-ui/svelte-icon';
-	import {
-		QuestionMarkCircle,
-		ArrowsPointingOut,
-		CloudArrowUp,
-		CloudArrowDown
-	} from '@steeze-ui/heroicons';
-	import { createEventDispatcher, onMount, SvelteComponent } from 'svelte';
-	import RainlangEditor from './RainlangEditor.svelte';
 	import { darkMode } from '$lib/darkModeAction';
-	import { getOpMetaFromSg } from '@rainprotocol/rainlang';
+	import SimulatedOutput from '$lib/parser/SimulatedOutput.svelte';
+	import { getOpMetaFromSg, type ExpressionConfig } from '@rainprotocol/rainlang';
+	import {
+		ArrowsPointingOut,
+		CloudArrowDown,
+		CloudArrowUp,
+		QuestionMarkCircle
+	} from '@steeze-ui/heroicons';
+	import { Icon } from '@steeze-ui/svelte-icon';
+	import type { Signer } from 'ethers';
+	import { createEventDispatcher, onMount, SvelteComponent } from 'svelte';
+	import { writable, type Writable } from 'svelte/store';
+	import RainlangEditor from './RainlangEditor.svelte';
 
-	export let vmExpressionConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
+	export let expressionConfig: Writable<ExpressionConfig> = writable({
+		sources: [],
+		constants: []
+	});
 	export let raw: string = '';
 	export let signer: Signer;
 	export let error: string = '';
@@ -30,12 +31,15 @@
 	export let hideSave: boolean = false;
 	export let hideHelp: boolean = false;
 
-	let parserInput: SvelteComponent;
+	let editorInput: SvelteComponent;
 
 	export let loadRaw: any = null;
 
-	onMount(() => {
-		loadRaw = parserInput.loadRaw;
+	const opMetaPromise = getOpMetaFromSg('0x01D5611c2D6FB7Bb1bFa9df2f524196743f59F2a', 524289);
+
+	onMount(async () => {
+		await opMetaPromise;
+		loadRaw = editorInput.loadRaw;
 	});
 
 	const dispatch = createEventDispatcher();
@@ -64,21 +68,20 @@
 			<div
 				class="border-r border-gray-300 dark:border-gray-600 p-2 parser-wrapper flex-grow flex flex-col"
 			>
-				<!-- <ParserInput {vmExpressionConfig} {readOnly} bind:error bind:raw bind:this={parserInput} /> -->
-				{#await getOpMetaFromSg('0x01D5611c2D6FB7Bb1bFa9df2f524196743f59F2a', 524289)}
-					<!-- promise is pending -->
+				{#await opMetaPromise}
+					<span>Fetching op meta...</span>
 				{:then opmeta}
 					<RainlangEditor
-						{vmExpressionConfig}
+						{expressionConfig}
 						{readOnly}
 						bind:error
 						bind:raw
-						bind:this={parserInput}
+						bind:this={editorInput}
 						dark={$darkMode}
 						minHeight="150px"
-						{opmeta}
+						opMeta={opmeta}
 					/>
-				{:catch error}
+				{:catch e}
 					<!-- promise was rejected -->
 				{/await}
 			</div>
@@ -86,7 +89,7 @@
 		<div class="flex flex-col w-1/3">
 			<div class="heading">Simulated output</div>
 			<div class="p-2">
-				<SimulatedOutput {vmExpressionConfig} {signer} {chainId} />
+				<SimulatedOutput {expressionConfig} {signer} {chainId} />
 			</div>
 		</div>
 	</div>

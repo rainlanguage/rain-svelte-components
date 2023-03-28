@@ -1,3 +1,4 @@
+<!-- TODO: USE RAINLANG DECOMPILER -->
 <script lang="ts">
 	import ParserInput from '$lib/parser/ParserInput.svelte';
 	import { createEventDispatcher, onMount } from 'svelte';

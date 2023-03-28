@@ -13,7 +13,7 @@
 	import { Icon } from '@steeze-ui/svelte-icon';
 	import { ArrowPath } from '@steeze-ui/heroicons';
 
-	export let vmStateConfig: Writable<StateConfig>;
+	export let expressionConfig: Writable<StateConfig>;
 	export let signer: Signer = new ethers.VoidSigner('0x8ba1f109551bD432803012645Ac136ddd64DBA72');
 	export let chainId: number = 80001;
 	export let context: BigNumber[][] = [];
@@ -42,10 +42,10 @@
 		}[];
 	};
 
-	$: simulate($vmStateConfig, context, chainId);
+	$: simulate($expressionConfig, context, chainId);
 
 	const run = () => {
-		simulate($vmStateConfig, context, chainId);
+		simulate($expressionConfig, context, chainId);
 	};
 
 	const simulate = async (
