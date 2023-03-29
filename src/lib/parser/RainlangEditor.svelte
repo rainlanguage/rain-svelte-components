@@ -1,10 +1,5 @@
 <script lang="ts">
-	import CodeMirror from 'svelte-codemirror-editor';
-	import { writable, type Writable } from 'svelte/store';
-	import { RainlangExtension } from '@rainprotocol/rainlang-codemirror';
-
-	import type { Extension } from '@codemirror/state';
-
+	import { darkMode } from '$lib/darkModeAction';
 	import {
 		autocompletion,
 		closeBrackets,
@@ -21,19 +16,19 @@
 		keymap,
 		lineNumbers
 	} from '@codemirror/view';
-	import { lightTheme } from './theme/light';
+	import { rlc, type ExpressionConfig, type RDProblem } from '@rainprotocol/rainlang';
+	import { RainlangExtension } from '@rainprotocol/rainlang-codemirror';
+	import CodeMirror from 'svelte-codemirror-editor';
+	import { writable, type Writable } from 'svelte/store';
 	import { darkTheme } from './theme/dark';
-	import type { ExpressionConfig } from '@rainprotocol/rainlang';
+	import { lightTheme } from './theme/light';
 
-	const emptySc: Writable<ExpressionConfig> = writable({ sources: [], constants: [] });
+	const emptySc: ExpressionConfig = { sources: [], constants: [] };
 
-	export let expressionConfig: ExpressionConfig | null = emptySc;
-	export let raw: string | null = `_: add(1 2);`;
-	export let error: string = ''; // TODO: list of errors
+	export let expressionConfig: Writable<ExpressionConfig> = writable(emptySc);
+	export let raw: string;
+	export let errors: RDProblem[] = [];
 	export let readOnly = false;
-	export let editable = true;
-	export let dark = false;
-	export let minHeight: string = '0px';
 	export let opMeta: string;
 
 	const rainlangCodemirror = new RainlangExtension({
@@ -44,62 +39,70 @@
 
 	$: opMeta && rainlangCodemirror.updateOpMeta(opMeta);
 
-	$: raw && onRawChange();
+	$: raw && compileDocument();
 
-	const onRawChange = () => {
-		// vmExpressionConfig.set();
+	interface RainCompilerError {
+		problems: RDProblem[];
+		runtimeError: Error | undefined;
+	}
+
+	const compileDocument = async () => {
+		try {
+			const compiledDocument = await rlc(raw, opMeta);
+			expressionConfig.set(compiledDocument);
+			errors = [];
+		} catch (e) {
+			const error = e as RainCompilerError;
+			errors = error.problems;
+			if (error.runtimeError) {
+				throw error.runtimeError;
+			}
+		}
 	};
 
-	/// @see https://codemirror.net/docs/extensions/
+	/// @see https://codemirror.net/docs/extensions/ for the full list of extensions maintained by CodeMirror
 
 	/// Editing
-	const whitespace: Extension[] = [indentOnInput()];
-	const editingHelpers: Extension[] = [
-		autocompletion(),
-		closeBrackets(),
-		drawSelection(),
-		history()
-	];
-	const editingExtension: Extension[] = [whitespace, editingHelpers];
+	const whitespace = [indentOnInput()];
+	const editingHelpers = [autocompletion(), closeBrackets(), drawSelection(), history()];
+	const editingExtension = [whitespace, editingHelpers];
 
 	/// Presentation
-	const styling: Extension[] = [];
-	const presentationFeatures: Extension[] = [highlightSpecialChars()];
-	const gutters: Extension[] = [highlightActiveLineGutter(), lineNumbers()];
-	const tooltips: Extension[] = [];
-	const presentationExtension: Extension[] = [gutters, presentationFeatures, styling, tooltips];
+	// const styling = [];
+	const presentationFeatures = [highlightSpecialChars()];
+	const gutters = [highlightActiveLineGutter(), lineNumbers()];
+	// const tooltips = [];
+	const presentationExtension = [gutters, presentationFeatures];
 
 	/// Input Handling
-	const keymapsExtension: Extension = keymap.of([
+	const keymapsExtension = keymap.of([
 		...closeBracketsKeymap,
 		...completionKeymap,
 		...defaultKeymap,
 		...historyKeymap,
 		...searchKeymap
 	]);
-	const inputHandlingExtension: Extension[] = [keymapsExtension];
+	const inputHandlingExtension = [keymapsExtension];
 
 	/// Language
-	const languageExtension: Extension[] = [
-		syntaxHighlighting(defaultHighlightStyle, { fallback: true })
-	];
+	const languageExtension = [syntaxHighlighting(defaultHighlightStyle, { fallback: true })];
 
 	/// Primitives
-	const transactions: Extension[] = [];
-	const primitivesExtension: Extension[] = [transactions];
+	// const transactions = [];
+	// const primitivesExtension = [];
 </script>
 
 <div class="h-full flex-grow">
 	<CodeMirror
 		bind:value={raw}
-		placeholder={'Write a Rainlang expression'}
+		placeholder={'Write your expression...'}
 		readonly={readOnly}
-		{editable}
-		theme={dark ? darkTheme : lightTheme}
+		editable={!readOnly}
+		theme={$darkMode ? darkTheme : lightTheme}
 		styles={{
-			'.cm-scroller': {
-				overflow: 'auto',
-				minHeight
+			'&': {
+				flexGrow: 1,
+				height: '100%'
 			}
 		}}
 		basic={false}
@@ -108,8 +111,15 @@
 			presentationExtension,
 			inputHandlingExtension,
 			languageExtension,
-			primitivesExtension,
+			// primitivesExtension,
 			rainlangCodemirror.extension
 		]}
 	/>
 </div>
+
+<style lang="postcss" global>
+	.codemirror-wrapper {
+		display: flex;
+		height: 100%;
+	}
+</style>

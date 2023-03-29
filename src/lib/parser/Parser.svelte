@@ -1,9 +1,8 @@
 <svelte:options accessors={true} />
 
 <script lang="ts">
-	import { darkMode } from '$lib/darkModeAction';
 	import SimulatedOutput from '$lib/parser/SimulatedOutput.svelte';
-	import { getOpMetaFromSg, type ExpressionConfig } from '@rainprotocol/rainlang';
+	import type { ExpressionConfig, RDProblem } from '@rainprotocol/rainlang';
 	import {
 		ArrowsPointingOut,
 		CloudArrowDown,
@@ -14,7 +13,7 @@
 	import type { Signer } from 'ethers';
 	import { createEventDispatcher, onMount, SvelteComponent } from 'svelte';
 	import { writable, type Writable } from 'svelte/store';
-	import RainlangEditor from './RainlangEditor.svelte';
+	import ParserInput from '$lib/parser/ParserInput.svelte';
 
 	export let expressionConfig: Writable<ExpressionConfig> = writable({
 		sources: [],
@@ -22,7 +21,7 @@
 	});
 	export let raw: string = '';
 	export let signer: Signer;
-	export let error: string = '';
+	export let errors: RDProblem[];
 	export let readOnly: boolean = false;
 	export let componentName: string | null = null;
 	export let chainId: number = 80001;
@@ -30,15 +29,13 @@
 	export let hideExpand: boolean = false;
 	export let hideSave: boolean = false;
 	export let hideHelp: boolean = false;
+	export let opMeta: string;
 
 	let editorInput: SvelteComponent;
 
 	export let loadRaw: any = null;
 
-	const opMetaPromise = getOpMetaFromSg('0x01D5611c2D6FB7Bb1bFa9df2f524196743f59F2a', 524289);
-
 	onMount(async () => {
-		await opMetaPromise;
 		loadRaw = editorInput.loadRaw;
 	});
 
@@ -68,22 +65,14 @@
 			<div
 				class="border-r border-gray-300 dark:border-gray-600 p-2 parser-wrapper flex-grow flex flex-col"
 			>
-				{#await opMetaPromise}
-					<span>Fetching op meta...</span>
-				{:then opmeta}
-					<RainlangEditor
-						{expressionConfig}
-						{readOnly}
-						bind:error
-						bind:raw
-						bind:this={editorInput}
-						dark={$darkMode}
-						minHeight="150px"
-						opMeta={opmeta}
-					/>
-				{:catch e}
-					<!-- promise was rejected -->
-				{/await}
+				<ParserInput
+					{expressionConfig}
+					{readOnly}
+					bind:errors
+					bind:raw
+					bind:this={editorInput}
+					{opMeta}
+				/>
 			</div>
 		</div>
 		<div class="flex flex-col w-1/3">
@@ -95,8 +84,10 @@
 	</div>
 	<div class="bg-gray-200 dark:bg-gray-800 flex justify-between px-2">
 		<div class="text-red-500 text-xs font-regular h-4 p-2">
-			{#if error}
-				Error: {error}
+			{#if errors.length}
+				{#each errors as problem}
+					{problem.msg}
+				{/each}
 			{/if}
 		</div>
 		<div class="gap-x-3 flex items-center text-gray-600">

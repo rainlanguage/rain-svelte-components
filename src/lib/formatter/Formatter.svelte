@@ -2,7 +2,7 @@
 <script lang="ts">
 	import ParserInput from '$lib/parser/ParserInput.svelte';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import { Formatter, rainterpreterOpMeta, type ExpressionConfig } from '@rainprotocol/rainlang';
+	import { rld, type ExpressionConfig } from '@rainprotocol/rainlang';
 	import Button from '$lib/Button.svelte';
 	import { DocumentDuplicate } from '@steeze-ui/heroicons';
 
@@ -12,6 +12,7 @@
 	export let showFork: boolean = true;
 	export let showForkLabel: boolean = false;
 	export let maxHeight: string | null = null;
+	export let opMeta: string;
 
 	let formatter: ParserInput;
 
@@ -19,8 +20,9 @@
 
 	const dispatch = createEventDispatcher();
 
-	onMount(() => {
-		if (expressionConfig) raw = Formatter.get(expressionConfig, { opmeta: rainterpreterOpMeta });
+	onMount(async () => {
+		if (expressionConfig)
+			raw = (await rld(expressionConfig, rainterpreterOpMeta)).getTextDocument().getText();
 		if (raw) formatter.loadRaw(raw.toLowerCase());
 		if (!raw && !expressionConfig) showFormatter = false;
 	});
