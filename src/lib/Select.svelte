@@ -8,6 +8,7 @@
 	export let value: any = -1;
 
 	export let small: boolean = false;
+	export let label: string = 'Select';
 
 	export let disabled = false;
 
@@ -27,7 +28,7 @@
 		class={`default ${small ? 'small' : 'large'}`}
 		class:disabled
 	>
-		<option value={-1} hidden selected>Select</option>
+		<option value={-1} hidden selected>{label}</option>
 		{#each items as item, i}
 			<option value={item?.value || i}>{item.label}</option>
 		{/each}
@@ -40,7 +41,7 @@
 	}
 
 	.small {
-		@apply px-0 py-1;
+		@apply px-0 py-1 text-xs;
 	}
 
 	.large {

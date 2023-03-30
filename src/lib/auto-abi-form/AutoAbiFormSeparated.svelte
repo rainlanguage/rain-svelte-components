@@ -21,8 +21,8 @@
 		const findExpression = (component: AbiParameter) => {
 			if ('internalType' in component) {
 				if (
-					component.internalType == 'struct StateConfig' ||
-					component.internalType == 'struct StateConfig[]'
+					component.internalType == 'struct EvaluableConfig' ||
+					component.internalType == 'struct EvaluableConfig[]'
 				) {
 					expressions = true;
 				}
@@ -39,7 +39,7 @@
 
 	$: expressions = hasExpressions(abi);
 
-	$: result = merge([], expressionsResult, configResult);
+	$: result = merge([], configResult, expressionsResult);
 </script>
 
 <div class="flex flex-col gap-y-8">
