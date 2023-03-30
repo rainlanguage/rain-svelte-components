@@ -5,8 +5,8 @@
 
 	export let expressionConfig: Writable<ExpressionConfig>;
 	export let raw: string;
-	export let errors: RDProblem[];
-	export let readOnly: boolean;
+	export let errors: RDProblem[] = [];
+	export let readOnly: boolean = false;
 	export let opMeta: string;
 </script>
 

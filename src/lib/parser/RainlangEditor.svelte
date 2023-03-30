@@ -51,6 +51,8 @@
 			const compiledDocument = await rlc(raw, opMeta);
 			expressionConfig.set(compiledDocument);
 			errors = [];
+
+			console.log({ compiledDocument });
 		} catch (e) {
 			const error = e as RainCompilerError;
 			errors = error.problems;
