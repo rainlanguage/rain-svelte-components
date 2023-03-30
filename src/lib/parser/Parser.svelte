@@ -17,12 +17,14 @@
 	import type { Deployer, EvaluableConfig, GetDeployers } from '$lib/parser/types';
 	import Select from '$lib/Select.svelte';
 
-	export let evaluableConfig: EvaluableConfig;
-
 	export let expressionConfig: Writable<ExpressionConfig> = writable({
 		sources: [],
 		constants: []
 	});
+	export let evaluableConfig: EvaluableConfig = {
+		...$expressionConfig,
+		IExpressionDeployerV1: ''
+	};
 	export let raw: string = '';
 	export let signer: Signer;
 	export let error: string = '';
@@ -35,6 +37,9 @@
 	export let hideSave: boolean = false;
 	export let hideHelp: boolean = false;
 	export let opMeta: string;
+	export let deployers: Deployer[] = [];
+	export let selectedDeployer: Writable<Deployer> = writable();
+	export let loadRaw: any = null;
 
 	let noDeployers = false;
 
@@ -50,11 +55,7 @@
 		}));
 	};
 
-	export let deployers: Deployer[] = [];
-
 	let deployerOptions: DeployerOption[] = formatDeployerOptions(deployers);
-
-	export let selectedDeployer: Writable<Deployer> = writable();
 
 	$: evaluableConfig = {
 		constants: $expressionConfig.constants,
@@ -63,8 +64,6 @@
 	};
 
 	let editorInput: SvelteComponent;
-
-	export let loadRaw: any = null;
 
 	onMount(async () => {
 		if (!getDeployers) {
@@ -126,7 +125,7 @@
 		<div class="flex flex-col w-1/3">
 			<div class="heading">Simulated output</div>
 			<div class="p-2">
-				<SimulatedOutput {expressionConfig} {signer} {chainId} externalError={error}/>
+				<SimulatedOutput {expressionConfig} {signer} {chainId} externalError={error} />
 			</div>
 		</div>
 	</div>
@@ -136,6 +135,9 @@
 				{#each errors as problem}
 					{problem.msg}
 				{/each}
+			{/if}
+		</div>
+	</div>
 	<div class="bg-gray-200 dark:bg-gray-800 flex justify-between px-2 items-center">
 		<div class="justify-self-start flex items-center py-1">
 			{#if noDeployers}

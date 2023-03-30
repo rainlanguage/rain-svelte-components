@@ -92,7 +92,9 @@
 				<span>Diagnostics</span>
 				<div class="bg-gray-100 dark:bg-gray-800 p-3">
 					{#each errors as problem}
-						{problem.msg}
+						<div class="text-red-500 text-xs leading-tight pb-2">
+							{problem.msg}
+						</div>
 					{/each}
 				</div>
 				<span>Raw text</span>
