@@ -20,16 +20,20 @@
 
 	const dispatch = createEventDispatcher();
 
+	export const getRawExpression = async (config_: ExpressionConfig, opMeta_: string) => {
+		return (await rld(config_, opMeta_, true)).getTextDocument().getText();
+	};
+
 	onMount(async () => {
-		// TODO: Formatting without compiling and decompiling
+		// TODO: Don't skip raw formatting (avoid compiling and decompiling? loss of information)
 		// if (raw)
 		// 	return (raw = (await rld(await rlc(raw, opMeta), opMeta, true)).getTextDocument().getText());
+
 		if (raw) return;
-
-		if (expressionConfig)
-			return (raw = (await rld($expressionConfig, opMeta, true)).getTextDocument().getText());
-
-		if (!raw && !expressionConfig) showFormatter = false;
+		else if (expressionConfig) {
+			raw = await getRawExpression($expressionConfig, opMeta);
+			return;
+		} else showFormatter = false;
 	});
 
 	const handleFork = () => {
