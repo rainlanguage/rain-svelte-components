@@ -1,7 +1,14 @@
+<script context="module" lang="ts">
+	import { rld, type ExpressionConfig } from '@rainprotocol/rainlang';
+
+	export const getRawExpression = async (config_: ExpressionConfig, opMeta_: string) => {
+		return (await rld(config_, opMeta_, true)).getTextDocument().getText();
+	};
+</script>
+
 <script lang="ts">
 	import Button from '$lib/Button.svelte';
 	import ParserInput from '$lib/parser/ParserInput.svelte';
-	import { rld, type ExpressionConfig } from '@rainprotocol/rainlang';
 	import { DocumentDuplicate } from '@steeze-ui/heroicons';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import type { Writable } from 'svelte/store';
@@ -19,10 +26,6 @@
 	let showFormatter: boolean = true;
 
 	const dispatch = createEventDispatcher();
-
-	export const getRawExpression = async (config_: ExpressionConfig, opMeta_: string) => {
-		return (await rld(config_, opMeta_, true)).getTextDocument().getText();
-	};
 
 	onMount(async () => {
 		// TODO: Don't skip raw formatting (avoid compiling and decompiling? loss of information)
