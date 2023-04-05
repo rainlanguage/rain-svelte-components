@@ -626,18 +626,6 @@
     ethers "^5.7.2"
     prettier "^2.7.1"
 
-"@rainprotocol/rainlang-codemirror@git+https://github.com/rainprotocol/rainlang-codemirror#d2b634ed2d3c664dc23f1f4ebb53a27721b30f20":
-  version "0.0.4"
-  resolved "git+https://github.com/rainprotocol/rainlang-codemirror#d2b634ed2d3c664dc23f1f4ebb53a27721b30f20"
-  dependencies:
-    "@codemirror/autocomplete" "^6.4.2"
-    "@codemirror/lint" "^6.2.0"
-    "@codemirror/state" "^6.2.0"
-    "@codemirror/view" "^6.9.3"
-    "@lezer/highlight" "^1.1.3"
-    "@lezer/lr" "^1.3.3"
-    "@rainprotocol/rainlang" "git+https://github.com/rainprotocol/rainlang#d732259a3fe0bf721f13df30de57c45b4c71ba3b"
-
 "@rainprotocol/rainlang@git+https://github.com/rainprotocol/rainlang#29484fabd2a8b7c5be713d7d034c6c93034f8fc4":
   version "1.2.2"
   resolved "git+https://github.com/rainprotocol/rainlang#29484fabd2a8b7c5be713d7d034c6c93034f8fc4"
@@ -656,9 +644,9 @@
     vscode-languageserver-textdocument "^1.0.8"
     vscode-languageserver-types "^3.17.3"
 
-"@rainprotocol/rainlang@git+https://github.com/rainprotocol/rainlang#d732259a3fe0bf721f13df30de57c45b4c71ba3b":
+"@rainprotocol/rainlang@git+https://github.com/rainprotocol/rainlang#c1ccd54db174125acbfba7dbe28c9d79ae6cc643":
   version "1.2.3"
-  resolved "git+https://github.com/rainprotocol/rainlang#d732259a3fe0bf721f13df30de57c45b4c71ba3b"
+  resolved "git+https://github.com/rainprotocol/rainlang#c1ccd54db174125acbfba7dbe28c9d79ae6cc643"
   dependencies:
     ajv "^8.12.0"
     algebra.js rouzwelt/algebra.js
@@ -2612,6 +2600,18 @@ quick-lru@^5.1.1:
   dependencies:
     ethers "^5.5.2"
     prettier "^2.6.2"
+
+"rainlang-codemirror@https://gitpkg.now.sh/rainprotocol/rainlang-codemirror?0ff30cf212dcf5cf9813786b1137fb968253392c":
+  version "0.0.5"
+  resolved "https://gitpkg.now.sh/rainprotocol/rainlang-codemirror?0ff30cf212dcf5cf9813786b1137fb968253392c#2edd647f49af5220bf39ae8241d7c4f1f63c07bf"
+  dependencies:
+    "@codemirror/autocomplete" "^6.4.2"
+    "@codemirror/lint" "^6.2.0"
+    "@codemirror/state" "^6.2.0"
+    "@codemirror/view" "^6.9.3"
+    "@lezer/highlight" "^1.1.3"
+    "@lezer/lr" "^1.3.3"
+    "@rainprotocol/rainlang" "git+https://github.com/rainprotocol/rainlang#c1ccd54db174125acbfba7dbe28c9d79ae6cc643"
 
 read-cache@^1.0.0:
   version "1.0.0"
