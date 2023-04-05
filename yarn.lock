@@ -638,6 +638,24 @@
     "@lezer/lr" "^1.3.3"
     "@rainprotocol/rainlang" "git+https://github.com/rainprotocol/rainlang#c1ccd54db174125acbfba7dbe28c9d79ae6cc643"
 
+"@rainprotocol/rainlang@git+https://github.com/rainprotocol/rainlang#29484fabd2a8b7c5be713d7d034c6c93034f8fc4":
+  version "1.2.2"
+  resolved "git+https://github.com/rainprotocol/rainlang#29484fabd2a8b7c5be713d7d034c6c93034f8fc4"
+  dependencies:
+    ajv "^8.12.0"
+    algebra.js rouzwelt/algebra.js
+    buffer "^6.0.3"
+    cbor-web "https://gitpkg.now.sh/rouzwelt/node-cbor/packages/cbor-web?4f8d212f058a84ca40993e7db523b80ed6cefc19"
+    ethers "^5.7.2"
+    graphql "^16.6.0"
+    graphql-request "^5.2.0"
+    pako "^2.1.0"
+    prettier "^2.8.3"
+    prettier-standalone "^1.3.1-0"
+    string-math "^1.2.2"
+    vscode-languageserver-textdocument "^1.0.8"
+    vscode-languageserver-types "^3.17.3"
+
 "@rainprotocol/rainlang@git+https://github.com/rainprotocol/rainlang#c1ccd54db174125acbfba7dbe28c9d79ae6cc643":
   version "1.2.3"
   resolved "git+https://github.com/rainprotocol/rainlang#c1ccd54db174125acbfba7dbe28c9d79ae6cc643"
@@ -1150,6 +1168,10 @@ caniuse-lite@^1.0.30001400, caniuse-lite@^1.0.30001407:
 "cbor-web@https://gitpkg.now.sh/hildjj/node-cbor/packages/cbor-web?e593ce09b34cc1420f402b27ab0dd38a1306cecd":
   version "8.1.0"
   resolved "https://gitpkg.now.sh/hildjj/node-cbor/packages/cbor-web?e593ce09b34cc1420f402b27ab0dd38a1306cecd#2d9674275dafdb1d11a27b14678636a96db2efff"
+
+"cbor-web@https://gitpkg.now.sh/rouzwelt/node-cbor/packages/cbor-web?4f8d212f058a84ca40993e7db523b80ed6cefc19":
+  version "8.1.0"
+  resolved "https://gitpkg.now.sh/rouzwelt/node-cbor/packages/cbor-web?4f8d212f058a84ca40993e7db523b80ed6cefc19#d38060aef7957564bf40c25f9a45ccbc0ea4166d"
 
 chalk@^4.0.0:
   version "4.1.2"
