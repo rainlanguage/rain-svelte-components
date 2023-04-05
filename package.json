@@ -41,6 +41,8 @@
 		".": "./index.js"
 	},
 	"svelte": "./index.js",
+	"module": "./package/index.js",
+	"typings": "./package/index.d.ts",
 	"dependencies": {
 		"@codemirror/lang-javascript": "^6.1.4",
 		"@formkit/auto-animate": "^1.0.0-beta.3",
