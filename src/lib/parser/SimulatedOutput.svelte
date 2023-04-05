@@ -1,10 +1,5 @@
 <script lang="ts">
-	import {
-		defaultProvidersUrls,
-		RainInterpreterTs,
-		rainterpreterOpConfigs
-	} from '@rainprotocol/interpreter-ts';
-	import type { StateConfig } from 'rain-sdk';
+	import type { ExpressionConfig } from '@rainprotocol/rainlang';
 	import type { BigNumber, Signer } from 'ethers';
 	import { ethers } from 'ethers';
 	import type { Writable } from 'svelte/store';
@@ -13,7 +8,10 @@
 	import { Icon } from '@steeze-ui/svelte-icon';
 	import { ArrowPath } from '@steeze-ui/heroicons';
 
-	export let expressionConfig: Writable<StateConfig>;
+	//// !!! This component is broken until we can get eval for expression happening on-chain.
+	const defaultProvidersUrls = {};
+
+	export let expressionConfig: Writable<ExpressionConfig>;
 	export let signer: Signer = new ethers.VoidSigner('0x8ba1f109551bD432803012645Ac136ddd64DBA72');
 	export let chainId: number = 80001;
 	export let context: BigNumber[][] = [];
@@ -50,7 +48,7 @@
 	};
 
 	const simulate = async (
-		vmStateConfig: StateConfig | null,
+		vmStateConfig: ExpressionConfig | null,
 		_context: BigNumber[][],
 		_chainId: number
 	) => {
@@ -61,29 +59,29 @@
 		}
 
 		resultState = ResultState.Calculating;
-		const simulator = new RainInterpreterTs(
-			'0xF4d1dbA59eABac89a9C37eB5F5bbC5F5b7Ab6B8c',
-			_chainId,
-			rainterpreterOpConfigs,
-			undefined,
-			[vmStateConfig]
-		);
+		// const simulator = new RainInterpreterTs(
+		// 	'0xF4d1dbA59eABac89a9C37eB5F5bbC5F5b7Ab6B8c',
+		// 	_chainId,
+		// 	rainterpreterOpConfigs,
+		// 	undefined,
+		// 	[vmStateConfig]
+		// );
 		try {
-			const resultPromises = vmStateConfig.sources.map(async (source, i) => ({
-				...(await simulator.run(
-					await signer.getAddress(),
-					{
-						context: _context,
-						namespace: 'none'
-					},
-					{ entrypoint: i }
-				))
-			}));
-			const results = await Promise.all(resultPromises);
-			const matchingBlocks = results.every(
-				(result) => result.blockNumber == results[0].blockNumber
-			);
-			simulatedResults = { matchingBlocks, results };
+			// const resultPromises = vmStateConfig.sources.map(async (source, i) => ({
+			// 	...(await simulator.run(
+			// 		await signer.getAddress(),
+			// 		{
+			// 			context: _context,
+			// 			namespace: 'none'
+			// 		},
+			// 		{ entrypoint: i }
+			// 	))
+			// }));
+			// const results = await Promise.all(resultPromises);
+			// const matchingBlocks = results.every(
+			// 	(result) => result.blockNumber == results[0].blockNumber
+			// );
+			// simulatedResults = { matchingBlocks, results };
 			resultState = ResultState.Ready;
 		} catch (err: any) {
 			error = err;
