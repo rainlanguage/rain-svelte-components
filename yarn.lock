@@ -614,9 +614,9 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
-"@rainprotocol/rainlang-codemirror@git+https://github.com/rainprotocol/rainlang-codemirror#0ff30cf212dcf5cf9813786b1137fb968253392c":
+"@rainprotocol/rainlang-codemirror@git+https://github.com/rainprotocol/rainlang-codemirror#dfedac3333c4a0052fd3fddd3ac827f47b1f5fb6":
   version "0.0.5"
-  resolved "git+https://github.com/rainprotocol/rainlang-codemirror#0ff30cf212dcf5cf9813786b1137fb968253392c"
+  resolved "git+https://github.com/rainprotocol/rainlang-codemirror#dfedac3333c4a0052fd3fddd3ac827f47b1f5fb6"
   dependencies:
     "@codemirror/autocomplete" "^6.4.2"
     "@codemirror/lint" "^6.2.0"
@@ -624,11 +624,11 @@
     "@codemirror/view" "^6.9.3"
     "@lezer/highlight" "^1.1.3"
     "@lezer/lr" "^1.3.3"
-    "@rainprotocol/rainlang" "git+https://github.com/rainprotocol/rainlang#c1ccd54db174125acbfba7dbe28c9d79ae6cc643"
+    "@rainprotocol/rainlang" "git+https://github.com/rainprotocol/rainlang#d5b13a076b07a36f00acba7ebc20764cea1e61d7"
 
-"@rainprotocol/rainlang@git+https://github.com/rainprotocol/rainlang#c1ccd54db174125acbfba7dbe28c9d79ae6cc643":
+"@rainprotocol/rainlang@git+https://github.com/rainprotocol/rainlang#d5b13a076b07a36f00acba7ebc20764cea1e61d7":
   version "1.2.3"
-  resolved "git+https://github.com/rainprotocol/rainlang#c1ccd54db174125acbfba7dbe28c9d79ae6cc643"
+  resolved "git+https://github.com/rainprotocol/rainlang#d5b13a076b07a36f00acba7ebc20764cea1e61d7"
   dependencies:
     ajv "^8.12.0"
     algebra.js rouzwelt/algebra.js
