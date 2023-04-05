@@ -38,9 +38,9 @@
 	"type": "module",
 	"exports": {
 		"./package.json": "./package.json",
-		".": "./package/index.js"
+		".": "./index.js"
 	},
-	"svelte": "./package/index.js",
+	"svelte": "./index.js",
 	"module": "./package/index.js",
 	"typings": "./package/index.d.ts",
 	"dependencies": {
