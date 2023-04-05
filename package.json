@@ -57,7 +57,7 @@
 		"lodash-es": "^4.17.21",
 		"rain-metadata": "git+https://github.com/rainprotocol/rain-metadata.git",
 		"rain-sdk": "git+https://github.com/rainprotocol/rain-sdk.git#f6710e64a7d6c47110e3e584cd17e947c1d7313a",
-		"rainlang-codemirror": "https://gitpkg.now.sh/rainprotocol/rainlang-codemirror?0ff30cf212dcf5cf9813786b1137fb968253392c",
+		"rainlang-codemirror": "git+https://github.com/rainprotocol/rainlang-codemirror#0ff30cf212dcf5cf9813786b1137fb968253392c",
 		"slate": "^0.85.0",
 		"slate-history": "^0.86.0",
 		"svelte-codemirror-editor": "^1.1.0",
