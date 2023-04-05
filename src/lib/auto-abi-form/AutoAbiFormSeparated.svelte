@@ -1,6 +1,6 @@
 <script lang="ts">
 	import AutoAbiForm from '$lib/auto-abi-form/AutoAbiForm.svelte';
-	import type { ContractMetadata } from 'rain-metadata/metadata-types/contract';
+	// import type { ContractMetadata } from 'rain-metadata/metadata-types/contract';
 	import { Section, SectionBody, SectionHeading } from '$lib/section';
 	import type { Abi, AbiFunction, AbiParameter } from 'abitype';
 	import { merge } from 'lodash-es';
@@ -9,7 +9,7 @@
 	export let abi: Abi;
 	export let methodName: string = 'createChildTyped';
 	export let result: any = [];
-	export let metadata: ContractMetadata;
+	export let metadata: any;
 
 	// config
 	export let showInterpreterFields: boolean = false;

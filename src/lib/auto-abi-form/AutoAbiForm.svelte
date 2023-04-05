@@ -1,6 +1,6 @@
 <script lang="ts">
 	import AutoAbiFormComponent from '$lib/auto-abi-form/AutoAbiFormComponent.svelte';
-	import type { ContractMetadata } from 'rain-metadata/type-definitions/contract';
+	// import type { ContractMetadata } from 'rain-metadata/type-definitions/contract';
 	import { set } from 'lodash-es';
 	import type { Abi } from 'abitype';
 	import { setContext } from 'svelte';
@@ -17,7 +17,7 @@
 	setContext('abi-form', { onlyExpressions, onlyConfig, showInterpreterFields });
 
 	// metadata
-	export let metadata: ContractMetadata;
+	export let metadata: any;
 
 	$: method = abi.find((method) => method.type == 'function' && method?.name == methodName);
 	$: inputs = method?.type == 'function' ? method.inputs : null;
