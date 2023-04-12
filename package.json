@@ -2,7 +2,7 @@
 	"name": "rain-svelte-components",
 	"version": "0.0.1",
 	"files": [
-		"package/**"
+		"dist"
 	],
 	"scripts": {
 		"dev": "vite dev",
@@ -14,9 +14,8 @@
 		"prepare": "yarn build"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "next",
-		"@sveltejs/kit": "next",
-		"@sveltejs/package": "next",
+		"@sveltejs/adapter-auto": "2.0.0",
+		"@sveltejs/package": "2.0.2",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
 		"@typescript-eslint/parser": "^5.27.0",
 		"autoprefixer": "^10.4.7",
@@ -27,21 +26,24 @@
 		"postcss-load-config": "^4.0.1",
 		"prettier": "^2.6.2",
 		"prettier-plugin-svelte": "^2.7.0",
-		"svelte": "^3.44.0",
 		"svelte-check": "^2.7.1",
 		"svelte-preprocess": "^4.10.7",
 		"tailwindcss": "^3.1.5",
 		"tslib": "^2.3.1",
 		"typescript": "^4.7.4",
-		"vite": "^3.1.0"
+		"vite": "4.2.1"
 	},
 	"type": "module",
 	"exports": {
-		"./package.json": "./package.json",
-		".": "./index.js"
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js"
+		}
 	},
-	"svelte": "./index.js",
+	"svelte": "./dist/index.js",
 	"dependencies": {
+		"svelte": "^3.44.0",
+		"@sveltejs/kit": "1.15.4",
 		"@codemirror/lang-javascript": "^6.1.4",
 		"@formkit/auto-animate": "^1.0.0-beta.3",
 		"@metamask/jazzicon": "^2.0.0",
