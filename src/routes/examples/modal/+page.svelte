@@ -23,7 +23,7 @@
 		<ExampleComponent>
 			<Button on:click={toggleModal}>Open modal</Button>
 			<Modal bind:open>
-				<div class="flex flex-col gap-y-2 w-60 ">
+				<div class="flex flex-col gap-y-2 w-60">
 					<span class="text-2xl font-semibold">Some modal</span>
 					<span>This is a modal, close it by clicking the button below.</span>
 					<span class="self-start mt-4">
@@ -35,7 +35,7 @@
 		<ExampleUsage>
 			{`
 <script>
-	let open: boolean = false;
+	let open = false;
 
 	const toggleModal = () => {
 		open = !open;
