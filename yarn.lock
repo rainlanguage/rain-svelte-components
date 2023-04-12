@@ -595,18 +595,6 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
-"@rainprotocol/rainlang-codemirror@git+https://github.com/rainprotocol/rainlang-codemirror#dc67dcb79139b47be645c9fe11cd12cadf164693":
-  version "0.0.9"
-  resolved "git+https://github.com/rainprotocol/rainlang-codemirror#dc67dcb79139b47be645c9fe11cd12cadf164693"
-  dependencies:
-    "@codemirror/autocomplete" "^6.4.2"
-    "@codemirror/lint" "^6.2.0"
-    "@codemirror/state" "^6.2.0"
-    "@codemirror/view" "^6.9.3"
-    "@lezer/highlight" "^1.1.3"
-    "@lezer/lr" "^1.3.3"
-    "@rainprotocol/rainlang" "^1.2.11"
-
 "@rainprotocol/rainlang@^1.2.11":
   version "1.2.11"
   resolved "https://registry.yarnpkg.com/@rainprotocol/rainlang/-/rainlang-1.2.11.tgz#ddf8de0c1a2ba77d498f01e6bed79ae192f1c291"
@@ -1023,6 +1011,19 @@ clone@^1.0.2:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==
+
+codemirror-rainlang@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/codemirror-rainlang/-/codemirror-rainlang-0.0.9.tgz#adf7b9b3b282566db266c7ab3e5ffe16e16bf18f"
+  integrity sha512-nbwQ8V9E6OV0LaeJzcsPv78BXtupY71IqNXgSMm3sP9Q6a6mR2Tau+nFKcYaqI4NfUZKEyW7R8Brh8j1sRoB2g==
+  dependencies:
+    "@codemirror/autocomplete" "^6.4.2"
+    "@codemirror/lint" "^6.2.0"
+    "@codemirror/state" "^6.2.0"
+    "@codemirror/view" "^6.9.3"
+    "@lezer/highlight" "^1.1.3"
+    "@lezer/lr" "^1.3.3"
+    "@rainprotocol/rainlang" "^1.2.11"
 
 codemirror@^6.0.1:
   version "6.0.1"
