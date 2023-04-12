@@ -17,7 +17,7 @@
 		lineNumbers
 	} from '@codemirror/view';
 	import { rlc, type ExpressionConfig, type RDProblem } from '@rainprotocol/rainlang';
-	import { RainlangExtension } from 'codemirror-rainlang';
+	import { RainlangExtension } from '@rainprotocol/rainlang-codemirror';
 	import CodeMirror from 'svelte-codemirror-editor';
 	import { writable, type Writable } from 'svelte/store';
 	import { darkTheme } from './theme/dark';
