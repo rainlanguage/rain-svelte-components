@@ -1,5 +1,5 @@
 {
-	"name": "rain-svelte-components",
+	"name": "@rainprotocol/rain-svelte-components",
 	"version": "0.0.1",
 	"files": [
 		"dist"
