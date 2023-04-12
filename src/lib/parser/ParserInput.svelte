@@ -10,4 +10,4 @@
 	export let opMeta: string;
 </script>
 
-<RainlangEditor bind:expressionConfig bind:raw bind:errors bind:readOnly bind:opMeta />
+<RainlangEditor bind:expressionConfig bind:raw bind:errors bind:readOnly {opMeta} />

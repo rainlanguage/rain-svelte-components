@@ -1,14 +1,14 @@
 // import type { OpMeta } from "rain-metadata/type-definitions/op";
 
 export type EvaluableConfig = {
-	IExpressionDeployerV1: string;
+	deployer: string;
 	sources: any[];
 	constants: any[];
 };
 
 export const constructEvaluableConfig: () => EvaluableConfig = () => {
 	return {
-		IExpressionDeployerV1: '',
+		deployer: '',
 		sources: [],
 		constants: []
 	};
@@ -16,7 +16,7 @@ export const constructEvaluableConfig: () => EvaluableConfig = () => {
 
 export type Deployer = {
 	address: string,
-	opmeta: any[]
+	opmeta: string
 }
 
 export type GetDeployers = () => Deployer[]

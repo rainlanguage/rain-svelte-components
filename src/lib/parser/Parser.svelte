@@ -23,7 +23,7 @@
 	});
 	export let evaluableConfig: EvaluableConfig = {
 		...$expressionConfig,
-		IExpressionDeployerV1: ''
+		deployer: ''
 	};
 	export let raw: string = '';
 	export let signer: Signer;
@@ -36,7 +36,6 @@
 	export let hideExpand: boolean = false;
 	export let hideSave: boolean = false;
 	export let hideHelp: boolean = false;
-	export let opMeta: string;
 	export let deployers: Deployer[] = [];
 	export let selectedDeployer: Writable<Deployer> = writable();
 	export let loadRaw: any = null;
@@ -60,7 +59,7 @@
 	$: evaluableConfig = {
 		constants: $expressionConfig.constants,
 		sources: $expressionConfig.sources,
-		IExpressionDeployerV1: $selectedDeployer?.address
+		deployer: $selectedDeployer?.address
 	};
 
 	let editorInput: SvelteComponent;
@@ -118,7 +117,7 @@
 					bind:errors
 					bind:raw
 					bind:this={editorInput}
-					{opMeta}
+					opMeta={$selectedDeployer?.opmeta}
 				/>
 			</div>
 		</div>
