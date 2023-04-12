@@ -13,6 +13,7 @@ export { default as HoverTooltip } from './HoverTooltip.svelte';
 export { default as Jazzicon } from './Jazzicon.svelte';
 export { default as Select } from './Select.svelte';
 export { default as Modal } from './Modal.svelte';
+export { default as Pills } from './Pills.svelte';
 
 // parser stuff
 export { default as Parser } from './parser/Parser.svelte';
