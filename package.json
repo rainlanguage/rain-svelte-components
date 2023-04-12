@@ -45,7 +45,7 @@
 		"@codemirror/lang-javascript": "^6.1.4",
 		"@formkit/auto-animate": "^1.0.0-beta.3",
 		"@metamask/jazzicon": "^2.0.0",
-		"@rainprotocol/rainlang-codemirror": "git+https://github.com/rainprotocol/rainlang-codemirror#dfedac3333c4a0052fd3fddd3ac827f47b1f5fb6",
+		"@rainprotocol/rainlang-codemirror": "git+https://github.com/rainprotocol/rainlang-codemirror#dc67dcb79139b47be645c9fe11cd12cadf164693",
 		"@steeze-ui/heroicons": "^2.1.0",
 		"@steeze-ui/svelte-icon": "^1.3.2",
 		"@types/lodash": "^4.14.186",
