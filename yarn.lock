@@ -609,29 +609,23 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@nohns/algebra.js@^0.2.9":
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/@nohns/algebra.js/-/algebra.js-0.2.9.tgz#d24faf0d4b85fb7697ccf4d7cc80039c69aa1cf1"
+  integrity sha512-L9+AXigZJHrRgggYTPXZE6p6nnUoQHvnOJwKcrEBZlv3UV3PShnJFV9zyWPkJnuaYdHuZROjY36MTSDzyVm8hw==
+
 "@polka/url@^1.0.0-next.20":
   version "1.0.0-next.21"
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
-"@rainprotocol/rainlang-codemirror@git+https://github.com/rainprotocol/rainlang-codemirror#dfedac3333c4a0052fd3fddd3ac827f47b1f5fb6":
-  version "0.0.5"
-  resolved "git+https://github.com/rainprotocol/rainlang-codemirror#dfedac3333c4a0052fd3fddd3ac827f47b1f5fb6"
+"@rainprotocol/rainlang@^1.2.11":
+  version "1.2.11"
+  resolved "https://registry.yarnpkg.com/@rainprotocol/rainlang/-/rainlang-1.2.11.tgz#ddf8de0c1a2ba77d498f01e6bed79ae192f1c291"
+  integrity sha512-/gAA67++Jfi1/xsbAtmdQz50WfF8DI4Aocxl/Y02XzSFti7CWBUBR0/uedUFUr+DRGCh6RJvxjbJ6pZaf12FvA==
   dependencies:
-    "@codemirror/autocomplete" "^6.4.2"
-    "@codemirror/lint" "^6.2.0"
-    "@codemirror/state" "^6.2.0"
-    "@codemirror/view" "^6.9.3"
-    "@lezer/highlight" "^1.1.3"
-    "@lezer/lr" "^1.3.3"
-    "@rainprotocol/rainlang" "git+https://github.com/rainprotocol/rainlang#d5b13a076b07a36f00acba7ebc20764cea1e61d7"
-
-"@rainprotocol/rainlang@git+https://github.com/rainprotocol/rainlang#d5b13a076b07a36f00acba7ebc20764cea1e61d7":
-  version "1.2.3"
-  resolved "git+https://github.com/rainprotocol/rainlang#d5b13a076b07a36f00acba7ebc20764cea1e61d7"
-  dependencies:
+    "@nohns/algebra.js" "^0.2.9"
     ajv "^8.12.0"
-    algebra.js rouzwelt/algebra.js
     buffer "^6.0.3"
     cbor-web "https://gitpkg.now.sh/hildjj/node-cbor/packages/cbor-web?e593ce09b34cc1420f402b27ab0dd38a1306cecd"
     ethers "^5.7.2"
@@ -954,10 +948,6 @@ ajv@^8.12.0:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-algebra.js@rouzwelt/algebra.js:
-  version "0.2.6"
-  resolved "https://codeload.github.com/rouzwelt/algebra.js/tar.gz/dd6e79a88e86f06befb5b489f03ca1fac1939401"
-
 ansi-regex@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-5.0.1.tgz#082cb2c89c9fe8659a311a53bd6a4dc5301db304"
@@ -1166,6 +1156,19 @@ clone@^1.0.2:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==
+
+codemirror-rainlang@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/codemirror-rainlang/-/codemirror-rainlang-0.0.9.tgz#adf7b9b3b282566db266c7ab3e5ffe16e16bf18f"
+  integrity sha512-nbwQ8V9E6OV0LaeJzcsPv78BXtupY71IqNXgSMm3sP9Q6a6mR2Tau+nFKcYaqI4NfUZKEyW7R8Brh8j1sRoB2g==
+  dependencies:
+    "@codemirror/autocomplete" "^6.4.2"
+    "@codemirror/lint" "^6.2.0"
+    "@codemirror/state" "^6.2.0"
+    "@codemirror/view" "^6.9.3"
+    "@lezer/highlight" "^1.1.3"
+    "@lezer/lr" "^1.3.3"
+    "@rainprotocol/rainlang" "^1.2.11"
 
 codemirror@^6.0.1:
   version "6.0.1"
