@@ -1,22 +1,29 @@
 <script lang="ts">
-	import ParserInput from '$lib/parser/ParserInput.svelte';
-	import { signer } from 'svelte-ethers-store';
-	import ExampleComponent from '$lib/_docs/ExampleComponent.svelte';
-	import ExampleUsage from '$lib/_docs/ExampleUsage.svelte';
-	import Example from '$lib/_docs/Example.svelte';
-	import ExampleHeading from '$lib/_docs/ExampleHeading.svelte';
-	import PageHeading from '$lib/_docs/PageHeading.svelte';
-	import { writable, type Writable } from 'svelte/store';
-	import SimulatedOutput from '$lib/parser/SimulatedOutput.svelte';
-	import type { StateConfig } from 'rain-sdk';
-	import Parser from '$lib/parser/Parser.svelte';
-	import { setContext, type SvelteComponent } from 'svelte';
 	import Input from '$lib/Input.svelte';
+	import Parser from '$lib/parser/Parser.svelte';
+	import ParserInput from '$lib/parser/ParserInput.svelte';
+	import SimulatedOutput from '$lib/parser/SimulatedOutput.svelte';
+	import Example from '$lib/_docs/Example.svelte';
+	import ExampleComponent from '$lib/_docs/ExampleComponent.svelte';
+	import ExampleHeading from '$lib/_docs/ExampleHeading.svelte';
+	import ExampleUsage from '$lib/_docs/ExampleUsage.svelte';
+	import PageHeading from '$lib/_docs/PageHeading.svelte';
+	import { getOpMetaFromSg, type ExpressionConfig, type RDProblem } from '@rainprotocol/rainlang';
+	import { setContext } from 'svelte';
+	import { signer } from 'svelte-ethers-store';
+	import { writable, type Writable } from 'svelte/store';
 
-	let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
+	const emptySc: ExpressionConfig = { sources: [], constants: [] };
+
+	let expressionConfig: Writable<ExpressionConfig> = writable(emptySc);
 	let raw: string;
 	let events: string[] = [];
 	let rawToLoad: string;
+	let error: string = '';
+	let errors: RDProblem[] = [];
+	let readOnly = false;
+
+	const opMetaPromise = getOpMetaFromSg('0x01D5611c2D6FB7Bb1bFa9df2f524196743f59F2a', 524289);
 
 	setContext('EVALUABLE_ADDRESSES', {
 		getAddresses: async () => {
@@ -73,12 +80,22 @@
 	<Example>
 		<ExampleComponent>
 			<div class="flex flex-col gap-y-2">
-				<div class="bg-gray-100 dark:bg-gray-800 h-[100px] overflow-scroll flex flex-col">
-					<ParserInput {vmStateConfig} bind:raw />
+				<div class="bg-gray-100 dark:bg-gray-800 h-[200px] overflow-auto flex flex-col">
+					{#await opMetaPromise then opMeta}
+						<ParserInput {expressionConfig} bind:raw bind:errors {readOnly} {opMeta} />
+					{/await}
 				</div>
 				<span>Simulated output</span>
 				<div class="bg-gray-100 p-3 dark:bg-gray-800">
-					<SimulatedOutput {vmStateConfig} signer={$signer} />
+					<SimulatedOutput {expressionConfig} signer={$signer} externalError={error} />
+				</div>
+				<span>Diagnostics</span>
+				<div class="bg-gray-100 dark:bg-gray-800 p-3">
+					{#each errors as problem}
+						<div class="text-red-500 text-xs leading-tight pb-2">
+							{problem.msg}
+						</div>
+					{/each}
 				</div>
 				<span>Raw text</span>
 				<div class="bg-gray-100 dark:bg-gray-800 p-3">
@@ -110,12 +127,16 @@
 					<span slot="label">Enter raw text to load into parser here.</span>
 				</Input>
 				<div class="min-h-[150px] flex flex-col">
-					<Parser
-						on:save={saveEvent}
-						on:load={loadEvent}
-						on:expand={expandEvent}
-						signer={$signer}
-					/>
+					{#await opMetaPromise then opMeta}
+						<Parser
+							on:save={saveEvent}
+							on:load={loadEvent}
+							on:expand={expandEvent}
+							signer={$signer}
+							bind:errors
+							{opMeta}
+						/>
+					{/await}
 				</div>
 				<div class="flex flex-col gap-y-2">
 					{#each events as event}

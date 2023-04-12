@@ -103,10 +103,10 @@
 			</div>
 		</ExampleComponent>
 		<ExampleUsage>
-			{`<script>
+			{`
 	const options = [...];
 	let select;
-</script>
+
 
 <div>
 	<Select bind:value={select} items={options} disabled={true} />

@@ -2,26 +2,33 @@
 
 <script lang="ts">
 	import SimulatedOutput from '$lib/parser/SimulatedOutput.svelte';
-	import type { Signer } from 'ethers';
-	import type { StateConfig } from 'rain-sdk';
-	import { writable, type Writable } from 'svelte/store';
-	import ParserInput from './ParserInput.svelte';
-	import { Icon } from '@steeze-ui/svelte-icon';
+	import type { ExpressionConfig, RDProblem } from '@rainprotocol/rainlang';
 	import {
-		QuestionMarkCircle,
 		ArrowsPointingOut,
+		CloudArrowDown,
 		CloudArrowUp,
-		CloudArrowDown
+		QuestionMarkCircle
 	} from '@steeze-ui/heroicons';
+	import { Icon } from '@steeze-ui/svelte-icon';
+	import type { Signer } from 'ethers';
+	import { writable, type Writable } from 'svelte/store';
+	import ParserInput from '$lib/parser/ParserInput.svelte';
 	import { createEventDispatcher, getContext, onMount, SvelteComponent } from 'svelte';
 	import type { Deployer, EvaluableConfig, GetDeployers } from '$lib/parser/types';
 	import Select from '$lib/Select.svelte';
 
-	export let evaluableConfig: EvaluableConfig;
-
+	export let expressionConfig: Writable<ExpressionConfig> = writable({
+		sources: [],
+		constants: []
+	});
+	export let evaluableConfig: EvaluableConfig = {
+		...$expressionConfig,
+		IExpressionDeployerV1: ''
+	};
 	export let raw: string = '';
 	export let signer: Signer;
 	export let error: string = '';
+	export let errors: RDProblem[];
 	export let readOnly: boolean = false;
 	export let componentName: string | null = null;
 	export let chainId: number = 80001;
@@ -29,6 +36,10 @@
 	export let hideExpand: boolean = false;
 	export let hideSave: boolean = false;
 	export let hideHelp: boolean = false;
+	export let opMeta: string;
+	export let deployers: Deployer[] = [];
+	export let selectedDeployer: Writable<Deployer> = writable();
+	export let loadRaw: any = null;
 
 	let noDeployers = false;
 
@@ -44,21 +55,15 @@
 		}));
 	};
 
-	export let deployers: Deployer[] = [];
-
 	let deployerOptions: DeployerOption[] = formatDeployerOptions(deployers);
 
-	export let vmStateConfig: Writable<StateConfig> = writable({ sources: [], constants: [] });
-	export let selectedDeployer: Writable<Deployer> = writable();
-
 	$: evaluableConfig = {
-		constants: $vmStateConfig.constants,
-		sources: $vmStateConfig.sources,
+		constants: $expressionConfig.constants,
+		sources: $expressionConfig.sources,
 		IExpressionDeployerV1: $selectedDeployer?.address
 	};
 
-	let parserInput: SvelteComponent;
-	export let loadRaw: any = null;
+	let editorInput: SvelteComponent;
 
 	onMount(async () => {
 		if (!getDeployers) {
@@ -75,7 +80,7 @@
 	});
 
 	onMount(() => {
-		loadRaw = parserInput.loadRaw;
+		loadRaw = editorInput.loadRaw;
 
 		// setting a default interpreter
 		if (deployerOptions.length) $selectedDeployer = deployerOptions[0].value;
@@ -107,14 +112,30 @@
 			<div
 				class="border-r border-gray-300 dark:border-gray-600 p-2 parser-wrapper flex-grow flex flex-col"
 			>
-				<ParserInput {vmStateConfig} {readOnly} bind:error bind:raw bind:this={parserInput} />
+				<ParserInput
+					{expressionConfig}
+					{readOnly}
+					bind:errors
+					bind:raw
+					bind:this={editorInput}
+					{opMeta}
+				/>
 			</div>
 		</div>
 		<div class="flex flex-col w-1/3">
 			<div class="heading">Simulated output</div>
 			<div class="p-2">
-				<SimulatedOutput {vmStateConfig} {signer} {chainId} externalError={error} />
+				<SimulatedOutput {expressionConfig} {signer} {chainId} externalError={error} />
 			</div>
+		</div>
+	</div>
+	<div class="bg-gray-200 dark:bg-gray-800 flex justify-between px-2">
+		<div class="text-red-500 text-xs font-regular h-4 p-2">
+			{#if errors?.length}
+				{#each errors as problem}
+					{problem.msg}
+				{/each}
+			{/if}
 		</div>
 	</div>
 	<div class="bg-gray-200 dark:bg-gray-800 flex justify-between px-2 items-center">

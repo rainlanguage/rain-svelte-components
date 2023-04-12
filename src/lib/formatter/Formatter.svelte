@@ -1,27 +1,42 @@
+<script context="module" lang="ts">
+	import { rld, type ExpressionConfig } from '@rainprotocol/rainlang';
+
+	export const getRawExpression = async (config_: ExpressionConfig, opMeta_: string) => {
+		return (await rld(config_, opMeta_, true)).getTextDocument().getText();
+	};
+</script>
+
 <script lang="ts">
-	import ParserInput from '$lib/parser/ParserInput.svelte';
-	import { createEventDispatcher, onMount } from 'svelte';
-	import { Formatter, rainterpreterOpMeta, type StateConfig } from '@rainprotocol/rainlang';
 	import Button from '$lib/Button.svelte';
+	import ParserInput from '$lib/parser/ParserInput.svelte';
 	import { DocumentDuplicate } from '@steeze-ui/heroicons';
+	import { createEventDispatcher, onMount } from 'svelte';
+	import type { Writable } from 'svelte/store';
 
 	export let readOnly: boolean = true;
-	export let raw: string | null = null;
-	export let stateConfig: StateConfig | null = null;
+	export let raw: string = '';
+	export let expressionConfig: Writable<ExpressionConfig>;
 	export let showFork: boolean = true;
 	export let showForkLabel: boolean = false;
 	export let maxHeight: string | null = null;
+	export let opMeta: string;
 
-	let formatter: ParserInput;
+	let parserInput: ParserInput;
 
 	let showFormatter: boolean = true;
 
 	const dispatch = createEventDispatcher();
 
-	onMount(() => {
-		if (stateConfig) raw = Formatter.get(stateConfig, { opmeta: rainterpreterOpMeta });
-		if (raw) formatter.loadRaw(raw.toLowerCase());
-		if (!raw && !stateConfig) showFormatter = false;
+	onMount(async () => {
+		// TODO: Don't skip raw formatting (avoid compiling and decompiling? loss of information)
+		// if (raw)
+		// 	return (raw = (await rld(await rlc(raw, opMeta), opMeta, true)).getTextDocument().getText());
+
+		if (raw) return;
+		else if (expressionConfig) {
+			raw = await getRawExpression($expressionConfig, opMeta);
+			return;
+		} else showFormatter = false;
 	});
 
 	const handleFork = () => {
@@ -32,7 +47,7 @@
 {#if showFormatter}
 	<div class="bg-gray-100 dark:bg-gray-800 rounded-lg relative">
 		<div class="overflow-y-scroll p-4" style={maxHeight ? `max-height: ${maxHeight}` : ''}>
-			<ParserInput {readOnly} bind:this={formatter} />
+			<ParserInput {raw} {readOnly} {expressionConfig} bind:this={parserInput} {opMeta} />
 		</div>
 		{#if showFork}
 			<div class="bottom-0 right-0 p-2 absolute bg-gray-100 dark:bg-gray-800">
