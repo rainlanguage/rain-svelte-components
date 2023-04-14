@@ -46,7 +46,7 @@ jobs:
       # Configure Git
       - name: Git Config
         id: git
-        if: steps.test.outcome == 'success'
+        if: steps.build.outcome == 'success'
         # set git user and email to github actions,
         # this email and user id will result in github user with github avatar in Github
         run: |
