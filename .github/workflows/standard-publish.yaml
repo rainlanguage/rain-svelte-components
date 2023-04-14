@@ -135,9 +135,9 @@ jobs:
       # Publish package to npm
       # files and folders that go in the npm package should be specified in package.json "files" field
       - name: Publish To NPM
+        working-directory: ./package
         id: publish
         if: steps.release.outcome == 'success'
-        working-directory: ./package
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
