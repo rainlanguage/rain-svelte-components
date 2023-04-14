@@ -92,7 +92,7 @@ jobs:
         if: steps.major.outcome == 'success' || steps.minor.outcome == 'success' || steps.patch.outcome == 'success'
         run: |
           git add "package.json"
-          git add "package-lock.json"
+          git add "yarn.lock"
           git commit -m "Release ${{ env.NEW_VERSION }}"
           git tag ${{ env.NEW_VERSION }}
 
@@ -132,11 +132,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # Change the directory to publish
+      - name: Change package directory to publish
+        id: chdir
+        if: steps.release.outcome == 'success'
+        run: cd package
+
       # Publish package to npm
       # files and folders that go in the npm package should be specified in package.json "files" field
       - name: Publish To NPM
         id: publish
-        if: steps.release.outcome == 'success'
+        if: steps.chdir.outcome == 'success'
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
