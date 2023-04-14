@@ -42,7 +42,6 @@ jobs:
         if: steps.install.outcome == 'success'
         run: yarn build
 
-
       # Configure Git
       - name: Git Config
         id: git
@@ -132,17 +131,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Change the directory to publish
-      - name: Change package directory to publish
-        id: chdir
-        if: steps.release.outcome == 'success'
-        run: cd package
-
       # Publish package to npm
       # files and folders that go in the npm package should be specified in package.json "files" field
       - name: Publish To NPM
         id: publish
-        if: steps.chdir.outcome == 'success'
+        if: steps.release.outcome == 'success'
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
