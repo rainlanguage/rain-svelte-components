@@ -129,10 +129,12 @@
 		</div>
 	</div>
 	<div class="bg-gray-200 dark:bg-gray-800 flex justify-between px-2">
-		<div class="text-red-500 text-xs font-regular h-4 p-2">
+		<div class="text-red-500 text-xs font-regular p-2">
 			{#if errors?.length}
 				{#each errors as problem}
-					{problem.msg}
+					<p>
+						{problem.msg};
+					</p>
 				{/each}
 			{/if}
 		</div>
