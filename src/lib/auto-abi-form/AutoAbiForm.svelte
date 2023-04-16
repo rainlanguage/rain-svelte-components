@@ -61,7 +61,7 @@
 
 <style>
 	.onlyConfig {
-		@apply gap-y-4 grid grid-cols-2 items-end gap-4;
+		@apply gap-y-4 flex flex-col;
 	}
 
 	.normalForm {
