@@ -14,6 +14,8 @@
 	import OrderBook from './OrderBook.json';
 	import OrderBookMetadata from './OrderBook.meta.json';
 	import { setContext } from 'svelte';
+	import { getStores } from '$app/stores';
+	import { writable } from 'svelte/store';
 
 	let result: any, resultMerged: any, result2: any, resultMergedFlow: any;
 
@@ -39,6 +41,13 @@
 			];
 		}
 	});
+
+	// To only show the column to write expressions
+	setContext('onlyExpressionParser', true);
+
+	// Hide buttons if not user found
+	let isLogged = writable(true);
+	setContext('isLogged', isLogged);
 </script>
 
 <div class="flex flex-col gap-y-4 dark:text-gray-100">

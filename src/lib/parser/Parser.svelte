@@ -40,6 +40,11 @@
 	export let selectedDeployer: Writable<Deployer> = writable();
 	export let loadRaw: any = null;
 
+	const onlyExpressionParser: boolean = getContext('onlyExpressionParser');
+
+	// To determine if connected or logged to save/load expressions
+	const isLogged: Writable<boolean> = getContext('isLogged');
+
 	let noDeployers = false;
 
 	type DeployerOption = { label: string; value: Deployer };
@@ -83,6 +88,12 @@
 
 		// setting a default interpreter
 		if (deployerOptions.length) $selectedDeployer = deployerOptions[0].value;
+
+		// Hide buttons if not user found
+		if (!$isLogged) {
+			hideLoad = true;
+			hideSave = true;
+		}
 	});
 
 	const dispatch = createEventDispatcher();
@@ -106,27 +117,45 @@
 
 <div class="rounded-lg overflow-hidden h-full flex flex-col flex-grow">
 	<div class="flex bg-gray-100 dark:bg-gray-700 flex-grow">
-		<div class="flex flex-col w-2/3">
-			<div class="heading">Expression</div>
-			<div
-				class="border-r border-gray-300 dark:border-gray-600 p-2 parser-wrapper flex-grow flex flex-col"
-			>
-				<ParserInput
-					{expressionConfig}
-					{readOnly}
-					bind:errors
-					bind:raw
-					bind:this={editorInput}
-					opMeta={$selectedDeployer?.opmeta}
-				/>
+		{#if onlyExpressionParser}
+			<div class="flex flex-col flex-grow">
+				<div class="heading">Expression</div>
+				<div
+					class="border-r border-gray-300 dark:border-gray-600 p-2 parser-wrapper flex-grow flex flex-col"
+				>
+					<ParserInput
+						{expressionConfig}
+						{readOnly}
+						bind:errors
+						bind:raw
+						bind:this={editorInput}
+						opMeta={$selectedDeployer?.opmeta}
+					/>
+				</div>
 			</div>
-		</div>
-		<div class="flex flex-col w-1/3">
-			<div class="heading">Simulated output</div>
-			<div class="p-2">
-				<SimulatedOutput {expressionConfig} {signer} {chainId} externalError={error} />
+		{:else}
+			<div class="flex flex-col w-2/3">
+				<div class="heading">Expression</div>
+				<div
+					class="border-r border-gray-300 dark:border-gray-600 p-2 parser-wrapper flex-grow flex flex-col"
+				>
+					<ParserInput
+						{expressionConfig}
+						{readOnly}
+						bind:errors
+						bind:raw
+						bind:this={editorInput}
+						opMeta={$selectedDeployer?.opmeta}
+					/>
+				</div>
 			</div>
-		</div>
+			<div class="flex flex-col w-1/3">
+				<div class="heading">Simulated output</div>
+				<div class="p-2">
+					<SimulatedOutput {expressionConfig} {signer} {chainId} externalError={error} />
+				</div>
+			</div>
+		{/if}
 	</div>
 	<div class="bg-gray-200 dark:bg-gray-800 flex justify-between px-2">
 		<div class="text-red-500 text-xs font-regular p-2">
@@ -199,7 +228,6 @@
 		@apply bg-gray-500 text-white font-light uppercase py-2 px-2 leading-none;
 		font-size: 11px;
 	}
-
 	.parser-button {
 		@apply flex items-center gap-x-1 cursor-pointer hover:opacity-80 transition-opacity py-2;
 	}
