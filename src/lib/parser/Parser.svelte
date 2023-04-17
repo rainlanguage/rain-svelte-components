@@ -26,12 +26,12 @@
 		deployer: ''
 	};
 	export let raw: string = '';
-	export let signer: Signer;
-	export let error: string = '';
+	// export let signer: Signer;
+	// export let error: string = '';
 	export let errors: RDProblem[];
 	export let readOnly: boolean = false;
 	export let componentName: string | null = null;
-	export let chainId: number = 80001;
+	// export let chainId: number = 80001;
 	export let hideLoad: boolean = false;
 	export let hideExpand: boolean = false;
 	export let hideSave: boolean = false;
@@ -106,7 +106,7 @@
 
 <div class="rounded-lg overflow-hidden h-full flex flex-col flex-grow">
 	<div class="flex bg-gray-100 dark:bg-gray-700 flex-grow">
-		<div class="flex flex-col w-2/3">
+		<div class="flex flex-col flex-grow">
 			<div class="heading">Expression</div>
 			<div
 				class="border-r border-gray-300 dark:border-gray-600 p-2 parser-wrapper flex-grow flex flex-col"
@@ -121,12 +121,12 @@
 				/>
 			</div>
 		</div>
-		<div class="flex flex-col w-1/3">
+		<!-- <div class="flex flex-col w-1/3">
 			<div class="heading">Simulated output</div>
 			<div class="p-2">
 				<SimulatedOutput {expressionConfig} {signer} {chainId} externalError={error} />
 			</div>
-		</div>
+		</div> -->
 	</div>
 	<div class="bg-gray-200 dark:bg-gray-800 flex justify-between px-2">
 		<div class="text-red-500 text-xs font-regular p-2">
