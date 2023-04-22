@@ -1,4 +1,4 @@
-name: Smoke install
+name: Standard test
 on: [push]
 jobs:
   test:
