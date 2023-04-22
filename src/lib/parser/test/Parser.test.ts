@@ -5,27 +5,21 @@ import {
     screen,
 } from '@testing-library/svelte';
 import Parser from '../Parser.svelte';
-import ParserTest from './Parser.test.svelte';
 import { get, writable, type Writable } from 'svelte/store';
 import type { Deployer } from '../types';
 import { rainlang, rlc } from '@rainprotocol/rainlang';
-import type { ExpressionConfig } from '@rainprotocol/rainlang';
+import type { ExpressionConfig, RDProblem } from '@rainprotocol/rainlang';
 import userEvent from '@testing-library/user-event';
 import type { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
+import type { Signer } from 'ethers';
 
 describe("Parser Tests", () => {
     let user: UserEvent;
     let selectedDeployer: Writable<Deployer>;
     let expressionConfig: Writable<ExpressionConfig>;
-
-    beforeAll(async () => {
-        user = userEvent.setup();
-        selectedDeployer = writable(deployers[0]);
-        expressionConfig = writable({
-            sources: [],
-            constants: []
-        });
-    });
+    let addressContext = new Map([]);
+    let signer: Signer;
+    let errors: RDProblem[];
 
     const deployers = [
         {
@@ -46,17 +40,29 @@ describe("Parser Tests", () => {
         }
     ];
 
+    beforeAll(async () => {
+        user = userEvent.setup();
+        selectedDeployer = writable(deployers[0]);
+        expressionConfig = writable({
+            sources: [],
+            constants: []
+        });
+        addressContext = new Map([['EVALUABLE_ADDRESSES', {
+            getDeployers: async () => {
+                return deployers;
+            }
+        }]]);
+    });
+
     it("should render Parser component", async () => {
-        render(ParserTest, {
+        render(Parser, {
             props: {
                 deployers: deployers,
-                Component: Parser,
                 raw: "",
-                context_key: 'EVALUABLE_ADDRESSES',
-                context_value: {
-                    getDeployers: null
-                }
-            }
+                signer,
+                errors,
+            },
+            context: addressContext
         });
         expect(screen.getByText("Expression"));
         expect(screen.getByText("Select interpreter"));
@@ -64,17 +70,14 @@ describe("Parser Tests", () => {
     });
 
     it("should hide components", async () => {
-        await render(ParserTest, {
+        render(Parser, {
             props: {
                 deployers: deployers,
-                Component: Parser,
+                signer,
                 raw: "",
-                context_key: 'EVALUABLE_ADDRESSES',
-                context_value: {
-                    getDeployers: null
-                },
                 hideHelp: true
-            }
+            },
+            context: addressContext
         });
         expect(screen.queryByText("Help")).toBeNull();
         expect(screen.queryByText("Load")).toBeTruthy();
@@ -82,20 +85,17 @@ describe("Parser Tests", () => {
         expect(screen.queryByText("Detailed view")).toBeTruthy();
         cleanup();
 
-        await render(ParserTest, {
+        render(Parser, {
             props: {
                 deployers: deployers,
-                Component: Parser,
+                signer,
                 raw: "",
-                context_key: 'EVALUABLE_ADDRESSES',
-                context_value: {
-                    getDeployers: null
-                },
                 hideExpand: true,
                 hideHelp: true,
                 hideLoad: true,
                 hideSave: true
-            }
+            },
+            context: addressContext
         });
         expect(screen.queryByText("Help")).toBeNull();
         expect(screen.queryByText("Save")).toBeNull();
@@ -104,16 +104,13 @@ describe("Parser Tests", () => {
     });
 
     it("should display deployer addresses when passed using props", async () => {
-        render(ParserTest, {
+        render(Parser, {
             props: {
                 deployers: deployers,
-                Component: Parser,
-                raw: "",
-                context_key: 'EVALUABLE_ADDRESSES',
-                context_value: {
-                    getDeployers: null
-                }
-            }
+                signer,
+                raw: ""
+            },
+            context: addressContext
         });
         deployers.forEach(deployer => {
             expect(screen.getByText(deployer.address));
@@ -125,24 +122,21 @@ describe("Parser Tests", () => {
         const expression = rainlang`_: add(10 20);`;
 
         // rendering component
-        const { component } = render(ParserTest, {
+        const { component } = render(Parser, {
             props: {
-                Component: Parser,
-                context_key: 'EVALUABLE_ADDRESSES',
-                context_value: {
-                    getDeployers: null
-                },
                 deployers: deployers,
+                signer,
                 selectedDeployer,
                 raw: expression,
                 expressionConfig
-            }
+            },
+            context: addressContext
         });
 
         // Mock function
         let raw = '';
         const mock = vi.fn((event) => (raw = event.detail.raw));
-        component.$on('saveEvent', mock);
+        component.$on('save', mock);
 
         // Clicking save button
         const saveButton = screen.getByText("Save").parentElement
@@ -161,26 +155,23 @@ describe("Parser Tests", () => {
         const loadRaw = expression;
 
         // rendering component
-        const { component } = render(ParserTest, {
+        const { component } = render(Parser, {
             props: {
-                Component: Parser,
-                context_key: 'EVALUABLE_ADDRESSES',
-                context_value: {
-                    getDeployers: null
-                },
                 deployers: deployers,
+                signer,
                 selectedDeployer,
                 raw: expression,
                 expressionConfig,
                 loadRaw,
                 componentName
-            }
+            },
+            context: addressContext
         });
 
         // Mock function
         let loadData = '';
         const mock = vi.fn((event) => (loadData = event.detail));
-        component.$on('loadEvent', mock);
+        component.$on('load', mock);
 
         // Clicking save button
         const saveButton = screen.getByText("Load").parentElement
@@ -199,26 +190,23 @@ describe("Parser Tests", () => {
         const loadRaw = expression;
 
         // rendering component
-        const { component } = render(ParserTest, {
+        const { component } = render(Parser, {
             props: {
-                Component: Parser,
-                context_key: 'EVALUABLE_ADDRESSES',
-                context_value: {
-                    getDeployers: null
-                },
                 deployers: deployers,
+                signer,
                 selectedDeployer,
                 raw: expression,
                 expressionConfig,
                 loadRaw,
                 componentName
-            }
+            },
+            context: addressContext
         });
 
         // Mock function
         let expandData = '';
         const mock = vi.fn((event) => (expandData = event.detail));
-        component.$on('expandEvent', mock);
+        component.$on('expand', mock);
 
         // Clicking save button
         const saveButton = screen.getByText("Detailed view").parentElement
@@ -237,26 +225,23 @@ describe("Parser Tests", () => {
         const loadRaw = expression;
 
         // rendering component
-        const { component } = render(ParserTest, {
+        const { component } = render(Parser, {
             props: {
-                Component: Parser,
-                context_key: 'EVALUABLE_ADDRESSES',
-                context_value: {
-                    getDeployers: null
-                },
                 deployers: deployers,
+                signer,
                 selectedDeployer,
                 raw: expression,
                 expressionConfig,
                 loadRaw,
                 componentName
-            }
+            },
+            context: addressContext
         });
 
         // Mock function
         let helpData = '';
         const mock = vi.fn((event) => (helpData = event.detail));
-        component.$on('helpEvent', mock);
+        component.$on('help', mock);
 
         // Clicking save button
         const saveButton = screen.getByText("Help").parentElement
@@ -272,18 +257,15 @@ describe("Parser Tests", () => {
         // 0
         const expression0 = rainlang`_: add(10 20);`
         // rendering component
-        await render(ParserTest, {
+        render(Parser, {
             props: {
-                Component: Parser,
-                context_key: 'EVALUABLE_ADDRESSES',
-                context_value: {
-                    getDeployers: null
-                },
                 deployers: deployers,
+                signer,
                 selectedDeployer,
                 raw: expression0,
                 expressionConfig
-            }
+            },
+            context: addressContext
         });
 
         // asserting deployers
@@ -305,18 +287,15 @@ describe("Parser Tests", () => {
             0x03
         );`
         // rendering component
-        await render(ParserTest, {
+        render(Parser, {
             props: {
-                Component: Parser,
-                context_key: 'EVALUABLE_ADDRESSES',
-                context_value: {
-                    getDeployers: null
-                },
                 deployers: deployers,
+                signer,
                 selectedDeployer,
                 raw: expression1,
                 expressionConfig
-            }
+            },
+            context: addressContext
         });
 
         // asserting expressionConfig
@@ -343,18 +322,15 @@ describe("Parser Tests", () => {
             _: add(s1 5);`;
 
         // rendering component
-        await render(ParserTest, {
+        render(Parser, {
             props: {
-                Component: Parser,
-                context_key: 'EVALUABLE_ADDRESSES',
-                context_value: {
-                    getDeployers: null
-                },
                 deployers: deployers,
+                signer,
                 selectedDeployer,
                 raw: expression2,
                 expressionConfig
-            }
+            },
+            context: addressContext
         });
 
         // asserting expressionConfig
@@ -366,18 +342,15 @@ describe("Parser Tests", () => {
         // 0
         const expression0 = rainlang`_: add(10 20)`
         // rendering component
-        await render(ParserTest, {
+        await render(Parser, {
             props: {
-                Component: Parser,
-                context_key: 'EVALUABLE_ADDRESSES',
-                context_value: {
-                    getDeployers: null
-                },
                 deployers: deployers,
+                signer,
                 selectedDeployer,
                 raw: expression0,
                 expressionConfig
-            }
+            },
+            context: addressContext
         });
 
         // asserting deployers
@@ -392,18 +365,15 @@ describe("Parser Tests", () => {
         // 1
         const expression1 = rainlang`_: add(¢ 2);`
         // rendering component
-        await render(ParserTest, {
+        await render(Parser, {
             props: {
-                Component: Parser,
-                context_key: 'EVALUABLE_ADDRESSES',
-                context_value: {
-                    getDeployers: null
-                },
                 deployers: deployers,
+                signer,
                 selectedDeployer,
                 raw: expression1,
                 expressionConfig
-            }
+            },
+            context: addressContext
         });
 
         // asserting expressionConfig
@@ -413,18 +383,15 @@ describe("Parser Tests", () => {
         // 2
         const expression2 = rainlang`x: read-memory<error-argument>();`
         // rendering component
-        await render(ParserTest, {
+        await render(Parser, {
             props: {
-                Component: Parser,
-                context_key: 'EVALUABLE_ADDRESSES',
-                context_value: {
-                    getDeployers: null
-                },
                 deployers: deployers,
+                signer,
                 selectedDeployer,
                 raw: expression2,
                 expressionConfig
-            }
+            },
+            context: addressContext
         });
 
         // asserting expressionConfig
@@ -434,18 +401,15 @@ describe("Parser Tests", () => {
         // 3
         const expression3 = rainlang`_: add(do-while<1>(1 2 3 1 3 ) add(10 20));`
         // rendering component
-        await render(ParserTest, {
+        await render(Parser, {
             props: {
-                Component: Parser,
-                context_key: 'EVALUABLE_ADDRESSES',
-                context_value: {
-                    getDeployers: null
-                },
                 deployers: deployers,
+                signer,
                 selectedDeployer,
                 raw: expression3,
                 expressionConfig
-            }
+            },
+            context: addressContext
         });
 
         // asserting expressionConfig
@@ -455,22 +419,34 @@ describe("Parser Tests", () => {
         // 4
         const expression4 = rainlang`_: read-mem.ory<1 1>();`
         // rendering component
-        await render(ParserTest, {
+        await render(Parser, {
             props: {
-                Component: Parser,
-                context_key: 'EVALUABLE_ADDRESSES',
-                context_value: {
-                    getDeployers: null
-                },
                 deployers: deployers,
+                signer,
                 selectedDeployer,
                 raw: expression4,
                 expressionConfig
-            }
+            },
+            context: addressContext
         });
 
         // asserting expressionConfig
         expect(screen.getByText(/invalid word pattern: "read-mem.ory"/)).toBeTruthy();
         expect(screen.getByText(/unknown opcode: "read-mem.ory"/)).toBeTruthy();
     });
+    it("should throw an error when a context is not passed", async () => {
+        try {
+            render(Parser, {
+                props: {
+                    deployers: deployers,
+                    signer,
+                    raw: ""
+                }
+            });
+        }
+        catch (error) {
+            expect(error.message).toContain("Context 'EVALUABLE_ADDRESSES' is missing");
+        }
+    });
+
 });
