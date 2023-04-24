@@ -51,7 +51,9 @@
 	let noDeployers = false;
 
 	// User should add an function that retrieve the array with addresses
-	const { getDeployers } = getContext('EVALUABLE_ADDRESSES') as { getDeployers: GetDeployers };
+	const contextVal = getContext('EVALUABLE_ADDRESSES') as { getDeployers: GetDeployers };
+	if (!contextVal) throw Error("Context 'EVALUABLE_ADDRESSES' is missing function getDeployers");
+	const getDeployers = contextVal.getDeployers;
 
 	const formatDeployerOptions = (deployers: Deployer[]): DeployerOption[] => {
 		return deployers.map((e) => ({
