@@ -445,7 +445,7 @@ describe("Parser Tests", () => {
             });
         }
         catch (error) {
-            expect(error.message).toContain("Context 'EVALUABLE_ADDRESSES' is missing");
+            expect(error.message).toContain("Context 'EVALUABLE_ADDRESSES' is missing function getDeployers");
         }
     });
 
