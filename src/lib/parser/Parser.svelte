@@ -180,7 +180,7 @@
 					items={deployerOptions}
 					placeholder="Select interpreter"
 					classInput="text-neutral-600 border border-neutral-100 bg-white rounded-md px-0 py-1 text-xs w-full"
-					classContainer="max-h-[100px] text-neutral-600 border-[1px] border-gray-400 bg-white rounded-md text-xs shadow cursor-default font-mono"
+					classContainer="max-h-28 text-neutral-600 border-[1px] border-gray-400 bg-white rounded-md text-xs shadow cursor-default font-mono"
 				/>
 			{/if}
 		</div>
