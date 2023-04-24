@@ -14,8 +14,10 @@
 	import { writable, type Writable } from 'svelte/store';
 	import ParserInput from '$lib/parser/ParserInput.svelte';
 	import { createEventDispatcher, getContext, onMount, SvelteComponent } from 'svelte';
+	import InputDropdown from '$lib/input-dropdown/InputDropdown.svelte';
 	import type { Deployer, EvaluableConfig, GetDeployers } from '$lib/parser/types';
-	import Select from '$lib/Select.svelte';
+
+	type DeployerOption = { label: string; value: Deployer };
 
 	export let expressionConfig: Writable<ExpressionConfig> = writable({
 		sources: [],
@@ -38,6 +40,7 @@
 	export let hideHelp: boolean = false;
 	export let deployers: Deployer[] = [];
 	export let selectedDeployer: Writable<Deployer> = writable();
+	export let selectedItem: Writable<DeployerOption> = writable();
 	export let loadRaw: any = null;
 
 	const onlyExpressionParser: boolean = getContext('onlyExpressionParser');
@@ -46,8 +49,6 @@
 	const isLogged: Writable<boolean> = getContext('isLogged');
 
 	let noDeployers = false;
-
-	type DeployerOption = { label: string; value: Deployer };
 
 	// User should add an function that retrieve the array with addresses
 	const contextVal = getContext('EVALUABLE_ADDRESSES') as { getDeployers: GetDeployers };
@@ -117,7 +118,7 @@
 	};
 </script>
 
-<div class="rounded-lg overflow-hidden h-full flex flex-col flex-grow">
+<div class="rounded-lg h-full flex flex-col flex-grow">
 	<div class="flex bg-gray-100 dark:bg-gray-700 flex-grow">
 		{#if onlyExpressionParser}
 			<div class="flex flex-col flex-grow">
@@ -171,15 +172,17 @@
 		</div>
 	</div>
 	<div class="bg-gray-200 dark:bg-gray-800 flex justify-between px-2 items-center">
-		<div class="justify-self-start flex items-center py-1">
+		<div class="justify-self-start flex items-center py-1 w-full">
 			{#if noDeployers}
 				<span>No deployers found!</span>
 			{:else}
-				<Select
-					items={deployerOptions}
+				<InputDropdown
 					bind:value={$selectedDeployer}
-					small
-					label="Select interpreter"
+					bind:selectedItem={$selectedItem}
+					items={deployerOptions}
+					placeholder="Select interpreter"
+					classInput="text-neutral-600 border border-neutral-100 bg-white rounded-md px-0 py-1 text-xs w-full"
+					classContainer="max-h-28 text-neutral-600 border-[1px] border-gray-400 bg-white rounded-md text-xs shadow cursor-default font-mono"
 				/>
 			{/if}
 		</div>
@@ -227,7 +230,7 @@
 
 <style lang="postcss">
 	.heading {
-		@apply bg-gray-500 text-white font-light uppercase py-2 px-2 leading-none;
+		@apply bg-gray-500 text-white font-light uppercase py-2 px-2 leading-none rounded-t;
 		font-size: 11px;
 	}
 	.parser-button {
