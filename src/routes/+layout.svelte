@@ -38,6 +38,9 @@
 		<NavItem link="/">
 			<span class="title">Home</span>
 		</NavItem>
+		<NavItem link="/examples/select-headless">
+			<span class="link">Select Headless</span>
+		</NavItem>
 		<NavItem link="/examples/button">
 			<span class="link">Button</span>
 		</NavItem>
