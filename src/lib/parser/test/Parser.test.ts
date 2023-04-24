@@ -65,7 +65,7 @@ describe("Parser Tests", () => {
             context: addressContext
         });
         expect(screen.getByText("Expression"));
-        expect(screen.getByText("Select interpreter"));
+        expect(screen.getByPlaceholderText("Select interpreter"));
         expect(screen.getByText("Nothing to simulate."));
     });
 
@@ -112,6 +112,10 @@ describe("Parser Tests", () => {
             },
             context: addressContext
         });
+
+        const interpreterDropdown = screen.getByPlaceholderText("Select interpreter");
+        await user.click(interpreterDropdown);
+
         deployers.forEach(deployer => {
             expect(screen.getByText(deployer.address));
         });
@@ -268,6 +272,9 @@ describe("Parser Tests", () => {
             context: addressContext
         });
 
+        const interpreterDropdown = screen.getByPlaceholderText("Select interpreter");
+        await user.click(interpreterDropdown);
+
         // asserting deployers
         deployers.forEach(deployer => {
             expect(screen.getByText(deployer.address));
@@ -309,7 +316,7 @@ describe("Parser Tests", () => {
             c1: 2,
             condition: 1, 
             _ _: do-while<1>(c0 c1 condition);
-            
+
             s0 s1: ,
             o0 o1: 1 2,
             condition: 3; 
@@ -353,6 +360,9 @@ describe("Parser Tests", () => {
             context: addressContext
         });
 
+        const interpreterDropdown = screen.getByPlaceholderText("Select interpreter");
+        await user.click(interpreterDropdown);
+        
         // asserting deployers
         deployers.forEach(deployer => {
             expect(screen.getByText(deployer.address));
@@ -434,6 +444,7 @@ describe("Parser Tests", () => {
         expect(screen.getByText(/invalid word pattern: "read-mem.ory"/)).toBeTruthy();
         expect(screen.getByText(/unknown opcode: "read-mem.ory"/)).toBeTruthy();
     });
+
     it("should throw an error when a context is not passed", async () => {
         try {
             render(Parser, {
