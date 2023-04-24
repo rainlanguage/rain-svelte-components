@@ -35,17 +35,17 @@
 <style lang="postcss">
 	/* Defaults */
 	.default-item {
-		@apply px-2 py-1 overflow-visible;
+		@apply px-2 py-1;
 	}
 	.default-item:hover {
 		@apply bg-gray-300;
 	}
 	.default-container {
-		@apply text-neutral-600 border-[1px] border-gray-400 bg-white rounded-md overflow-visible;
+		@apply text-neutral-600 border-[1px] border-gray-400 bg-white rounded-md;
 	}
 
 	/* Not customizable by consumer */
 	.container {
-		@apply flex flex-col w-fit min-w-full overflow-visible;
+		@apply flex flex-col w-fit min-w-full overflow-y-scroll overflow-x-hidden;
 	}
 </style>

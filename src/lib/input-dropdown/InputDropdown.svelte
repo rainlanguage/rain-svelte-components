@@ -106,10 +106,6 @@
 		@apply w-full relative;
 	}
 	.container-options {
-		@apply w-full absolute top-full left-0 overflow-visible;
-	}
-
-	.no-border {
-		border: none;
+		@apply w-full absolute top-full left-0;
 	}
 </style>
