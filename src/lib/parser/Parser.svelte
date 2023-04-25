@@ -81,7 +81,6 @@
 			return;
 		}
 		deployerOptions = formatDeployerOptions(deployers);
-		console.log(deployerOptions);
 	});
 
 	onMount(() => {
@@ -169,7 +168,7 @@
 			{/if}
 		</div>
 	</div>
-	<div class="bg-gray-200 dark:bg-gray-800 flex justify-between px-2 items-center">
+	<div class="bg-gray-200 dark:bg-gray-800 flex justify-between px-2 items-center rounded-b">
 		<div class="justify-self-start flex items-center py-1 w-full">
 			{#if noDeployers}
 				<span>No deployers found!</span>

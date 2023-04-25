@@ -21,7 +21,7 @@
 <script lang="ts">
 	import InputItem from '$lib/input-dropdown/InputItem.svelte';
 
-	export let items: Item[] = [];
+	export let items: Item[];
 	export let value: any = null;
 	export let placeholder: string = '';
 	export let disabled = false;
@@ -49,8 +49,8 @@
 
 	let isVisible = false;
 	let blurTimeout: number | undefined;
-	let _initItems = items;
 	let label: any = null;
+	let filteredItems: Item[];
 
 	function showDiv() {
 		clearTimeout(blurTimeout);
@@ -64,9 +64,7 @@
 	}
 
 	function handleInput(e: any) {
-		items = _initItems;
-		const _value = e.target.value;
-		items = filterFN(_value, items);
+		updateFilteredItems(e.target.value);
 	}
 
 	function assignInfo() {
@@ -74,7 +72,19 @@
 		label = selectedItem?.label;
 	}
 
+	function updateFilteredItems(label_: string) {
+		const _filtered = filterFN(label_, items);
+		filteredItems = _filtered;
+	}
+
+	// When the selected item change, it will assign the value and label to show
 	$: selectedItem && assignInfo();
+
+	// When the label change, due to change on `selectedItem` or the `bind` value of the input
+	// update the filtered items
+	$: label && updateFilteredItems(label);
+
+	$: filteredItems = items;
 </script>
 
 <div class="container">
@@ -86,11 +96,11 @@
 		on:focus={showDiv}
 		on:blur={hideDiv}
 		on:input={handleInput}
-		value={label}
+		bind:value={label}
 	/>
 	{#if isVisible}
 		<div hidden={!isVisible} class="container-options">
-			<InputItem bind:value={selectedItem} {items} {classContainer} {classOptions} />
+			<InputItem bind:value={selectedItem} items={filteredItems} {classContainer} {classOptions} />
 		</div>
 	{/if}
 </div>
