@@ -168,7 +168,9 @@
 			{/if}
 		</div>
 	</div>
-	<div class="bg-gray-200 dark:bg-gray-800 flex justify-between px-2 items-center rounded-b">
+	<div
+		class="bg-gray-200 dark:bg-gray-800 flex flex-col px-2 rounded-b lg:flex-row lg:justify-between lg:items-center"
+	>
 		<div class="justify-self-start flex items-center py-1 w-full">
 			{#if noDeployers}
 				<span>No deployers found!</span>
@@ -183,7 +185,7 @@
 				/>
 			{/if}
 		</div>
-		<div class="gap-x-3 flex items-center text-gray-600">
+		<div class="gap-x-3 flex items-center justify-between lg:justify-end text-gray-600 w-full">
 			{#if !hideHelp}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<div on:click={help} class="parser-button">
@@ -212,7 +214,7 @@
 				</div>
 			{/if}
 			{#if !hideExpand}
-				<div class="h-full border-l border-gray-300" />
+				<!-- <div class="h-full border-l border-gray-300" /> -->
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<div on:click={expand} class="parser-button">
 					<span class="text-xs">Detailed view</span>
