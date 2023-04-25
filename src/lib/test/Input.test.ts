@@ -3,7 +3,6 @@ import {
     fireEvent,
     render,
     screen,
-    waitFor
 } from '@testing-library/svelte';
 import Input from '../Input.svelte';
 import userEvent from '@testing-library/user-event';
@@ -142,14 +141,15 @@ describe("Parser Tests", () => {
 
         // Asserting dispatch
         expect(mock).toHaveBeenCalled();
+        // Asserting component prop
+        expect(component.$$.ctx[component.$$.props.value]).toEqual(inputValue);
     });
 
     it("should dispatch the input event when doDebounce is not defined", async () => {
-        const value = "Input event triggered"
+        const inputValue = "Input event triggered"
         const { container, component } = render(Input, {
             props: {
                 type: 'text',
-                value: "Error Value"
             }
         });
 
@@ -162,24 +162,26 @@ describe("Parser Tests", () => {
         expect(input).toBeTruthy();
 
         // Trigger the input event
-        await fireEvent.input(input, { target: { value: value } });
+        await fireEvent.input(input, { target: { value: inputValue } });
 
         // Asserting dispatch
         expect(mock).toHaveBeenCalled();
-        expect(input.value).toBe(value);
-        expect(inputData).toEqual(value);
+        expect(input.value).toBe(inputValue);
+        expect(inputData).toEqual(inputValue);
+
+        // Asserting component prop
+        expect(component.$$.ctx[component.$$.props.value]).toEqual(inputValue);
     });
 
     it("should dispatch the input event when doDebounce is defined", async () => {
         vi.useFakeTimers();
 
         const debounceTime = 2000;
-        const value = "Input event triggered";
+        const inputValue = "Input event triggered";
 
         const { container, component } = render(Input, {
             props: {
                 type: 'text',
-                value: "Error Value",
                 debounce: true,
                 debounceTime: debounceTime
             }
@@ -194,14 +196,16 @@ describe("Parser Tests", () => {
         expect(input).toBeTruthy();
 
         // Trigger the input event
-        await fireEvent.input(input, { target: { value: value } });
+        await fireEvent.input(input, { target: { value: inputValue } });
 
         // Advance the time
         vi.advanceTimersByTime(debounceTime);
 
         expect(mock).toHaveBeenCalled()
-        expect(input.value).toBe(value);
-        expect(inputData).toEqual(value);
+        expect(input.value).toBe(inputValue);
+        expect(inputData).toEqual(inputValue);
+        // Asserting component prop
+        expect(component.$$.ctx[component.$$.props.value]).toEqual(inputValue);
 
         vi.useRealTimers()
     });
