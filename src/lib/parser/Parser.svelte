@@ -51,7 +51,9 @@
 	let noDeployers = false;
 
 	// User should add an function that retrieve the array with addresses
-	const { getDeployers } = getContext('EVALUABLE_ADDRESSES') as { getDeployers: GetDeployers };
+	const contextVal = getContext('EVALUABLE_ADDRESSES') as { getDeployers: GetDeployers };
+	if (!contextVal) throw Error("Context 'EVALUABLE_ADDRESSES' is missing function getDeployers");
+	const getDeployers = contextVal.getDeployers;
 
 	const formatDeployerOptions = (deployers: Deployer[]): DeployerOption[] => {
 		return deployers.map((e) => ({
@@ -169,7 +171,7 @@
 		</div>
 	</div>
 	<div
-		class="bg-gray-200 dark:bg-gray-800 flex flex-col px-2 rounded-b lg:flex-row lg:justify-between lg:items-center"
+		class="bg-gray-200 dark:bg-gray-800 flex flex-col px-2 rounded-b lg:flex-row lg:justify-between lg:items-center pb-2"
 	>
 		<div class="justify-self-start flex items-center py-1 w-full">
 			{#if noDeployers}
