@@ -154,8 +154,8 @@ describe("Parser Tests", () => {
         });
 
         // Mock Handle Blur for dispatch
-        let inputData = '';
-        const mock = vi.fn((event) => (inputData = event.detail));
+        let dispatchValue = '';
+        const mock = vi.fn((event) => (dispatchValue = event.detail));
         component.$on('input', mock);
 
         const input: HTMLInputElement = container.querySelector("input[type=text]")
@@ -167,7 +167,7 @@ describe("Parser Tests", () => {
         // Asserting dispatch
         expect(mock).toHaveBeenCalled();
         expect(input.value).toBe(inputValue);
-        expect(inputData).toEqual(inputValue);
+        expect(dispatchValue).toEqual(inputValue);
 
         // Asserting component prop
         expect(component.$$.ctx[component.$$.props.value]).toEqual(inputValue);
@@ -188,8 +188,8 @@ describe("Parser Tests", () => {
         });
 
         // Mock Handle Blur for dispatch
-        let inputData = '';
-        const mock = vi.fn((event) => (inputData = event.detail));
+        let debounceValue = '';
+        const mock = vi.fn((event) => (debounceValue = event.detail));
         component.$on('input', mock);
 
         const input: HTMLInputElement = container.querySelector("input[type=text]")
@@ -198,12 +198,15 @@ describe("Parser Tests", () => {
         // Trigger the input event
         await fireEvent.input(input, { target: { value: inputValue } });
 
+        expect(component.$$.ctx[component.$$.props.value]).toBe(''); // Value is not yet updated until debounce
+
         // Advance the time
         vi.advanceTimersByTime(debounceTime);
 
         expect(mock).toHaveBeenCalled()
         expect(input.value).toBe(inputValue);
-        expect(inputData).toEqual(inputValue);
+        expect(debounceValue).toEqual(inputValue);
+        expect(component.$$.ctx[component.$$.props.value]).toEqual(debounceValue); // Prop value updated after debounce
         // Asserting component prop
         expect(component.$$.ctx[component.$$.props.value]).toEqual(inputValue);
 
