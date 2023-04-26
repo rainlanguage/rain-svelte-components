@@ -187,7 +187,7 @@
 				/>
 			{/if}
 		</div>
-		<div class="gap-x-3 flex items-center justify-between lg:justify-end text-gray-600 w-full">
+		<div class="gap-x-3 flex items-center justify-end text-gray-600 w-full">
 			{#if !hideHelp}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<div on:click={help} class="parser-button">

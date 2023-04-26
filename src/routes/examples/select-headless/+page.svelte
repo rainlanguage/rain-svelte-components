@@ -92,6 +92,7 @@
 					{items}
 					bind:selectedItem={selecteditem2}
 					classInput="bg-red-200 text-green-800 p-4 rounded-full"
+					classDropArrow="w-6 h-6 pt-1 pr-2"
 				/>
 			</div>
 			<div>
@@ -107,7 +108,7 @@
 			</div>
 		</ExampleComponent>
 		<ExampleUsage>
-			{`<div>\n\t<InputDropdown\n\t  bind:valuen\n\t  {items}\n\t  classInput="bg-red-200 text-green-800 p-4 rounded-full"\n\t/>\n</div>`}
+			{`<div>\n\t<InputDropdown\n\t  bind:valuen\n\t  {items}\n\t  classInput="bg-red-200 text-green-800 p-4 rounded-full"\n\t  classDropArrow="w-6 h-6 pt-1 pr-2"\n\t/>\n</div>`}
 		</ExampleUsage>
 	</Example>
 

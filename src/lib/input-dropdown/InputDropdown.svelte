@@ -20,6 +20,8 @@
 
 <script lang="ts">
 	import InputItem from '$lib/input-dropdown/InputItem.svelte';
+	import { ChevronDown } from '@steeze-ui/heroicons';
+	import { Icon } from '@steeze-ui/svelte-icon';
 
 	export let items: Item[];
 	export let value: any = null;
@@ -33,6 +35,10 @@
 	 * Class definition to give styling to the container of the input
 	 */
 	export let classInput = 'default-input';
+	/**
+	 * Class definition to give styling to the container of the input
+	 */
+	export let classDropArrow = 'default-drop-arrow';
 
 	/**
 	 * Class definition to give styling to the container of the options/items
@@ -88,9 +94,12 @@
 </script>
 
 <div class="container">
+	<div class="drop-arrow {classDropArrow}">
+		<Icon src={ChevronDown} />
+	</div>
 	<input
 		{disabled}
-		class="w-full !outline-none {classInput}"
+		class="w-full !outline-none pl-2 {classInput}"
 		type="text"
 		{placeholder}
 		on:focus={showDiv}
@@ -110,6 +119,9 @@
 	.default-input {
 		@apply bg-gray-200 font-light p-2 rounded;
 	}
+	.default-drop-arrow {
+		@apply w-4 h-4 pt-1;
+	}
 
 	/* Not customizable by consumer */
 	.container {
@@ -117,5 +129,8 @@
 	}
 	.container-options {
 		@apply w-full absolute top-full left-0;
+	}
+	.drop-arrow {
+		@apply absolute top-1/2 transform -translate-y-1/2 right-3 cursor-pointer;
 	}
 </style>

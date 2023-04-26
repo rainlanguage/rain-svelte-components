@@ -90,6 +90,7 @@
 		<ExampleComponent>
 			<Input
 				icon={MagnifyingGlass}
+				iconPos="end"
 				iconAction={() => {
 					alert('clicked the icon!');
 				}}
