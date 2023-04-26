@@ -76,6 +76,9 @@
 	function assignInfo() {
 		value = selectedItem?.value;
 		label = selectedItem?.label;
+
+		// Restart the filter
+		filteredItems = items;
 	}
 
 	function updateFilteredItems(label_: string) {
@@ -102,7 +105,7 @@
 	</div>
 	<input
 		{disabled}
-		class="w-full !outline-none pl-2 {classInput}"
+		class="w-full !outline-none {classInput}"
 		type="text"
 		{placeholder}
 		on:focus={showDiv}
