@@ -123,7 +123,7 @@
 			<div class="flex flex-col flex-grow">
 				<div class="heading">Expression</div>
 				<div
-					class="border-r border-gray-300 dark:border-gray-600 p-2 parser-wrapper flex-grow flex flex-col"
+					class="border-r border-gray-300 dark:border-gray-600 parser-wrapper flex-grow flex flex-col"
 				>
 					<ParserInput
 						{expressionConfig}
@@ -139,7 +139,7 @@
 			<div class="flex flex-col w-2/3">
 				<div class="heading">Expression</div>
 				<div
-					class="border-r border-gray-300 dark:border-gray-600 p-2 parser-wrapper flex-grow flex flex-col"
+					class="border-r border-gray-300 dark:border-gray-600 parser-wrapper flex-grow flex flex-col"
 				>
 					<ParserInput
 						{expressionConfig}
