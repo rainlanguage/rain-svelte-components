@@ -91,10 +91,13 @@
 	$: label && updateFilteredItems(label);
 
 	$: filteredItems = items;
+
+	let inputPointer: any;
 </script>
 
 <div class="container">
-	<div class="drop-arrow {classDropArrow}">
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<div class="drop-arrow {classDropArrow}" on:click={() => inputPointer.focus()}>
 		<Icon src={ChevronDown} />
 	</div>
 	<input
@@ -106,6 +109,7 @@
 		on:blur={hideDiv}
 		on:input={handleInput}
 		bind:value={label}
+		bind:this={inputPointer}
 	/>
 	{#if isVisible}
 		<div hidden={!isVisible} class="container-options">
