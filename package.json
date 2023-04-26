@@ -1,6 +1,6 @@
 {
 	"name": "@rainprotocol/rain-svelte-components",
-	"version": "0.0.21",
+	"version": "0.0.22",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "svelte-kit sync && svelte-package",
