@@ -83,7 +83,6 @@
 			return;
 		}
 		deployerOptions = formatDeployerOptions(deployers);
-		console.log(deployerOptions);
 	});
 
 	onMount(() => {
@@ -124,7 +123,7 @@
 			<div class="flex flex-col flex-grow">
 				<div class="heading">Expression</div>
 				<div
-					class="border-r border-gray-300 dark:border-gray-600 p-2 parser-wrapper flex-grow flex flex-col"
+					class="border-r border-gray-300 dark:border-gray-600 parser-wrapper flex-grow flex flex-col"
 				>
 					<ParserInput
 						{expressionConfig}
@@ -140,7 +139,7 @@
 			<div class="flex flex-col w-2/3">
 				<div class="heading">Expression</div>
 				<div
-					class="border-r border-gray-300 dark:border-gray-600 p-2 parser-wrapper flex-grow flex flex-col"
+					class="border-r border-gray-300 dark:border-gray-600 parser-wrapper flex-grow flex flex-col"
 				>
 					<ParserInput
 						{expressionConfig}
@@ -171,7 +170,9 @@
 			{/if}
 		</div>
 	</div>
-	<div class="bg-gray-200 dark:bg-gray-800 flex justify-between px-2 items-center">
+	<div
+		class="bg-gray-200 dark:bg-gray-800 flex flex-col px-2 rounded-b lg:flex-row lg:justify-between lg:items-center pb-2"
+	>
 		<div class="justify-self-start flex items-center py-1 w-full">
 			{#if noDeployers}
 				<span>No deployers found!</span>
@@ -186,7 +187,7 @@
 				/>
 			{/if}
 		</div>
-		<div class="gap-x-3 flex items-center text-gray-600">
+		<div class="gap-x-3 flex items-center justify-between lg:justify-end text-gray-600 w-full">
 			{#if !hideHelp}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<div on:click={help} class="parser-button">
@@ -215,7 +216,7 @@
 				</div>
 			{/if}
 			{#if !hideExpand}
-				<div class="h-full border-l border-gray-300" />
+				<!-- <div class="h-full border-l border-gray-300" /> -->
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<div on:click={expand} class="parser-button">
 					<span class="text-xs">Detailed view</span>

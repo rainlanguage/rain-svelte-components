@@ -19,17 +19,27 @@
 	 */
 	export let classOptions = 'default-item';
 
+	export let notFoundMsg = 'No match found';
+
 	const selectItem = (value_: Item) => {
 		value = value_;
 	};
 </script>
 
-<div class="container {classContainer}">
-	{#each items as item}
-		<div class={classOptions} on:click={() => selectItem(item)} on:keydown={() => selectItem(item)}>
-			{item.label}
-		</div>
-	{/each}
+<div class="container {items.length ? 'overflow-manage' : ''} {classContainer}">
+	{#if items.length}
+		{#each items as item}
+			<div
+				class={classOptions}
+				on:click={() => selectItem(item)}
+				on:keydown={() => selectItem(item)}
+			>
+				{item.label}
+			</div>
+		{/each}
+	{:else}
+		<div class={classOptions}>{notFoundMsg}</div>
+	{/if}
 </div>
 
 <style lang="postcss">
@@ -46,6 +56,9 @@
 
 	/* Not customizable by consumer */
 	.container {
-		@apply flex flex-col w-fit min-w-full overflow-y-scroll overflow-x-hidden;
+		@apply flex flex-col w-fit min-w-full;
+	}
+	.overflow-manage {
+		@apply overflow-y-scroll overflow-x-hidden;
 	}
 </style>

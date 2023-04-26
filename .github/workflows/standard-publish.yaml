@@ -34,13 +34,13 @@ jobs:
       - name: Install Dependencies
         id: install
         if: steps.node.outcome == 'success'
-        run: yarn install
+        run: npm install
 
       # Build the package
       - name: Build
         id: build
         if: steps.install.outcome == 'success'
-        run: yarn build
+        run: npm run build
 
       # Configure Git
       - name: Git Config
@@ -91,7 +91,7 @@ jobs:
         if: steps.major.outcome == 'success' || steps.minor.outcome == 'success' || steps.patch.outcome == 'success'
         run: |
           git add "package.json"
-          git add "yarn.lock"
+          git add "package-lock.json"
           git commit -m "Release ${{ env.NEW_VERSION }}"
           git tag ${{ env.NEW_VERSION }}
 

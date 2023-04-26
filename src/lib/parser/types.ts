@@ -15,8 +15,8 @@ export const constructEvaluableConfig: () => EvaluableConfig = () => {
 };
 
 export type Deployer = {
-	address: string,
-	opmeta: string
-}
+	address: string;
+	opmeta: string;
+};
 
-export type GetDeployers = () => Deployer[]
+export type GetDeployers = () => Promise<Deployer[]>;
