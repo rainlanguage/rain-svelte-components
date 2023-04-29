@@ -182,12 +182,12 @@
 					bind:selectedItem={$selectedItem}
 					items={deployerOptions}
 					placeholder="Select interpreter"
-					classInput="text-neutral-600 border border-neutral-100 bg-white rounded-md px-0 py-1 text-xs w-full"
+					classInput="text-neutral-600 border border-neutral-100 bg-white rounded-md px-0 py-1 text-xs w-full pl-2"
 					classContainer="max-h-28 text-neutral-600 border-[1px] border-gray-400 bg-white rounded-md text-xs shadow cursor-default font-mono"
 				/>
 			{/if}
 		</div>
-		<div class="gap-x-3 flex items-center justify-between lg:justify-end text-gray-600 w-full">
+		<div class="gap-x-3 flex items-center justify-end text-gray-600 w-full">
 			{#if !hideHelp}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<div on:click={help} class="parser-button">
