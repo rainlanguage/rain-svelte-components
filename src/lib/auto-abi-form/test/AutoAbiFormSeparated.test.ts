@@ -9,7 +9,31 @@ import OrderBook from './OrderBook.json';
 import OrderBookMetadata from './OrderBook.meta.json';
 import { get } from 'lodash-es';
 
-function assertMeta(metadata_, abi_, methodName: string, componentCount: number, hasMetadataDefined = true) {
+
+function countComponents(component, componentCount) {
+    const type: string = component.internalType;
+
+    // Direct components
+    if (type == 'string' || type.startsWith('uint') || type == 'address' || type == 'bool' || type == 'bytes') {
+        const componentName = `${component.name} (${component.type})`;
+        if (componentCount.hasOwnProperty(componentName))
+            componentCount[componentName] += 1;
+        else {
+            componentCount[componentName] = 1;
+        }
+    }
+
+    // Nested Components 
+    if (type.startsWith('struct') && 'components' in component && type !== 'struct EvaluableConfig' && type !== 'struct EvaluableConfig[]') {
+        // Recursive call to 
+        component.components.forEach(subComponent => {
+            componentCount = countComponents(subComponent, componentCount);
+        });
+    }
+    return componentCount;
+}
+
+function assertMeta(metadata_, abi_, methodName: string, componentCount_: number, hasMetadataDefined = true) {
 
     if (hasMetadataDefined) {
         metadata_.methods.forEach(method => {
@@ -28,20 +52,27 @@ function assertMeta(metadata_, abi_, methodName: string, componentCount: number,
                     expect(screen.getByText(input.desc)).toBeTruthy();
 
                     get(abi_.abi, input.path).components.forEach((component: { name: string; type: string; }) => {
-                        expect(screen.getAllByText(`${component.name} (${component.type})`).length).toEqual(componentCount);
+                        expect(screen.getAllByText(`${component.name} (${component.type})`).length).toEqual(componentCount_);
                     });
                 });
             }
         });
     }
     else {
+        // Find the method in abi
         const method = abi_.abi.find((method) => method.type == 'function' && method?.name == methodName);
-        console.log(method);
-        method.inputs.forEach(input => {
-            input.components.forEach(component => {
-                expect(screen.getAllByText(`${component.name} (${component.type})`).length).toEqual(componentCount);
-            });
+
+        // Generate component count which will be displayed
+        let componentCount = {};
+        method.inputs.forEach(component => {
+            componentCount = countComponents(component, componentCount);
         });
+
+        // Assert on screen
+        for (const [componentName, count] of Object.entries(componentCount)) {
+            expect(screen.getAllByText(componentName).length).toEqual(count);
+        }
+
     }
 }
 
@@ -381,7 +412,7 @@ describe("AutoAboFormSeparated Tests", () => {
         expect(screen.getByText("Configuration")).toBeTruthy();
 
         // Asserting meta 
-        assertMeta(OrderBookMetadata, OrderBook, "withdraw", 1, false);
+        assertMeta(OrderBookMetadata, OrderBook, "withdraw", 0, false);
 
         // Asserting result
         const expectedResult = [
@@ -389,6 +420,120 @@ describe("AutoAboFormSeparated Tests", () => {
                 amount: '',
                 token: '',
                 vaultId: '',
+            }
+        ];
+        expect(component.$$.ctx[component.$$.props.result]).toEqual(expectedResult);
+    });
+
+    it("should render the AutoAbiFormComponent for OrderBook's removeOrder", async () => {
+        const context = addressContext;
+        context.set('onlyExpressionParser', true);
+
+        const { component } = render(AutoAbiFormSeparated, {
+            props: {
+                abi: OrderBook.abi,
+                metadata: OrderBookMetadata,
+                methodName: "removeOrder"
+            },
+            context: context
+        });
+
+        // Asserting Ui Components
+        expect(screen.getByText("Configuration")).toBeTruthy();
+
+        // Asserting meta 
+        assertMeta(OrderBookMetadata, OrderBook, "removeOrder", 0, false);
+
+        // Asserting result
+        const expectedResult = [
+            {
+                "validOutputs": [
+                    {
+                        "vaultId": "",
+                        "decimals": "",
+                        "token": ""
+                    }
+                ],
+                "validInputs": [
+                    {
+                        "vaultId": "",
+                        "decimals": "",
+                        "token": ""
+                    }
+                ],
+                "evaluable": {
+                    "expression": ""
+                },
+                "handleIO": false,
+                "owner": ""
+            }
+        ];
+        expect(component.$$.ctx[component.$$.props.result]).toEqual(expectedResult);
+    });
+
+    it("should render the AutoAbiFormComponent for OrderBook's takeOrders", async () => {
+        const context = addressContext;
+        context.set('onlyExpressionParser', true);
+
+        const { component } = render(AutoAbiFormSeparated, {
+            props: {
+                abi: OrderBook.abi,
+                metadata: OrderBookMetadata,
+                methodName: "takeOrders"
+            },
+            context: context
+        });
+
+        // Asserting Ui Components
+        expect(screen.getByText("Configuration")).toBeTruthy();
+
+        // Asserting meta 
+        assertMeta(OrderBookMetadata, OrderBook, "takeOrders", 0, false);
+
+        // Asserting result
+        const expectedResult = [
+            {
+                "orders": [
+                    {
+                        "outputIOIndex": "",
+                        "inputIOIndex": "",
+                        "order": {
+                            "validOutputs": [
+                                {
+                                    "vaultId": "",
+                                    "decimals": "",
+                                    "token": ""
+                                }
+                            ],
+                            "validInputs": [
+                                {
+                                    "vaultId": "",
+                                    "decimals": "",
+                                    "token": ""
+                                }
+                            ],
+                            "evaluable": {
+                                "expression": ""
+                            },
+                            "handleIO": false,
+                            "owner": ""
+                        },
+                        "signedContext": [
+                            {
+                                "signature": "",
+                                "context": [
+                                    {}
+                                ],
+                                "signer": ""
+                            }
+                        ]
+                    }
+                ],
+                "maximumIORatio": "",
+                "maximumInput": "",
+                "minimumInput": "",
+                "input": "",
+                "output": ""
             }
         ];
         expect(component.$$.ctx[component.$$.props.result]).toEqual(expectedResult);
