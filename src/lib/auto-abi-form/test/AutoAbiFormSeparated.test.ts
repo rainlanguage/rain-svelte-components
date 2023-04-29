@@ -539,6 +539,115 @@ describe("AutoAboFormSeparated Tests", () => {
         expect(component.$$.ctx[component.$$.props.result]).toEqual(expectedResult);
     });
 
+    it("should render the AutoAbiFormComponent for OrderBook's takeOrders", async () => {
+        const context = addressContext;
+        context.set('onlyExpressionParser', true);
+
+        const { component } = render(AutoAbiFormSeparated, {
+            props: {
+                abi: OrderBook.abi,
+                metadata: OrderBookMetadata,
+                methodName: "takeOrders"
+            },
+            context: context
+        });
+
+        // Asserting Ui Components
+        expect(screen.getByText("Configuration")).toBeTruthy();
+
+        // Asserting meta 
+        assertMeta(OrderBookMetadata, OrderBook, "takeOrders", 0, false);
+
+        // Adding arrayedComponent
+        const addButtons = screen.getAllByRole('button', {
+            name: "+ Add another"
+        });
+        // Clicking last add Button to add order element
+        await fireEvent.click(addButtons[addButtons.length - 1]);
+
+        // Asserting result
+        const expectedResult = [
+            {
+                "orders": [
+                    {
+                        "outputIOIndex": "",
+                        "inputIOIndex": "",
+                        "order": {
+                            "validOutputs": [
+                                {
+                                    "vaultId": "",
+                                    "decimals": "",
+                                    "token": ""
+                                }
+                            ],
+                            "validInputs": [
+                                {
+                                    "vaultId": "",
+                                    "decimals": "",
+                                    "token": ""
+                                }
+                            ],
+                            "evaluable": {
+                                "expression": ""
+                            },
+                            "handleIO": false,
+                            "owner": ""
+                        },
+                        "signedContext": [
+                            {
+                                "signature": "",
+                                "context": [
+                                    {}
+                                ],
+                                "signer": ""
+                            }
+                        ]
+                    },
+                    {
+                        "outputIOIndex": "",
+                        "inputIOIndex": "",
+                        "order": {
+                            "validOutputs": [
+                                {
+                                    "vaultId": "",
+                                    "decimals": "",
+                                    "token": ""
+                                }
+                            ],
+                            "validInputs": [
+                                {
+                                    "vaultId": "",
+                                    "decimals": "",
+                                    "token": ""
+                                }
+                            ],
+                            "evaluable": {
+                                "expression": ""
+                            },
+                            "handleIO": false,
+                            "owner": ""
+                        },
+                        "signedContext": [
+                            {
+                                "signature": "",
+                                "context": [
+                                    {}
+                                ],
+                                "signer": ""
+                            }
+                        ]
+                    }
+                ],
+                "maximumIORatio": "",
+                "maximumInput": "",
+                "minimumInput": "",
+                "input": "",
+                "output": ""
+            }
+        ];
+        expect(component.$$.ctx[component.$$.props.result]).toEqual(expectedResult);
+    });
+
     it("should throw an error when EVALUABLE_ADDRESSES context is not defined", async () => {
         const context = addressContext;
         context.set('onlyExpressionParser', true);
