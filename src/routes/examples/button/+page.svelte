@@ -69,22 +69,25 @@
 	</Example>
 
 	<ExampleHeading>Dual button with icons</ExampleHeading>
-	By default the icon will be on the left side of the {`<slot>`} on the component
+	By default the icon will be on the left side of the {`<slot>`} on the component Also you can provide
+	as 'classes' your own styling, but the variant will be skipped
 	<Example>
 		<ExampleComponent>
 			<div class="flex flex-col gap-y-3">
 				<div class="flex">
-					<Button variant="transparent" dual={'left'} icon={ChevronLeft}>Left</Button>
-					<Button variant="transparent" dual={'right'} icon={ChevronRight} iconPosition={'right'}
-						>Right</Button
-					>
-				</div>
-				<div class="flex">
-					<Button variant="transparent" dual={'left'} size="small" icon={ChevronLeft}>Left</Button>
 					<Button
-						variant="transparent"
+						classes="text-neutral-600 border border-neutral-200 hover:bg-neutral-200"
+						dual={'left'}
+						icon={ChevronLeft}>Left</Button
+					>
+					<div
+						class="border border-neutral-200 px-2.5 text-neutral-600 hover:bg-neutral-200 flex items-center hover:cursor-pointer"
+					>
+						Some intermediate element
+					</div>
+					<Button
+						classes="text-neutral-600 border border-neutral-200 hover:bg-neutral-200"
 						dual={'right'}
-						size="small"
 						icon={ChevronRight}
 						iconPosition={'right'}>Right</Button
 					>

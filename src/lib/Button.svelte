@@ -11,8 +11,7 @@
 	export let dual: 'right' | 'left' | null = null;
 	export let type: string | null = null;
 	export let iconPosition: 'right' | 'left' = 'left';
-
-	let iconStyle: string;
+	export let iconStyle: string = '';
 
 	$: variantCalc = disabled ? 'disabled' : variant;
 
@@ -20,16 +19,20 @@
 
 	if (size === 'small' && iconOnly) size = 'small-icon-only';
 
-	if (size === 'small') {
-		iconStyle = `w-5 h-5 py-0.5 ${iconOnly ? '' : 'mr-1.5'}`;
-	} else {
-		// Always setting a good value
-		// size = 'regular';
-		iconStyle = `w-6 h-6 py-0.5 ${iconOnly ? '' : 'mr-1.5'}`;
+	// If no iconStyle provided, then use defaults
+	if (iconStyle == '') {
+		iconStyle =
+			size === 'small'
+				? `w-5 h-5 py-0.5 ${iconOnly ? '' : 'mr-1.5'}`
+				: `w-6 h-6 py-0.5 ${iconOnly ? '' : 'mr-1.5'}`;
 	}
 
 	if (variant === 'transparent') {
 		iconStyle += ' text-black';
+	}
+
+	if (classes !== '') {
+		variant = classes;
 	}
 </script>
 
@@ -52,7 +55,7 @@
 
 <style lang="postcss">
 	.button {
-		@apply leading-none transition-colors text-white;
+		@apply leading-none transition-colors;
 	}
 
 	.right {
@@ -82,18 +85,18 @@
 	}
 
 	.default {
-		@apply bg-gray-900 hover:bg-gray-800;
+		@apply bg-gray-900 hover:bg-gray-800 text-white;
 	}
 	.primary {
-		@apply bg-blue-700 hover:bg-blue-600 dark:bg-blue-300 dark:hover:bg-blue-200;
+		@apply bg-blue-700 hover:bg-blue-600 dark:bg-blue-300 dark:hover:bg-blue-200 text-white;
 	}
 
 	.secondary {
-		@apply bg-blue-500 hover:bg-blue-400;
+		@apply bg-blue-500 hover:bg-blue-400 text-white;
 	}
 
 	.black {
-		@apply bg-neutral-900 hover:bg-neutral-800;
+		@apply bg-neutral-900 hover:bg-neutral-800 text-white;
 	}
 
 	.transparent {
@@ -101,14 +104,14 @@
 	}
 
 	.disabled {
-		@apply cursor-not-allowed bg-gray-400;
+		@apply cursor-not-allowed bg-gray-400 text-white;
 	}
 
 	.rain-primary {
-		@apply bg-rainprimary;
+		@apply bg-rainprimary text-white;
 	}
 
 	.rain-secondary {
-		@apply bg-rainsecondary;
+		@apply bg-rainsecondary text-white;
 	}
 </style>
