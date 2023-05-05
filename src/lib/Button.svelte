@@ -9,11 +9,9 @@
 	export let solidIcon: boolean = false;
 	export let classes: string = '';
 	export let dual: 'right' | 'left' | null = null;
-	export let type: string | null = null;
+	export let type: 'button' | 'submit' | 'reset' | null | undefined = null;
 	export let iconPosition: 'right' | 'left' = 'left';
 	export let iconStyle: string = '';
-
-	$: variantCalc = disabled ? 'disabled' : variant;
 
 	const iconOnly = icon && $$slots.default == undefined;
 
@@ -34,15 +32,15 @@
 	if (classes !== '') {
 		variant = classes;
 	}
+
+	$: variantCalc = disabled ? 'disabled' : variant;
 </script>
 
 <button
 	{disabled}
 	on:click
-	{type}
-	class={`button ${variantCalc} ${size} ${classes} ${dual ?? 'rounded-[10px]'} ${
-		icon ? 'withIcon' : ''
-	}`}
+	type={type ?? 'button'}
+	class={` ${variantCalc} ${size} ${classes} ${dual ?? 'rounded-[10px]'} ${icon ? 'withIcon' : ''}`}
 >
 	{#if iconPosition == 'left' && icon != undefined}
 		<Icon src={icon} class={iconStyle} theme={solidIcon ? 'solid' : ''} />
@@ -54,10 +52,6 @@
 </button>
 
 <style lang="postcss">
-	.button {
-		@apply leading-none transition-colors;
-	}
-
 	.right {
 		@apply rounded-r-[10px];
 	}
@@ -74,11 +68,11 @@
 	}
 
 	.small {
-		@apply px-2.5 py-[5px] text-sm;
+		@apply px-2.5 py-[5px] text-sm flex items-center justify-center;
 	}
 
 	.small-icon-only {
-		@apply h-8 w-8 flex items-center justify-center rounded-md;
+		@apply h-8 w-8 flex items-center justify-center;
 	}
 	.regular {
 		@apply px-5 py-2.5 text-base;
