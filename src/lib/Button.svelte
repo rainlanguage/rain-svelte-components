@@ -10,6 +10,7 @@
 	export let classes: string = '';
 	export let dual: 'right' | 'left' | null = null;
 	export let type: string | null = null;
+	export let iconPosition: 'right' | 'left' = 'left';
 
 	let iconStyle: string;
 
@@ -40,10 +41,13 @@
 		icon ? 'withIcon' : ''
 	}`}
 >
-	{#if icon != undefined}
+	{#if iconPosition == 'left' && icon != undefined}
 		<Icon src={icon} class={iconStyle} theme={solidIcon ? 'solid' : ''} />
 	{/if}
 	<slot />
+	{#if iconPosition == 'right' && icon != undefined}
+		<Icon src={icon} class={iconStyle} theme={solidIcon ? 'solid' : ''} />
+	{/if}
 </button>
 
 <style lang="postcss">

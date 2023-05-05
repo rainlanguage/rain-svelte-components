@@ -5,7 +5,7 @@
 	import ExampleHeading from '$lib/_docs/ExampleHeading.svelte';
 	import PageHeading from '$lib/_docs/PageHeading.svelte';
 	import Button from '$lib/Button.svelte';
-	import { Heart, Square2Stack } from '@steeze-ui/heroicons';
+	import { ChevronLeft, ChevronRight, Heart, Square2Stack } from '@steeze-ui/heroicons';
 	import OverflowMenu from '$lib/overflow-menu/OverflowMenu.svelte';
 </script>
 
@@ -66,6 +66,32 @@
 </div>
 		`}</ExampleUsage
 		>
+	</Example>
+
+	<ExampleHeading>Dual button with icons</ExampleHeading>
+	By default the icon will be on the left side of the {`<slot>`} on the component
+	<Example>
+		<ExampleComponent>
+			<div class="flex flex-col gap-y-3">
+				<div class="flex">
+					<Button variant="transparent" dual={'left'} icon={ChevronLeft}>Left</Button>
+					<Button variant="transparent" dual={'right'} icon={ChevronRight} iconPosition={'right'}
+						>Right</Button
+					>
+				</div>
+				<div class="flex">
+					<Button variant="transparent" dual={'left'} size="small" icon={ChevronLeft}>Left</Button>
+					<Button
+						variant="transparent"
+						dual={'right'}
+						size="small"
+						icon={ChevronRight}
+						iconPosition={'right'}>Right</Button
+					>
+				</div>
+			</div>
+		</ExampleComponent>
+		<ExampleUsage>{``}</ExampleUsage>
 	</Example>
 
 	<ExampleHeading>Additional classes</ExampleHeading>
