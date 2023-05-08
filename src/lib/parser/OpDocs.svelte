@@ -3,7 +3,7 @@
 	import { Icon } from '@steeze-ui/svelte-icon';
 	import { onMount } from 'svelte';
 
-	export let opMeta: string;
+	export let opMeta: any;
 
 	let ops: any[] = [];
 	let opsSearch: any[] = [];
@@ -26,6 +26,7 @@
 
 	const getCategories = () => {
 		let categorySet = new Set();
+		console.log(opsSearch);
 		Array.from(opsSearch).forEach((op) => {
 			categorySet.add(op.data.category);
 		});

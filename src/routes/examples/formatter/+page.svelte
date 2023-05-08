@@ -5,9 +5,7 @@
 	import ExampleHeading from '$lib/_docs/ExampleHeading.svelte';
 	import Formatter from '$lib/formatter/Formatter.svelte';
 	import { type Writable, writable } from 'svelte/store';
-	import { getOpMetaFromSg, type ExpressionConfig } from '@rainprotocol/rainlang';
-
-	const opMetaPromise = getOpMetaFromSg('0x01D5611c2D6FB7Bb1bFa9df2f524196743f59F2a', 524289);
+	import type { ExpressionConfig } from '@rainprotocol/rainlang';
 
 	let raw = `/**
  ** Calculate the maximum number of NFTs to mint
@@ -98,27 +96,21 @@ _ _: sender-address nft-id;
 	<ExampleHeading>With raw text</ExampleHeading>
 	<Example>
 		<ExampleComponent>
-			{#await opMetaPromise then opMeta}
-				<Formatter {raw} {opMeta} maxHeight="400px" />
-			{/await}
+			<Formatter {raw} maxHeight="400px" />
 		</ExampleComponent>
 	</Example>
 
 	<ExampleHeading>With expression config</ExampleHeading>
 	<Example>
 		<ExampleComponent>
-			{#await opMetaPromise then opMeta}
-				<Formatter {expressionConfig} {opMeta} />
-			{/await}
+			<Formatter {expressionConfig} />
 		</ExampleComponent>
 	</Example>
 
 	<ExampleHeading>With both specified (will use raw)</ExampleHeading>
 	<Example>
 		<ExampleComponent>
-			{#await opMetaPromise then opMeta}
-				<Formatter {expressionConfig} {raw} {opMeta} maxHeight="400px" />
-			{/await}
+			<Formatter {expressionConfig} {raw} maxHeight="400px" />
 		</ExampleComponent>
 	</Example>
 </div>

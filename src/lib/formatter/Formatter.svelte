@@ -1,8 +1,8 @@
 <script context="module" lang="ts">
 	import { rld, type ExpressionConfig } from '@rainprotocol/rainlang';
 
-	export const getRawExpression = async (config_: ExpressionConfig, opMeta_: string) => {
-		return (await rld(config_, opMeta_, true)).getTextDocument().getText();
+	export const getRawExpression = async (config_: ExpressionConfig) => {
+		return (await rld(config__)).getTextDocument().getText();
 	};
 </script>
 
@@ -19,7 +19,6 @@
 	export let showFork: boolean = true;
 	export let showForkLabel: boolean = false;
 	export let maxHeight: string | null = null;
-	export let opMeta: string;
 
 	let parserInput: ParserInput;
 
@@ -34,7 +33,7 @@
 
 		if (raw) return;
 		else if (expressionConfig) {
-			raw = await getRawExpression($expressionConfig, opMeta);
+			raw = await getRawExpression($expressionConfig);
 			return;
 		} else showFormatter = false;
 	});
@@ -47,7 +46,7 @@
 {#if showFormatter}
 	<div class="bg-gray-100 dark:bg-gray-800 rounded-lg relative">
 		<div class="overflow-y-scroll p-4" style={maxHeight ? `max-height: ${maxHeight}` : ''}>
-			<ParserInput {raw} {readOnly} {expressionConfig} bind:this={parserInput} {opMeta} />
+			<ParserInput {raw} {readOnly} bind:this={parserInput} />
 		</div>
 		{#if showFork}
 			<div class="bottom-0 right-0 p-2 absolute bg-gray-100 dark:bg-gray-800">
