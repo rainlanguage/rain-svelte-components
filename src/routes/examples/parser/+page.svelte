@@ -8,7 +8,7 @@
 	import ExampleHeading from '$lib/_docs/ExampleHeading.svelte';
 	import ExampleUsage from '$lib/_docs/ExampleUsage.svelte';
 	import PageHeading from '$lib/_docs/PageHeading.svelte';
-	import type { ExpressionConfig, RDProblem } from '@rainprotocol/rainlang';
+	import type { ExpressionConfig, MetaStore, RDProblem } from '@rainprotocol/rainlang';
 	import { setContext } from 'svelte';
 	import { signer } from 'svelte-ethers-store';
 	import { writable, type Writable } from 'svelte/store';
@@ -22,6 +22,9 @@
 	let error: string = '';
 	let errors: RDProblem[] = [];
 	let readOnly = false;
+
+	let expressionConfig2: Writable<ExpressionConfig> = writable(emptySc);
+	let metaStore: Writable<MetaStore> = writable();
 
 	setContext('EVALUABLE_ADDRESSES', {
 		getDeployers: async () => {
@@ -134,7 +137,14 @@
 					<span slot="label">Enter raw text to load into parser here.</span>
 				</Input>
 				<div class="min-h-[150px] flex flex-col">
-					<Parser on:save={saveEvent} on:load={loadEvent} on:expand={expandEvent} bind:errors />
+					<Parser
+						on:save={saveEvent}
+						on:load={loadEvent}
+						on:expand={expandEvent}
+						bind:errors
+						expressionConfig={expressionConfig2}
+						{metaStore}
+					/>
 				</div>
 				<div class="flex flex-col gap-y-2">
 					{#each events as event}
@@ -142,6 +152,12 @@
 					{/each}
 				</div>
 			</div>
+			<pre class="bg-black font-mono text-white p-4 overflow-hidden">
+Expression:
+{JSON.stringify($expressionConfig2, null, 2)}
+Metastore:
+{JSON.stringify($metaStore, null, 2)}
+			</pre>
 		</ExampleComponent>
 		<ExampleUsage />
 	</Example>
