@@ -7,7 +7,9 @@
 	import { type Writable, writable } from 'svelte/store';
 	import type { ExpressionConfig } from '@rainprotocol/rainlang';
 
-	let raw = `/**
+	let raw = `
+@0x47ed85f917e187757bff09371cedcf5c0eb277c27e4673feb2d3cc040c66c993	
+/**
  ** Calculate the maximum number of NFTs to mint
  */
 max-nfts: 100,
@@ -81,9 +83,19 @@ _ _: sender-address nft-id;
 `;
 
 	const expressionConfig: Writable<ExpressionConfig> = writable({
-		constants: [2, 3],
-		sources: ['0x000d0001000d0003001b0002']
+		constants: [
+			'100',
+			'1234',
+			'1',
+			'0xfea74d0c9bf4a3c28f0dd0674db22a3d7f8bf259c56af19f4ac1e735b156974f',
+			'0xf339171dab445c29f9897dda2f42413426ee907dc7f8b52bd387bc7cf9384c6b'
+		],
+		sources: [
+			'0x000c0001000c0003000d0001000c000200460000000c0004000c0000002b000000170001000c0002000c0004000c0005001a000200470000000c0004000c0005001a000200040000000c0007000c0009000c000a000c000a000c000a000c000a000c000c000c000c000c0008000c0006'
+		]
 	});
+
+	const opMetaHash = '0x47ed85f917e187757bff09371cedcf5c0eb277c27e4673feb2d3cc040c66c993';
 </script>
 
 <div class="flex flex-col gap-y-4">
@@ -103,7 +115,7 @@ _ _: sender-address nft-id;
 	<ExampleHeading>With expression config</ExampleHeading>
 	<Example>
 		<ExampleComponent>
-			<Formatter {expressionConfig} />
+			<Formatter {expressionConfig} {opMetaHash} />
 		</ExampleComponent>
 	</Example>
 

@@ -1,8 +1,8 @@
 <script context="module" lang="ts">
 	import { rld, type ExpressionConfig } from '@rainprotocol/rainlang';
 
-	export const getRawExpression = async (config_: ExpressionConfig) => {
-		return (await rld(config__)).getTextDocument().getText();
+	export const getRawExpression = async (config_: ExpressionConfig, opMetaHash: string) => {
+		return (await rld(config_, opMetaHash)).getTextDocument().getText();
 	};
 </script>
 
@@ -11,11 +11,12 @@
 	import ParserInput from '$lib/parser/ParserInput.svelte';
 	import { DocumentDuplicate } from '@steeze-ui/heroicons';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import type { Writable } from 'svelte/store';
+	import { writable, type Writable } from 'svelte/store';
 
 	export let readOnly: boolean = true;
 	export let raw: string = '';
-	export let expressionConfig: Writable<ExpressionConfig>;
+	export let opMetaHash: string = '';
+	export let expressionConfig: Writable<ExpressionConfig> = writable();
 	export let showFork: boolean = true;
 	export let showForkLabel: boolean = false;
 	export let maxHeight: string | null = null;
@@ -32,8 +33,8 @@
 		// 	return (raw = (await rld(await rlc(raw, opMeta), opMeta, true)).getTextDocument().getText());
 
 		if (raw) return;
-		else if (expressionConfig) {
-			raw = await getRawExpression($expressionConfig);
+		else if (expressionConfig && opMetaHash) {
+			raw = await getRawExpression($expressionConfig, opMetaHash);
 			return;
 		} else showFormatter = false;
 	});
