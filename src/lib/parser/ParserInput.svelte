@@ -59,6 +59,7 @@
 
 			const doc = await RainDocument.create(TextDocument.create('file', 'rainlang', 1, raw));
 			metaStore.set(doc.getMetaStore());
+			console.log($metaStore);
 		} catch (e) {
 			const error = e as RainCompilerError;
 			errors = error.problems;
