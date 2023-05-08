@@ -8,7 +8,7 @@
 	import ExampleHeading from '$lib/_docs/ExampleHeading.svelte';
 	import ExampleUsage from '$lib/_docs/ExampleUsage.svelte';
 	import PageHeading from '$lib/_docs/PageHeading.svelte';
-	import { getOpMetaFromSg, type ExpressionConfig, type RDProblem } from '@rainprotocol/rainlang';
+	import type { ExpressionConfig, RDProblem } from '@rainprotocol/rainlang';
 	import { setContext } from 'svelte';
 	import { signer } from 'svelte-ethers-store';
 	import { writable, type Writable } from 'svelte/store';
@@ -22,8 +22,6 @@
 	let error: string = '';
 	let errors: RDProblem[] = [];
 	let readOnly = false;
-
-	const opMetaPromise = getOpMetaFromSg('0x01D5611c2D6FB7Bb1bFa9df2f524196743f59F2a', 524289);
 
 	setContext('EVALUABLE_ADDRESSES', {
 		getDeployers: async () => {
@@ -90,9 +88,7 @@
 		<ExampleComponent>
 			<div class="flex flex-col gap-y-2">
 				<div class="bg-gray-100 dark:bg-gray-800 h-[200px] overflow-auto flex flex-col">
-					{#await opMetaPromise then opMeta}
-						<ParserInput {expressionConfig} bind:raw bind:errors {readOnly} {opMeta} />
-					{/await}
+					<ParserInput {expressionConfig} bind:raw bind:errors {readOnly} />
 				</div>
 				<span>Simulated output</span>
 				<div class="bg-gray-100 p-3 dark:bg-gray-800">
