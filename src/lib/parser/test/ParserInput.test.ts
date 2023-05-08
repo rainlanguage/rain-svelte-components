@@ -35,7 +35,9 @@ describe("ParserInput Tests", () => {
 
     it("should generate an expressionConfig for valid rainlang expressions", async () => {
         // 0
-        const expression0 = rainlang`_: add(10 20);`
+        const expression0 = rainlang`
+        @0x47ed85f917e187757bff09371cedcf5c0eb277c27e4673feb2d3cc040c66c993
+        _: add(10 20);`
         // rendering component
         const { container } = await render(ParserInput, {
             props: {
@@ -53,7 +55,8 @@ describe("ParserInput Tests", () => {
         cleanup();
 
         // 1
-        const expression1 = rainlang` _ _: erc-1155-balance-of-batch(
+        const expression1 = rainlang` @0x47ed85f917e187757bff09371cedcf5c0eb277c27e4673feb2d3cc040c66c993
+        _ _: erc-1155-balance-of-batch(
             0x01
             0x02
             0x03
@@ -75,7 +78,8 @@ describe("ParserInput Tests", () => {
         cleanup();
 
         // 2
-        const expression2 = rainlang`  
+        const expression2 = rainlang` 
+        @0x47ed85f917e187757bff09371cedcf5c0eb277c27e4673feb2d3cc040c66c993 
             c0: 1,
             c1: 2,
             condition: 1, 
