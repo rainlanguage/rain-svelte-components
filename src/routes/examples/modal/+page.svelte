@@ -33,8 +33,7 @@
 			</Modal>
 		</ExampleComponent>
 		<ExampleUsage>
-			{`
-<script>
+			{`<script>
 	let open = false;
 
 	const toggleModal = () => {
@@ -50,8 +49,46 @@
 			<Button variant="primary" on:click={toggleModal}>Close me</Button>
 		</span>
 	</div>
-</Modal>
-			`}
+</Modal>`}
+		</ExampleUsage>
+	</Example>
+
+	<ExampleHeading>Enable/Disable close on unfocus</ExampleHeading>
+	<div class="dark:text-white">
+		By default, the modal will be closed when clicking outside the modal. If need this feature to be
+		disable, you can specify it on the component.
+	</div>
+	<Example>
+		<ExampleComponent>
+			<Button on:click={toggleModal}>Open modal</Button>
+			<Modal bind:open disableOutsideClickClose>
+				<div class="flex flex-col gap-y-2 w-60">
+					<span class="text-2xl font-semibold">Some modal</span>
+					<span>This is a modal, ONLY close it by clicking the button below.</span>
+					<span class="self-start mt-4">
+						<Button variant="primary" on:click={toggleModal}>Close me</Button>
+					</span>
+				</div>
+			</Modal>
+		</ExampleComponent>
+		<ExampleUsage>
+			{`<script>
+	let open = false;
+
+	const toggleModal = () => {
+		open = !open;
+	};
+</script>
+
+<Modal bind:open disableOutsideClickClose>
+	<div class="flex flex-col gap-y-2 w-60 dark:text-white">
+		<span class="text-2xl font-semibold">Some modal</span>
+		<span>This is a modal, close it by clicking the button below.</span>
+		<span class="self-start mt-4">
+			<Button variant="primary" on:click={toggleModal}>Close me</Button>
+		</span>
+	</div>
+</Modal>`}
 		</ExampleUsage>
 	</Example>
 </div>
