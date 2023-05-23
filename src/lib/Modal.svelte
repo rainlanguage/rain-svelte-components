@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	export let open: boolean = true;
+	export let disableOutsideClickClose: boolean = false;
 	let modalWrapper: HTMLDivElement, modalInner: HTMLDivElement;
 
 	onMount(() => {
@@ -10,7 +11,7 @@
 	});
 
 	const closeModal = ({ target }: Event) => {
-		if (target == modalInner) open = false;
+		if (!disableOutsideClickClose) if (target == modalInner) open = false;
 	};
 
 	$: if (browser) document.body.classList.toggle('overflow-y-hidden', open);
