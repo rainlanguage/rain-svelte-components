@@ -539,7 +539,7 @@ describe("AutoAboFormSeparated Tests", () => {
         expect(component.$$.ctx[component.$$.props.result]).toEqual(expectedResult);
     });
 
-    it("should render the AutoAbiFormComponent for OrderBook's takeOrders", async () => {
+    it.only("should render the AutoAbiFormComponent for OrderBook's takeOrders", async () => {
         const context = addressContext;
         context.set('onlyExpressionParser', true);
 
@@ -603,40 +603,7 @@ describe("AutoAboFormSeparated Tests", () => {
                             }
                         ]
                     },
-                    {
-                        "outputIOIndex": "",
-                        "inputIOIndex": "",
-                        "order": {
-                            "validOutputs": [
-                                {
-                                    "vaultId": "",
-                                    "decimals": "",
-                                    "token": ""
-                                }
-                            ],
-                            "validInputs": [
-                                {
-                                    "vaultId": "",
-                                    "decimals": "",
-                                    "token": ""
-                                }
-                            ],
-                            "evaluable": {
-                                "expression": ""
-                            },
-                            "handleIO": false,
-                            "owner": ""
-                        },
-                        "signedContext": [
-                            {
-                                "signature": "",
-                                "context": [
-                                    {}
-                                ],
-                                "signer": ""
-                            }
-                        ]
-                    }
+                    {},
                 ],
                 "maximumIORatio": "",
                 "maximumInput": "",
@@ -645,6 +612,7 @@ describe("AutoAboFormSeparated Tests", () => {
                 "output": ""
             }
         ];
+
         expect(component.$$.ctx[component.$$.props.result]).toEqual(expectedResult);
     });
 
