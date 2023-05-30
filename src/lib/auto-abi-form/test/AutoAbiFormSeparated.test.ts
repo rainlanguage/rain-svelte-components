@@ -539,7 +539,7 @@ describe("AutoAboFormSeparated Tests", () => {
         expect(component.$$.ctx[component.$$.props.result]).toEqual(expectedResult);
     });
 
-    it.only("should render the AutoAbiFormComponent for OrderBook's takeOrders", async () => {
+    it("should render the AutoAbiFormComponent for OrderBook's takeOrders", async () => {
         const context = addressContext;
         context.set('onlyExpressionParser', true);
 
