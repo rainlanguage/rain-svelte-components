@@ -5,7 +5,7 @@
 	import ExampleHeading from '$lib/_docs/ExampleHeading.svelte';
 	import PageHeading from '$lib/_docs/PageHeading.svelte';
 	import Button from '$lib/Button.svelte';
-	import { Heart, Square2Stack } from '@steeze-ui/heroicons';
+	import { ChevronLeft, ChevronRight, Heart, Square2Stack } from '@steeze-ui/heroicons';
 	import OverflowMenu from '$lib/overflow-menu/OverflowMenu.svelte';
 </script>
 
@@ -66,6 +66,40 @@
 </div>
 		`}</ExampleUsage
 		>
+	</Example>
+
+	<ExampleHeading>Dual button with icons</ExampleHeading>
+	By default the icon will be on the left side of the {`<slot>`} on the component Also you can provide
+	as 'classes' your own styling, but the variant will be skipped
+	<Example>
+		<ExampleComponent>
+			<div class="flex">
+				<Button
+					classes="text-neutral-600 border border-neutral-200 hover:bg-neutral-200"
+					dual={'left'}
+					size="small"
+					icon={ChevronLeft}>Prev</Button
+				>
+				<div
+					class="border border-neutral-200 px-2 text-neutral-600 hover:bg-neutral-200 flex items-center hover:cursor-pointer"
+				>
+					1
+				</div>
+				<div
+					class="border border-neutral-200 px-2 text-neutral-600 hover:bg-neutral-200 flex items-center hover:cursor-pointer"
+				>
+					2
+				</div>
+				<Button
+					size="small"
+					classes="text-neutral-600 border border-neutral-200 hover:bg-neutral-200"
+					dual={'right'}
+					icon={ChevronRight}
+					iconPosition={'right'}>Next</Button
+				>
+			</div>
+		</ExampleComponent>
+		<ExampleUsage>{``}</ExampleUsage>
 	</Example>
 
 	<ExampleHeading>Additional classes</ExampleHeading>

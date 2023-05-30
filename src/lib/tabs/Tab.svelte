@@ -2,7 +2,7 @@
 	import { getContext } from 'svelte';
 	import { TABS } from './Tabs.svelte';
 
-	export let href: string;
+	export let href: string | null = null;
 
 	const tab = {};
 	const { registerTab, selectTab, selectedTab } = getContext(TABS) as any;
@@ -16,7 +16,7 @@
 	}`}
 	class:selected={$selectedTab === tab}
 	on:click={() => selectTab(tab)}
-	href={href || null}
+	{href}
 >
 	<slot />
 </a>
