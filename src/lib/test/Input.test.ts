@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event';
 import type { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
 import html from 'svelte-htm';
 
-describe("Parser Tests", () => {
+describe("Input Tests", () => {
     let user: UserEvent;
 
     beforeAll(async () => {
