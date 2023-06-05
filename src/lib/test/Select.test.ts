@@ -5,11 +5,8 @@ import {
     screen,
 } from '@testing-library/svelte';
 import Select from '../Select.svelte';
-import userEvent from '@testing-library/user-event';
-import type { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
 
 describe("Select Tests", () => {
-    let user: UserEvent;
 
     const options = [
         { label: 'Option 1' },
@@ -18,9 +15,6 @@ describe("Select Tests", () => {
         { label: 'Option 4' }
     ];
 
-    beforeAll(async () => {
-        user = userEvent.setup();
-    });
 
     it("should render Select component with none selected", async () => {
         const { container } = render(Select);
@@ -48,7 +42,7 @@ describe("Select Tests", () => {
     });
 
     it('should display the correct number of options', () => {
-        const { container, component } = render(Select, {
+        render(Select, {
             props: {
                 items: options
             }
@@ -58,7 +52,7 @@ describe("Select Tests", () => {
     })
 
     it("should render Select component with options", async () => {
-        const { container, component } = render(Select, {
+        const { container } = render(Select, {
             props: {
                 items: options
             }
@@ -73,7 +67,7 @@ describe("Select Tests", () => {
     });
 
     it("should select an option from the list", async () => {
-        const { container, component } = render(Select, {
+        const { container } = render(Select, {
             props: {
                 items: options
             }
