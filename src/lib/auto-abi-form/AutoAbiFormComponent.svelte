@@ -4,7 +4,7 @@
 	import Parser from '$lib/parser/Parser.svelte';
 	import type { AbiParameter } from 'abitype';
 	import Button from '$lib/Button.svelte';
-	import { getContext, onMount } from 'svelte';
+	import { getContext, onMount, tick } from 'svelte';
 	import Switch from '$lib/Switch.svelte';
 	import { constructEvaluableConfig, type EvaluableConfig } from '$lib/parser/types';
 
@@ -27,17 +27,18 @@
 	// if the component is an array of subcomponents
 	let arrayedComponents: { id: number; compResult: any }[] = [{ id: 0, compResult: {} }];
 
-	$: if (arrayedComponents) updateResult();
-
-	const updateResult = () => {
+	const updateResult = async () => {
 		if (type?.endsWith('[]') && type !== 'EvaluableConfig[]' && !settings.onlyExpressions) {
+			await tick();
 			result = arrayedComponents.map((comp) => comp.compResult);
 		}
 	};
 
+	$: if (arrayedComponents) updateResult();
+
 	// methods for adding and removing arrayed components
 	let arrayedComponentId = 0;
-	const addArrayedComponent = () => {
+	const addArrayedComponent = async () => {
 		arrayedComponentId++;
 		arrayedComponents = [...arrayedComponents, { id: arrayedComponentId, compResult: {} }];
 	};
@@ -214,6 +215,9 @@
 	{:else}
 		{#each component.components as subComponent}
 			{#if subComponent}
+				{#if result == undefined}
+					<!-- {console.log(subComponent)} -->
+				{/if}
 				<svelte:self
 					component={subComponent}
 					bind:result={result[subComponent.name]}

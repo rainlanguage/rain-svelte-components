@@ -132,6 +132,10 @@ describe("AutoAboFormSeparated Tests", () => {
         // Asserting meta
         assertMeta(OrderBookMetadata, OrderBook, "addOrder", 2);
 
+        // We need to click something so that the test will await the svelte tick()
+        const dummy = await screen.getByText('Order');
+        await fireEvent.click(dummy);
+
         // Asserting result
         const expectedResult = [
             {
@@ -141,14 +145,14 @@ describe("AutoAboFormSeparated Tests", () => {
                         "vaultId": "",
                         "decimals": "",
                         "token": ""
-                    }
+                    },
                 ],
                 "validInputs": [
                     {
                         "vaultId": "",
                         "decimals": "",
                         "token": ""
-                    }
+                    },
                 ],
                 "evaluableConfig": {
                     "constants": [],
@@ -157,6 +161,7 @@ describe("AutoAboFormSeparated Tests", () => {
                 }
             }
         ];
+
         expect(component.$$.ctx[component.$$.props.result]).toEqual(expectedResult);
     });
 
@@ -181,6 +186,10 @@ describe("AutoAboFormSeparated Tests", () => {
 
         // Asserting meta 
         assertMeta(OrderBookMetadata, OrderBook, "addOrder", 2);
+
+        // We need to click something so that the test will await the svelte tick()
+        const dummy = await screen.getByText('Order');
+        await fireEvent.click(dummy);
 
         // Asserting result
         const expectedResult = [
@@ -298,7 +307,6 @@ describe("AutoAboFormSeparated Tests", () => {
 
         // Asserting meta 
         assertMeta(OrderBookMetadata, OrderBook, "addOrder", 2);
-
 
         // Removing arrayedComponent
         const removeButtons = screen.getAllByRole('button', {
@@ -444,6 +452,10 @@ describe("AutoAboFormSeparated Tests", () => {
         // Asserting meta 
         assertMeta(OrderBookMetadata, OrderBook, "removeOrder", 0, false);
 
+        // We need to click something so that the test will await the svelte tick()
+        const dummy = await screen.getByText('Configuration');
+        await fireEvent.click(dummy);
+
         // Asserting result
         const expectedResult = [
             {
@@ -489,6 +501,10 @@ describe("AutoAboFormSeparated Tests", () => {
 
         // Asserting meta 
         assertMeta(OrderBookMetadata, OrderBook, "takeOrders", 0, false);
+
+        // We need to click something so that the test will await the svelte tick()
+        const dummy = await screen.getByText('Configuration');
+        await fireEvent.click(dummy);
 
         // Asserting result
         const expectedResult = [
@@ -603,7 +619,40 @@ describe("AutoAboFormSeparated Tests", () => {
                             }
                         ]
                     },
-                    {},
+                    {
+                        "outputIOIndex": "",
+                        "inputIOIndex": "",
+                        "order": {
+                            "validOutputs": [
+                                {
+                                    "vaultId": "",
+                                    "decimals": "",
+                                    "token": ""
+                                }
+                            ],
+                            "validInputs": [
+                                {
+                                    "vaultId": "",
+                                    "decimals": "",
+                                    "token": ""
+                                }
+                            ],
+                            "evaluable": {
+                                "expression": ""
+                            },
+                            "handleIO": false,
+                            "owner": ""
+                        },
+                        "signedContext": [
+                            {
+                                "signature": "",
+                                "context": [
+                                    {}
+                                ],
+                                "signer": ""
+                            }
+                        ]
+                    },
                 ],
                 "maximumIORatio": "",
                 "maximumInput": "",
