@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event';
 import type { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
 import html from 'svelte-htm';
 
-describe.only("Select Tests", () => {
+describe("Select Tests", () => {
     let user: UserEvent;
 
     const options = [
