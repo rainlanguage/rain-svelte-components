@@ -135,7 +135,7 @@
 		@apply w-full relative;
 	}
 	.container-options {
-		@apply w-full absolute top-full left-0;
+		@apply w-full absolute top-full left-0 z-20;
 	}
 	.drop-arrow {
 		@apply absolute top-1/2 transform -translate-y-1/2 right-3 cursor-pointer;

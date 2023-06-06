@@ -47,6 +47,9 @@
 		<NavItem link="/examples/input">
 			<span class="link">Input</span>
 		</NavItem>
+		<NavItem link="/examples/input-dropdown">
+			<span class="link">Input Dropdown</span>
+		</NavItem>
 		<NavItem link="/examples/switch">
 			<span class="link">Switch</span>
 		</NavItem>
