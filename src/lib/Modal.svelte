@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
-	import { browser } from '$app/environment';
+	// https://github.com/sveltejs/kit/issues/5879#issuecomment-1268973672
+	const browser = !import.meta.env?.SSR ?? typeof window !== 'undefined';
 	export let open: boolean = true;
 	export let disableOutsideClickClose: boolean = false;
 	let modalWrapper: HTMLDivElement, modalInner: HTMLDivElement;

@@ -8,10 +8,15 @@
 	import Modal from '$lib/Modal.svelte';
 	import Button from '$lib/Button.svelte';
 
-	let open: boolean = false;
+	let openModal1: boolean = false;
+	let openModal2: boolean = false;
 
-	const toggleModal = () => {
-		open = !open;
+	const toggleModal1 = () => {
+		openModal1 = !openModal1;
+	};
+
+	const toggleModal2 = () => {
+		openModal2 = !openModal2;
 	};
 </script>
 
@@ -21,13 +26,13 @@
 	<div class="dark:text-white">Bind to the open prop and set it to true to open the modal.</div>
 	<Example>
 		<ExampleComponent>
-			<Button on:click={toggleModal}>Open modal</Button>
-			<Modal bind:open>
+			<Button on:click={toggleModal1}>Open modal</Button>
+			<Modal bind:open={openModal1}>
 				<div class="flex flex-col gap-y-2 w-60">
 					<span class="text-2xl font-semibold">Some modal</span>
 					<span>This is a modal, close it by clicking the button below.</span>
 					<span class="self-start mt-4">
-						<Button variant="primary" on:click={toggleModal}>Close me</Button>
+						<Button variant="primary" on:click={toggleModal1}>Close me</Button>
 					</span>
 				</div>
 			</Modal>
@@ -60,13 +65,13 @@
 	</div>
 	<Example>
 		<ExampleComponent>
-			<Button on:click={toggleModal}>Open modal</Button>
-			<Modal bind:open disableOutsideClickClose>
+			<Button on:click={toggleModal2}>Open modal</Button>
+			<Modal bind:open={openModal2} disableOutsideClickClose>
 				<div class="flex flex-col gap-y-2 w-60">
 					<span class="text-2xl font-semibold">Some modal</span>
 					<span>This is a modal, ONLY close it by clicking the button below.</span>
 					<span class="self-start mt-4">
-						<Button variant="primary" on:click={toggleModal}>Close me</Button>
+						<Button variant="primary" on:click={toggleModal2}>Close me</Button>
 					</span>
 				</div>
 			</Modal>
