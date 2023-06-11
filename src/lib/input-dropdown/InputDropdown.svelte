@@ -53,6 +53,8 @@
 	// Filter function
 	export let filterFN: (searchLabel: string, itemList: Item[]) => Item[] = filterListByLabel;
 
+	export let disablePasteText: boolean = false;
+
 	let isVisible = false;
 	let blurTimeout: number | undefined;
 	let label: any = null;
@@ -81,6 +83,15 @@
 		filteredItems = items;
 	}
 
+	function handlePaste(e: any) {
+		if (disablePasteText) {
+			e.preventDefault();
+			return;
+		}
+		const textPasted = e.clipboardData.getData('text');
+		value = textPasted;
+	}
+
 	function updateFilteredItems(label_: string) {
 		const _filtered = filterFN(label_, items);
 		filteredItems = _filtered;
@@ -104,6 +115,7 @@
 		<Icon src={ChevronDown} />
 	</div>
 	<input
+		on:paste={handlePaste}
 		{disabled}
 		class="w-full !outline-none {classInput}"
 		type="text"
