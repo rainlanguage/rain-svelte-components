@@ -117,6 +117,9 @@
 				<Button icon={Heart} solidIcon size={'small'} variant={'transparent'}>Favorite</Button>
 				<Button icon={Square2Stack} size={'small'}>Copy this expression</Button>
 				<Button icon={Square2Stack} size={'small'} variant={'primary'}>Copy this expression</Button>
+				<Button icon={Square2Stack} size={'small'} variant={'primary'} iconPosition="right"
+					>Copy this expression</Button
+				>
 				<Button icon={Square2Stack} variant={'black'}>Copy this expression</Button>
 				<div>Only icon</div>
 				<Button icon={Heart} size={'small'} variant={'black'} />

@@ -21,8 +21,8 @@
 	if (iconStyle == '') {
 		iconStyle =
 			size === 'small'
-				? `w-5 h-5 py-0.5 ${iconOnly ? '' : 'mr-1.5'}`
-				: `w-6 h-6 py-0.5 ${iconOnly ? '' : 'mr-1.5'}`;
+				? `w-5 h-5 py-0.5 ${iconOnly ? '' : iconPosition == 'right' ? 'ml-1.5' : 'mr-1.5'}`
+				: `w-6 h-6 py-0.5 ${iconOnly ? '' : iconPosition == 'right' ? 'ml-1.5' : 'mr-1.5'}`;
 	}
 
 	if (variant === 'transparent') {
