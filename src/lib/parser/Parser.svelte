@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	import SimulatedOutput from '$lib/parser/SimulatedOutput.svelte';
-	import type { ExpressionConfig, RDProblem } from '@rainprotocol/rainlang';
+	import type { ExpressionConfig, MetaStore, RDProblem } from '@rainprotocol/rainlang';
 	import {
 		ArrowsPointingOut,
 		CloudArrowDown,
@@ -23,12 +23,13 @@
 		sources: [],
 		constants: []
 	});
+	export let metaStore: Writable<MetaStore> = writable();
 	export let evaluableConfig: EvaluableConfig = {
 		...$expressionConfig,
 		deployer: ''
 	};
 	export let raw: string = '';
-	export let signer: Signer;
+	export let signer: Signer | undefined = undefined;
 	export let error: string = '';
 	export let errors: RDProblem[];
 	export let readOnly: boolean = false;
@@ -127,11 +128,11 @@
 				>
 					<ParserInput
 						{expressionConfig}
+						{metaStore}
 						{readOnly}
 						bind:errors
 						bind:raw
 						bind:this={editorInput}
-						opMeta={$selectedDeployer?.opmeta}
 					/>
 				</div>
 			</div>
@@ -143,11 +144,11 @@
 				>
 					<ParserInput
 						{expressionConfig}
+						{metaStore}
 						{readOnly}
 						bind:errors
 						bind:raw
 						bind:this={editorInput}
-						opMeta={$selectedDeployer?.opmeta}
 					/>
 				</div>
 			</div>

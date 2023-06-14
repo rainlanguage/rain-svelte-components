@@ -8,7 +8,7 @@
 	import ExampleHeading from '$lib/_docs/ExampleHeading.svelte';
 	import ExampleUsage from '$lib/_docs/ExampleUsage.svelte';
 	import PageHeading from '$lib/_docs/PageHeading.svelte';
-	import { getOpMetaFromSg, type ExpressionConfig, type RDProblem } from '@rainprotocol/rainlang';
+	import type { ExpressionConfig, MetaStore, RDProblem } from '@rainprotocol/rainlang';
 	import { setContext } from 'svelte';
 	import { signer } from 'svelte-ethers-store';
 	import { writable, type Writable } from 'svelte/store';
@@ -23,7 +23,8 @@
 	let errors: RDProblem[] = [];
 	let readOnly = false;
 
-	const opMetaPromise = getOpMetaFromSg('0x01D5611c2D6FB7Bb1bFa9df2f524196743f59F2a', 524289);
+	let expressionConfig2: Writable<ExpressionConfig> = writable(emptySc);
+	let metaStore: Writable<MetaStore> = writable();
 
 	setContext('EVALUABLE_ADDRESSES', {
 		getDeployers: async () => {
@@ -90,9 +91,7 @@
 		<ExampleComponent>
 			<div class="flex flex-col gap-y-2">
 				<div class="bg-gray-100 dark:bg-gray-800 h-[200px] overflow-auto flex flex-col">
-					{#await opMetaPromise then opMeta}
-						<ParserInput {expressionConfig} bind:raw bind:errors {readOnly} {opMeta} />
-					{/await}
+					<ParserInput {expressionConfig} bind:raw bind:errors {readOnly} />
 				</div>
 				<span>Simulated output</span>
 				<div class="bg-gray-100 p-3 dark:bg-gray-800">
@@ -138,7 +137,14 @@
 					<span slot="label">Enter raw text to load into parser here.</span>
 				</Input>
 				<div class="min-h-[150px] flex flex-col">
-					<Parser on:save={saveEvent} on:load={loadEvent} on:expand={expandEvent} bind:errors />
+					<Parser
+						on:save={saveEvent}
+						on:load={loadEvent}
+						on:expand={expandEvent}
+						bind:errors
+						expressionConfig={expressionConfig2}
+						{metaStore}
+					/>
 				</div>
 				<div class="flex flex-col gap-y-2">
 					{#each events as event}
@@ -146,6 +152,12 @@
 					{/each}
 				</div>
 			</div>
+			<pre class="bg-black font-mono text-white p-4 overflow-hidden">
+Expression:
+{JSON.stringify($expressionConfig2, null, 2)}
+Metastore:
+{JSON.stringify($metaStore, null, 2)}
+			</pre>
 		</ExampleComponent>
 		<ExampleUsage />
 	</Example>

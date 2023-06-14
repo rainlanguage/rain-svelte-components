@@ -8,7 +8,7 @@ import Parser from '../Parser.svelte';
 import { get, writable, type Writable } from 'svelte/store';
 import type { Deployer } from '../types';
 import { rainlang, rlc } from '@rainprotocol/rainlang';
-import type { ExpressionConfig, RDProblem } from '@rainprotocol/rainlang';
+import { type ExpressionConfig, type RDProblem, MetaStore } from '@rainprotocol/rainlang';
 import userEvent from '@testing-library/user-event';
 import type { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
 import type { Signer } from 'ethers';
@@ -259,7 +259,16 @@ describe("Parser Tests", () => {
 
     it("should generate an expressionConfig for valid rainlang expressions", async () => {
         // 0
-        const expression0 = rainlang`_: add(10 20);`
+        const expression0 = rainlang`@0x47ed85f917e187757bff09371cedcf5c0eb277c27e4673feb2d3cc040c66c993 _: add(10 20);`
+
+        const _metaStore: MetaStore = await MetaStore.create({
+            initMetas: {
+                "0x47ed85f917e187757bff09371cedcf5c0eb277c27e4673feb2d3cc040c66c993": "0xff0a89c674ee7874a4005910d4789ced5d596fdc38127e9f5f411801369e6d39eef624f1cedb1c7b043b930c32d92c16992cc096d8dd8425b1234ab67b16f3dfb7aa48dda25a7df9423f24b6254a2c7ef555b14816a94f5f31f63ff8c7d849cc2371f22d3b0984af02e14d5ebe3a19993b81d03edef991ee30ce74287dc1d48c4d65aa99ca52fc9d337804afb06b1e66823de7f12a5dc878ce54ccd285603ae5fed5e959fe56b514098f0378f127ba900b5213069e4952fb444d96efa11e1907e296a58a512996081e6075b3444567d567504aace672c4c62f3fdbeb7f8cdcb586229ea78bae6adf66d1542445d3a16eac95aa345274567c3e62af8b7ae9e7670b828c971995c9a53859f204a44845a22bc854a5aca2a3b2c41727c5ad3fec6fa6ae3f72a0b3d45632b6577828b91654c109e992b48d4fd1330d4288d84588bfd21da65524589a64b1cf5311186408918194004502909cc5e2a6fec0912b07e4caa8bf3c083817e96edcf2d572e50d20d8ed3244865d4c9a04fb0575c5639601439019864644974ba605b222156ccca62bf8a1e5efc294d01dc439df0b8af4fae1a05c7680625b8b8d2d9aee84c65f70198732bef29609c0d8c4e703bf129afd4d80d5412bd9af290fc57733688ac5a1209b7f450540a39a0cef87fcbdec5dc2fd50d03bfea419d54245cd435836113a0b533685160468b8652d87427906c2546ca3d2601e04208e46a342d18cb8547c30b1358aeff18afc8d3a820c5825a1a1588944d7b6e0a9adea4686219b12cd64b09b7118853a15afe254dca64d85bf89b54840876013b604f305884426517854b087c2c3f92acca298549aa81b43885c5f9b7857f39e9d5c25d4bfa5c73b6f23da8f9b67c4f5165c2f9a18fe8a101933c0db14bbc44cc4a94c44892a3d7fc6fea5c52c0bd94c254cc77ca9172a4d1156c433e46869fe42f857748985525328948192c060d5b50cc0649c2e692bb4cf6b68ef0bae52356daa0d651a5eb46cabb2ac4e3d7a6a47287209ebbabacbce14e11a6efc0eec672a0c3c879dff2212a05c84e8870a600a98cf017c750d84a370cbc86f3c35fe9d63019269a697c2973389b1d82a5789897b4c18844fddc8205d6c464a8b5907cee38b2d7d40c52613b22b240a100c1bed0ecec668049321d5512bfb8333838f2e6a458c3b6b7d3d627f1952a7d5ab8bb54553ad62d6d6fbcd88bd1a52af89f03c527157c56f48f7b6e734852928cd6257207a31d4761a3cc8dfb6914dd15beb3db25ea26f819b30b81083edcd25d557f9c39d8e10ccab3bba32e6968ac84653a5ef23c796c568a416ce1b992e98cea65e5980ccb40ca334c4511857557ce866839c354a964e25bbbaeef1106e19743d0cb1bb6a8d0b6bcad5d0cde3d743ea72bb996d2849cf3c30429648e485ab81e10c06d2187fe2f860163b23c44079370b19b6c604ef0d23e99ef52c312b1564989c02b5e37c906ec89a4100149ade3e9058bf66523300eb31f0730d672ad729727fcfe3393ef7c98653d502be8ae05d3402a0114732671e1b9fec44bbc63b693ee0cff0d203f372cd48a8d074f738a8b88dea2ae9343cf0e906c5c97bc366f72401a01337c93e6004da0e86cf1d5560ebbc56153fa109151e3ea621a1c6c00a6c08bbf166ff5073fd691e18d7bc3fc5d09bfb7e926fbd0bc662dd51da64689476ec659e7c2f43a68c3d8c4a9c36876278918854b2ea8e8d60dc8ccc37c4077f019c8e715492247cc560c85c3108632168169206968c2665b78e8386519384b313af9d1631d420d2d5b29392783daf0c2b1935a1c079834ae39aa439df7c24dfa14b6a9e4b895d5320ffc0798fe75a415728d315bb12becfaf262f5f9dda19d64a7850bab3e68ce09ec68e34467777d0a0a2c94be8a13737c8d7f76c90ae71bf487c6f3c7ef9d29bf290c7e066d5aca99fbf8b9480b625ec14d55fdfff80cf01a1513be61af77d0591db8686b59f695a92c3b353b2c32760adc81b2c45503dbbceb7366177471a6dfdc0afa9dfb2a2869674a79a70e6909eb6f74de38d27342564b057bfb8a39db923e1e736143e652fd8a43b1eee8ffd1abdd150e36d8a41d1f3d76c72ba7d08bd2373f7107b179cdedad138b80d4c1bc4f0c9f936fe6772fef4bccf96bea404701dcea94a79e8e96cb90c5b71548eb4b9db01f44382767ba46ce3d70095afb0543d2f6fcd8d1790d9d29bb21431b87f2cf7dd4916d8eda39fecd0c560dd55d93e447b8f82f9f705fe00bb797931bef0d44d5c2ec7d7163a0933ba5d428c8f30ec56a1e638a5b5a384fbe9c1b226f20ab670293d0d7f3d196fd385c163c73ecc52ad02612fc7b01c71a807e806c79e00ccfb1b7714f8f524d9e92c69cfe58b2f196625d0e4c9737d5a4cb9a57611694a897762c4e499386373881e3125215d00e0bf8b448d60a87e4d50cf58ac8e23f635ea3bef505f6254e054dc3454fe9567a6265d2914941991258900fe53f97c3d6663fa0f9b0fb2757954d71ac9693a3be5d1b25bf80ed98b27068bdf96b6d5a0aaf831e608b0a215585ff36f23b1ab6560e9cdd67c17c0283bcac2542ec33c4b100c682e40fce48c7d34177cb01b302921f12a0b842f231ee21c1eb454cc453262d32c454b629c4592a619a76a7f69146b0c6bf2680dab33f1388b50ab80ac47faa2cc73c47b7c995fc07bb658790f2f38d744e5752b695d62165645f75695390734d837e67ef1305c1df5b8851e5149887b4f766fab5be352f7a8846bb65437384a03fb12dc5f3085f63862e26c7ec66ed97fd90afefd7ed4d696da02709dda8af86d6b182142e1db5e0c6ecb288b50310d677af4a1f7a44dd258d541e205a77a656b7dbba65e191fd5fbc0d42be3867aa53b272852adc0e7071efa19662a83bf554116aa9a72eb9ef7a8a46d95a4dcebaf807553273f1bf825e8e4ed51057b5201c0ec5281cea62daf974d694a0a3570f470f7aa39d24e3dc29fba55e9e3ee9df1657ba684ee804a66f256041040c2ab2b698f6f734552a2f7f8b2fcf306b42cd00e3528d8cc6419056ea6d0fc7d5d59223fe675d9e91b9364311594f06e040f3a73b027b574ea3619307bf1d5c5e5454987915b42cd53dcd9d499c7f266c6c60c054191b2a5d9e7943fc0e0bf453ead8469eab350ddb025d769b1310f628eee4c7d10708dfc83644f5416075eb65c2b7ba06e62233d3d826da94a4fb755cc80c0bed498db182aad5df9efe783455f638507dc62e89a21cf0dc50b567049fa0731984a9e50310db4e1a6dd23291f0329f3b9b7c2cb95fc1cdd219d5b839782c53152f4ddbb9f75179d31db968abddd8c9c660fb4d7e7da3f2c305b0e8bd5ecc55497aaa3573f1a50c50c6a5154954236edb2240e7bbbbbcdf0b8956e525d9198c944631c1b7bb8546445c0c53a80b98852285382b6b86a5c444ac9f78b5ba931b735162326422dec829ea635a7c6aac0312cde222ceec9c9161c86209e6c2dc39a84ec0bf74e3552a2d5a1d53da54743375e708072a62b14d1023781d87235b536148fd72f1253f28059047ddb553ed0f6e37ccb0ac82a90c0e81907f755e0fc346edd834688669a5fb7b59ad4f699ddfb9c575e81f4057261b804332ec33d4940b5cfa03fdaf18018a09a938b5f321e7aa96acd39a908142b0c2d42ec512696978df56bb3fc56c909d0643b2fc6952d32b6712bc6d1f3645f78d8e01eb5f1c5f9a16847508f370c78263be60c7c71630e3df500b73ec89bd396724237227473d21ebd7ae5d6febc3ae2e452ab4dddf0309ee976edd68eba0f7631bb8c2ba6535a59cde3db0374743d55a4e2ea4d017ca5352b9b3a72d81375eed8bce6a9530f529305b43c5a35022a5124cb7079af9a0a30d749df83e3dad1f76bcff4202378ad72a3160ae838ef8aba58d93e78db9395f280985cdbb3e7d6c032997afc7adeb3fa8360f144a60b688ff419877e044249f4ffe64090d50817decb899eea407a64c65df950ec60cee076387aabdd985dc93501d4fa50f5856c2de0fc478a30b02132bc051899b29b8582915b377ef94444cdebaa8451008561dced9d40ba134e84431f503dc937e98dea47469fb1f7c8309c3cb9e149605ceb93e2595f8e0cc2d79127d3b0de98666e42187e2f61e81da7d6765d46fbf029854d5e0349eb48c006265319f364d58024d3f9b67b7b7b864b7d382e82262e54f0c8319bf482360b956a65a2561c96f141031d56d9d73e326f6550e8c50938d10393b8f5b1ed53b1c2f082c2107ce5a3b7396a761f2ef3688dc9cd8502a913882122c1e3610184c94f7ff64c7f49d2e7b7ec6bb63a7df6ec2947157377922a822ce3565f594179cc5eb0db61e198e92eefaeb7dc09146c751f2a616bfce0e801433537a1eca337c7d09dcc4588a8f9f87c0d28be8a225af278329850a3d7c03230307852a8f477fcfd8966eb43f0723bc45372c47d796188dab27df2a94d4fbfcd4fe9a36474e4cfea9ef9735798f525885bcc322768cfcd5abc9b68a7755c57ec79166b398ff1b852ae21acb07976a795387ec6239569c6c3b932d6fcdb491ef24b7358f374c534c4a7093cf1dbc953d306f49cfd533f1857ad7188848e80c8419951d2039beed909226abe3365d0243c406bbc8e8d61f9d2893669ef8454717cae733155ce30d9e05a2478948bd96359cc0edbf3d2e70ab7b24cd535ed9a283e6c5039dcecb878b281b2418bf9b6b08a42edee30bcd9b72facf244472f995320ca7bcb20d7e191100f9b10bd49df5596b4f2bf4bb33779e0f979fffbd5f61453aaaaeb4947056fa6e0be5470950422992a75e55d4fbc6b0ea01767193494fda1750ec43b7cf67b78f6e30467b6ca3fc78cde74b02eaf143a3f8ea0865e55e2c6b72ede54641e1e8598531b36adeb5d7e968359edc4c3fe06d7583f6c61688d1ff0a94dd6ce50ddbb1ecd5061d0b8c120b7570905f22d111197313a177b4a447c0db168d74199e4126c61967cf8e75b5cc19ca51404d3010e5a85011d13c7d9aff0f68f9383918f84dfdb192c2514e04aaf3b8dcedeaa1c04f2389b483f312d2bd35dcdc4dbccdc7ec88decf4b1b681a66deb584f7aec5434f0ba6ad20f1582b5edc3b3ab2c6be1a72fe4b5680d1928e71b4b321c959a45a71ad33126308fe2b0f4916101c18c9cadd023da237b2c393c9e1fc5d1610025f72b27fde006391b4cf9e64b4af6c0f98f54c5c7f15d266794addaf2b4a52dce0f2a0e2a59a394aa45bae077678e89d6c8ff3d7e678eb32bb17a61f262965c26c5c9c414ef82ca14e57f0041cd978af2a9962b4cb5ac1df75bcd5ddf3b79a1baee202197c50608f5c6ecc1e4dbb0fd3b8180bf8d5be761c8375496f2959a901e12a90d02a48d92bfba8ee1a1263a69974a882ba9f75faaf6dc133a850f5002c26b53c0043885731831b5c431179eba52e15ffe15a3bbdd0bfd79c43e5de07fe3f3f55f82709c7cbbe561b6f64b109342eccdce359395d87e537f36fc81fa37aaeccd46da3d16c0ec00a3b9bd0c0907118fba240fc8e5e1f51e1a86304a0feb3d94838400a83497ef878f44c56f888fe3f57cbc38041f2f76e023a8e60e8e0447653f740277f85442a893b9ebfc6c653a2b90b3f6f61f1a86e44518161189b0131eb9133edc77516d9336c87eb54f6c92c9bd0e213ac8c60b53d750d4cee89a7279b853663815e94de504a0eb6b089182a7cbbdd2165d13ec876a8ee9b5102344f871e41dce72a73775ed8d342d60d05253dbb78c768530ea6257acf55ced4368e5b74d46eeaa51f4353563916ff1c4a0114d67e3d73e304fbbabde4bfc729edbe181479a0cda2ffa788ea44c8435bfd6f98a0d40692c591ca888d1246dd34be932b02ba7169f733cba7a53fb72576ac332a43be9f4a7d40ccfeea2ebce96014f2d348507f4125297639e3ead9930bda0f8b4123e673ed66bcf8ce345eb9a964b16dab2eaca8e83edad55c4413506a9b582120a6dc296341bd20d065d5cfea69fcb40cacb613bc3f14393bd22e9fc5394eb855aff19b5cb83ec9beea3715aa3b1919dd1a7d6c97248b8c1f652e5a4db5cd3a6b9da5acb1ae1e2865dda579fbffa3f60bfc333011bffe5282f43e495b402706170706c69636174696f6e2f6a736f6e03676465666c617465"
+            }
+        })
+
+        const metaStore = writable(_metaStore);
+
         // rendering component
         render(Parser, {
             props: {
@@ -267,7 +276,8 @@ describe("Parser Tests", () => {
                 signer,
                 selectedDeployer,
                 raw: expression0,
-                expressionConfig
+                expressionConfig,
+                metaStore
             },
             context: addressContext
         });
@@ -281,7 +291,7 @@ describe("Parser Tests", () => {
         });
 
         // asserting expressionConfig
-        const expectedExpressionConfig0 = await rlc(expression0, get(selectedDeployer).opmeta);
+        const expectedExpressionConfig0 = await rlc(expression0, _metaStore);
         expect(get(expressionConfig)).toEqual(expectedExpressionConfig0);
         cleanup();
 
@@ -300,13 +310,14 @@ describe("Parser Tests", () => {
                 signer,
                 selectedDeployer,
                 raw: expression1,
-                expressionConfig
+                expressionConfig,
+                metaStore
             },
             context: addressContext
         });
 
         // asserting expressionConfig
-        const expectedExpressionConfig1 = await rlc(expression1, get(selectedDeployer).opmeta);
+        const expectedExpressionConfig1 = await rlc(expression1, _metaStore);
         expect(get(expressionConfig)).toEqual(expectedExpressionConfig1);
         cleanup();
 
@@ -335,13 +346,14 @@ describe("Parser Tests", () => {
                 signer,
                 selectedDeployer,
                 raw: expression2,
-                expressionConfig
+                expressionConfig,
+                metaStore
             },
             context: addressContext
         });
 
         // asserting expressionConfig
-        const expectedExpressionConfig2 = await rlc(expression2, get(selectedDeployer).opmeta);
+        const expectedExpressionConfig2 = await rlc(expression2, _metaStore);
         expect(get(expressionConfig)).toEqual(expectedExpressionConfig2);
     });
 
@@ -355,14 +367,14 @@ describe("Parser Tests", () => {
                 signer,
                 selectedDeployer,
                 raw: expression0,
-                expressionConfig
+                expressionConfig,
             },
             context: addressContext
         });
 
         const interpreterDropdown = screen.getByPlaceholderText("Select interpreter");
         await user.click(interpreterDropdown);
-        
+
         // asserting deployers
         deployers.forEach(deployer => {
             expect(screen.getByText(deployer.address));
@@ -373,7 +385,7 @@ describe("Parser Tests", () => {
         cleanup();
 
         // 1
-        const expression1 = rainlang`_: add(¢ 2);`
+        const expression1 = rainlang`¢`
         // rendering component
         await render(Parser, {
             props: {
@@ -387,7 +399,7 @@ describe("Parser Tests", () => {
         });
 
         // asserting expressionConfig
-        expect(screen.getByText(/found non-printable-ASCII character with unicode: "U\+00a2"/)).toBeTruthy();
+        expect(screen.findByText(/found illigal character/)).toBeTruthy();
         cleanup();
 
         // 2
@@ -405,7 +417,7 @@ describe("Parser Tests", () => {
         });
 
         // asserting expressionConfig
-        expect(screen.getByText(/invalid argument pattern/)).toBeTruthy();
+        expect(screen.findByText(/invalid argument pattern/)).toBeTruthy();
         cleanup();
 
         // 3
@@ -423,7 +435,7 @@ describe("Parser Tests", () => {
         });
 
         // asserting expressionConfig
-        expect(screen.getByText(/multi output opcodes cannot be nested/)).toBeTruthy();
+        expect(screen.findByText(/multi output opcodes cannot be nested/)).toBeTruthy();
         cleanup();
 
         // 4
@@ -441,8 +453,8 @@ describe("Parser Tests", () => {
         });
 
         // asserting expressionConfig
-        expect(screen.getByText(/invalid word pattern: "read-mem.ory"/)).toBeTruthy();
-        expect(screen.getByText(/unknown opcode: "read-mem.ory"/)).toBeTruthy();
+        expect(screen.findByText(/invalid word pattern: "read-mem.ory"/)).toBeTruthy();
+        expect(screen.findByText(/unknown opcode: "read-mem.ory"/)).toBeTruthy();
     });
 
     it("should throw an error when a context is not passed", async () => {

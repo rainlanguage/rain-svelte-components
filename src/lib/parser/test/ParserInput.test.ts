@@ -6,12 +6,10 @@ import {
 import { get, writable, type Writable } from 'svelte/store';
 import { rainlang, rlc } from '@rainprotocol/rainlang';
 import type { ExpressionConfig, RDProblem } from '@rainprotocol/rainlang';
-import { getOpMetaFromSg } from '@rainprotocol/rainlang';
 import ParserInput from '../ParserInput.svelte';
 
 describe("ParserInput Tests", () => {
     let expressionConfig: Writable<ExpressionConfig>;
-    let opMeta: string;
     const errors: RDProblem[] = [];
 
     beforeAll(async () => {
@@ -19,7 +17,6 @@ describe("ParserInput Tests", () => {
             sources: [],
             constants: []
         });
-        opMeta = await getOpMetaFromSg('0x01D5611c2D6FB7Bb1bFa9df2f524196743f59F2a', 524289);
     });
 
     it("should render ParserInput component", async () => {
@@ -30,7 +27,6 @@ describe("ParserInput Tests", () => {
                 expressionConfig,
                 raw,
                 errors,
-                opMeta
             }
         });
 
@@ -39,26 +35,28 @@ describe("ParserInput Tests", () => {
 
     it("should generate an expressionConfig for valid rainlang expressions", async () => {
         // 0
-        const expression0 = rainlang`_: add(10 20);`
+        const expression0 = rainlang`
+        @0x47ed85f917e187757bff09371cedcf5c0eb277c27e4673feb2d3cc040c66c993
+        _: add(10 20);`
         // rendering component
         const { container } = await render(ParserInput, {
             props: {
                 expressionConfig,
                 raw: expression0,
                 errors,
-                opMeta
             }
         });
 
         expect(container.getElementsByClassName("codemirror-wrapper").length).toBe(1);
 
         // asserting expressionConfig
-        const expectedExpressionConfig0 = await rlc(expression0, opMeta);
+        const expectedExpressionConfig0 = await rlc(expression0);
         expect(get(expressionConfig)).toEqual(expectedExpressionConfig0);
         cleanup();
 
         // 1
-        const expression1 = rainlang` _ _: erc-1155-balance-of-batch(
+        const expression1 = rainlang` @0x47ed85f917e187757bff09371cedcf5c0eb277c27e4673feb2d3cc040c66c993
+        _ _: erc-1155-balance-of-batch(
             0x01
             0x02
             0x03
@@ -71,17 +69,17 @@ describe("ParserInput Tests", () => {
                 expressionConfig,
                 raw: expression1,
                 errors,
-                opMeta
             }
         });
 
         // asserting expressionConfig
-        const expectedExpressionConfig1 = await rlc(expression1, opMeta);
+        const expectedExpressionConfig1 = await rlc(expression1);
         expect(get(expressionConfig)).toEqual(expectedExpressionConfig1);
         cleanup();
 
         // 2
-        const expression2 = rainlang`  
+        const expression2 = rainlang` 
+        @0x47ed85f917e187757bff09371cedcf5c0eb277c27e4673feb2d3cc040c66c993 
             c0: 1,
             c1: 2,
             condition: 1, 
@@ -104,12 +102,11 @@ describe("ParserInput Tests", () => {
                 expressionConfig,
                 raw: expression2,
                 errors,
-                opMeta
             }
         });
 
         // asserting expressionConfig
-        const expectedExpressionConfig2 = await rlc(expression2, opMeta);
+        const expectedExpressionConfig2 = await rlc(expression2);
         expect(get(expressionConfig)).toEqual(expectedExpressionConfig2);
     });
 });
