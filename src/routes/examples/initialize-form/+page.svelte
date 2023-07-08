@@ -7,13 +7,14 @@
 	import ExampleComponent from '$lib/_docs/ExampleComponent.svelte';
 	import ExampleUsage from '$lib/_docs/ExampleUsage.svelte';
 
-	import InitializeForm from '$lib/initialize-form/InitializeForm.svelte';
+	import InitializeForm, { encodeConfigs } from '$lib/initialize-form/InitializeForm.svelte';
 
 	// Arbitrary ABIs and Contract Metas
 	import flowERC20Abi from './FlowERC20_ABI.json';
 	import flowERC20Meta from './FlowERC20_Contract_Meta.json';
 	import saleAbi from './Sale_ABI.json';
 	import saleMeta from './Sale_Contract_Meta.json';
+	import Button from '$lib/Button.svelte';
 
 	const _deployers = [
 		{
@@ -47,7 +48,9 @@
 	});
 
 	let resultFlow: any[];
+	let bytesFlow: string | null | undefined;
 	let resultSale: any[];
+	let bytesSale: string | null | undefined;
 </script>
 
 <div class="flex flex-col gap-y-4 dark:text-gray-100">
@@ -60,6 +63,10 @@
 			counts the ABI that contain an event with his config definition to initialize. Also require
 			that the Contract Meta contain information related to the path to find the input and
 			expression definition.
+		</div>
+		<div>
+			The component also provide a function that take the <span class="font-mono">result</span> obtained
+			and it will try to encoded it usign the types/tuples from the ABI and the Contract Meta.
 		</div>
 	</div>
 
@@ -76,11 +83,28 @@
 						bind:result={resultFlow}
 					/>
 				</div>
-				<div class="p-4">
-					<span>Result</span>
-					<pre>
-						{JSON.stringify(resultFlow, null, 2)}
-					</pre>
+				<div class="flex flex-col p-4 gap-y-2">
+					<div class="flex flex-col border border-gray-400 dark:border-gray-700 rounded-lg">
+						<div class="self-center">
+							<Button
+								on:click={() => {
+									try {
+										bytesFlow = encodeConfigs(resultFlow, flowERC20Abi, flowERC20Meta);
+									} catch (error) {
+										console.log(error);
+										console.log('Cannot encoded this!');
+									}
+								}}>Encoded</Button
+							>
+						</div>
+						<p>Result: {bytesFlow ?? 'No bytes yet'}</p>
+					</div>
+					<div class="border border-gray-400 dark:border-gray-700 rounded-lg">
+						<span>Result</span>
+						<pre>
+							{JSON.stringify(resultFlow, null, 2)}
+						</pre>
+					</div>
 				</div>
 			</div>
 		</ExampleComponent>
@@ -96,11 +120,28 @@
 
 					<InitializeForm abi={saleAbi} contractMeta={saleMeta} bind:result={resultSale} />
 				</div>
-				<div class="p-4">
-					<span>Result</span>
-					<pre>
-						{JSON.stringify(resultSale, null, 2)}
-					</pre>
+				<div class="flex flex-col p-4 gap-y-2">
+					<div class="flex flex-col border border-gray-400 dark:border-gray-700 rounded-lg">
+						<div class="self-center">
+							<Button
+								on:click={() => {
+									try {
+										bytesSale = encodeConfigs(resultSale, saleAbi, saleMeta);
+									} catch (error) {
+										console.log(error);
+										console.log('Cannot encoded this!');
+									}
+								}}>Encoded</Button
+							>
+						</div>
+						<p>Result: {bytesSale ?? 'No bytes yet'}</p>
+					</div>
+					<div class="border border-gray-400 dark:border-gray-700 rounded-lg">
+						<span>Result</span>
+						<pre>
+							{JSON.stringify(resultSale, null, 2)}
+						</pre>
+					</div>
 				</div>
 			</div>
 		</ExampleComponent>
