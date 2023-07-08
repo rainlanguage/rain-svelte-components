@@ -1,7 +1,6 @@
 <script context="module" lang="ts">
 	import { parseInt, set } from 'lodash-es';
 	import { ethers } from 'ethers';
-	import type { MethodMeta } from './FormComponent.svelte';
 
 	export const findConfigs = (
 		abi_: Abi,
@@ -82,7 +81,7 @@
 
 <script lang="ts">
 	import { merge } from 'lodash-es';
-	import FormComponent, { type AbiComponet } from './FormComponent.svelte';
+	import FormComponent, { type AbiComponet, type MethodMeta } from './FormComponent.svelte';
 	import { Section, SectionBody, SectionHeading } from '$lib/section';
 
 	import type { Abi } from 'abitype';
