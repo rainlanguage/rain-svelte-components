@@ -20,6 +20,11 @@
 	export let onlyConfig = false;
 	export let showInterpreterFields = false;
 
+	if (onlyExpressions) {
+		// To only show the column to write expressions
+		setContext('onlyExpressionParser', true);
+	}
+
 	setContext('abi-form', {
 		onlyExpressions,
 		onlyConfig,

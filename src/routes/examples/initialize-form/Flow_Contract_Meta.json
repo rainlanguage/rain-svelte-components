@@ -1,0 +1,52 @@
+{
+  "desc": "Flow contracts transfer tokens based on deployed expressions.",
+  "name": "Flow",
+  "alias": "flow",
+  "source": "https://github.com/rainprotocol/rain-protocol",
+  "abiName": "Flow",
+  "methods": [
+    {
+      "desc": "Initialize a new Flow ERC20 contract.",
+      "name": "initialize",
+      "abiName": "initialize",
+      "expressions": [
+        {
+          "desc": "A dummy expression. This is here to workaround a bug in Solidity.",
+          "name": "Dummy Expression",
+          "path": "[12].inputs[1].components[0]",
+          "abiName": "dummyConfig"
+        },
+        {
+          "desc": "The available flows.",
+          "name": "Flows",
+          "path": "[12].inputs[1].components[1]",
+          "abiName": "config",
+          "callerContext": true,
+          "signedContext": true,
+          "contextColumns": [
+            {
+              "desc": "Base context column.",
+              "name": "Base",
+              "alias": "base",
+              "cells": [
+                {
+                  "desc": "The contract or wallet that called flow.",
+                  "name": "Flow caller",
+                  "alias": "flow-caller",
+                  "cellIndex": 0
+                },
+                {
+                  "desc": "The address of the flow contract.",
+                  "name": "Flow contract",
+                  "alias": "flow-contract",
+                  "cellIndex": 1
+                }
+              ],
+              "columnIndex": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -12,9 +12,11 @@
 	import flowERC20Meta from './FlowERC20_Contract_Meta.json';
 	import saleAbi from './Sale_ABI.json';
 	import saleMeta from './Sale_Contract_Meta.json';
-
-	import obABI from './OB_ABI.json';
+	import obAbi from './OB_ABI.json';
 	import obMeta from './OB_Contract_Meta.json';
+	import flowAbi from './Flow_ABI.json';
+	import flowMeta from './Flow_Contract_Meta.json';
+
 	import Button from '$lib/Button.svelte';
 	import { InitializeForm } from '$lib';
 	import { encodeConfigs } from '$lib/initialize-form';
@@ -52,12 +54,17 @@
 		}
 	});
 
-	let resultFlow: any[];
-	let bytesFlow: string | null | undefined;
-	let isInitFlow: boolean;
+	let resultFlowERC20: any[];
+	let bytesFlowERC20: string | null | undefined;
+	let isInitFlowERC20: boolean;
+
 	let resultSale: any[];
 	let bytesSale: string | null | undefined;
 	let isInitSale: boolean;
+
+	let resultFlow: any[];
+	let bytesFlow: string | null | undefined;
+	let isInitFlow: boolean;
 
 	let resultOB: any[];
 	let isInitOB: boolean;
@@ -80,15 +87,15 @@
 		</div>
 	</div>
 
-	<ExampleHeading id="separated">Showing expressions and config: FlowERC20</ExampleHeading>
+	<ExampleHeading id="separated">Showing expressions and config: Flow</ExampleHeading>
 	<Example>
 		<ExampleComponent>
 			<div class="grid grid-cols-3">
 				<div class="col-span-2">
-					<div class="text-xl mb-2">Contract: FlowERC20 | Initialize config</div>
+					<div class="text-xl mb-2">Contract: Flow | Initialize config</div>
 					<InitializeForm
-						abi={flowERC20Abi}
-						contractMeta={flowERC20Meta}
+						abi={flowAbi}
+						contractMeta={flowMeta}
 						bind:isInitializable={isInitFlow}
 						bind:result={resultFlow}
 					/>
@@ -99,7 +106,7 @@
 							<Button
 								on:click={() => {
 									try {
-										bytesFlow = encodeConfigs(resultFlow, flowERC20Abi, flowERC20Meta);
+										bytesFlow = encodeConfigs(resultFlow, flowAbi, flowMeta);
 									} catch (error) {
 										console.log(error);
 										console.log('Cannot encoded this!');
@@ -113,6 +120,47 @@
 						<span>Result</span>
 						<pre>
 							{JSON.stringify(resultFlow, null, 2)}
+						</pre>
+					</div>
+				</div>
+			</div>
+		</ExampleComponent>
+		<ExampleUsage>example usage here</ExampleUsage>
+	</Example>
+
+	<ExampleHeading id="separated">Showing expressions and config: FlowERC20</ExampleHeading>
+	<Example>
+		<ExampleComponent>
+			<div class="grid grid-cols-3">
+				<div class="col-span-2">
+					<div class="text-xl mb-2">Contract: FlowERC20 | Initialize config</div>
+					<InitializeForm
+						abi={flowERC20Abi}
+						contractMeta={flowERC20Meta}
+						bind:isInitializable={isInitFlowERC20}
+						bind:result={resultFlowERC20}
+					/>
+				</div>
+				<div class="flex flex-col p-4 gap-y-2">
+					<div class="flex flex-col border border-gray-400 dark:border-gray-700 rounded-lg">
+						<div class="self-center">
+							<Button
+								on:click={() => {
+									try {
+										bytesFlowERC20 = encodeConfigs(resultFlowERC20, flowERC20Abi, flowERC20Meta);
+									} catch (error) {
+										console.log(error);
+										console.log('Cannot encoded this!');
+									}
+								}}>Encoded</Button
+							>
+						</div>
+						<p>Result: {bytesFlowERC20 ?? 'No bytes yet'}</p>
+					</div>
+					<div class="border border-gray-400 dark:border-gray-700 rounded-lg">
+						<span>Result</span>
+						<pre>
+							{JSON.stringify(resultFlowERC20, null, 2)}
 						</pre>
 					</div>
 				</div>
@@ -180,7 +228,7 @@
 					<div class="text-xl mb-2">Contract: OB | Initialize config</div>
 
 					<InitializeForm
-						abi={obABI}
+						abi={obAbi}
 						contractMeta={obMeta}
 						bind:isInitializable={isInitOB}
 						bind:result={resultOB}

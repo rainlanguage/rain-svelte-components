@@ -2,6 +2,12 @@
 	import { parseInt, set } from 'lodash-es';
 	import { ethers } from 'ethers';
 
+	/**
+	 * Find the configurations tuples or declarations to be used and filled
+	 * @param abi_
+	 * @param contractMeta_
+	 * @param handleError_
+	 */
 	export const findConfigs = (
 		abi_: Abi,
 		contractMeta_: any,
@@ -70,6 +76,13 @@
 		return positionAbi.inputs.filter((_, i_) => entriesIndex.includes(i_));
 	};
 
+	/**
+	 * Take the values and use the given ABI and Contact Meta to encode the values
+	 * to bytes.
+	 * @param values_
+	 * @param abi_
+	 * @param contractMeta_
+	 */
 	export const encodeConfigs = (values_: any, abi_: any, contractMeta_: any): string | null => {
 		const abiCoder = ethers.utils.defaultAbiCoder;
 		const configs = findConfigs(abi_, contractMeta_);
@@ -82,6 +95,37 @@
 			console.log('It cannot encode the values');
 			return null;
 		}
+	};
+
+	/**
+	 * Examine a given Contract Meta to check if have information about his Inputs
+	 * or Expressions.
+	 * @param contractMeta_
+	 */
+	export const examineMeta = (
+		contractMeta_: any
+	): { hasInputs: boolean; hasExpressions: boolean } => {
+		let hasExpressions = false;
+		let hasInputs = false;
+
+		let initializeMethod = (contractMeta_.methods as MethodMeta[]).find(
+			(method_: any) => method_.name == 'initialize'
+		);
+		if (initializeMethod) {
+			// Make sure that the init method has inputs or expressions, and that they are
+			// arrays. Otherwise, the code will skip it since does not fit the design.
+			if (initializeMethod.inputs && initializeMethod.inputs.constructor === Array) {
+				hasInputs = true;
+			}
+			if (initializeMethod.expressions && initializeMethod.expressions.constructor === Array) {
+				hasExpressions = true;
+			}
+		}
+
+		return {
+			hasExpressions,
+			hasInputs
+		};
 	};
 </script>
 
@@ -102,23 +146,28 @@
 	let expressionsResult: any, configResult: any;
 	let components: AbiComponet[] = findConfigs(abi, contractMeta);
 
+	$: ({ hasInputs, hasExpressions } = examineMeta(contractMeta));
 	$: result = merge([], configResult, expressionsResult);
 	$: components, components.length == 0 ? (isInitializable = false) : (isInitializable = true);
 </script>
 
 <div class="flex flex-col gap-y-8">
 	{#if components && components.length}
-		<Section>
-			<SectionHeading>Expressions</SectionHeading>
-			<SectionBody>
-				<FormComponent {components} bind:result={expressionsResult} onlyExpressions />
-			</SectionBody>
-		</Section>
-		<Section>
-			<SectionHeading>Configuration</SectionHeading>
-			<SectionBody>
-				<FormComponent {components} bind:result={configResult} onlyConfig />
-			</SectionBody>
-		</Section>
+		{#if hasExpressions}
+			<Section>
+				<SectionHeading>Expressions</SectionHeading>
+				<SectionBody>
+					<FormComponent {components} bind:result={expressionsResult} onlyExpressions />
+				</SectionBody>
+			</Section>
+		{/if}
+		{#if hasInputs}
+			<Section>
+				<SectionHeading>Configuration</SectionHeading>
+				<SectionBody>
+					<FormComponent {components} bind:result={configResult} onlyConfig />
+				</SectionBody>
+			</Section>
+		{/if}
 	{/if}
 </div>
