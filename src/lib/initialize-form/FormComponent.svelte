@@ -1,35 +1,18 @@
-<script lang="ts">
-	import { parseInt, set } from 'lodash-es';
+<script context="module" lang="ts">
 	import type { Abi, AbiParameter } from 'abitype';
-	import AutoAbiFormComponent from '$lib/auto-abi-form/AutoAbiFormComponent.svelte';
-	import { setContext } from 'svelte';
-
-	type MethodMeta = AbiParameter & { inputs: any[]; expressions: any[] };
-	type AbiComponet = AbiParameter & {
+	export type MethodMeta = AbiParameter & { inputs: any[]; expressions: any[] };
+	export type AbiComponet = AbiParameter & {
 		nameMeta?: string;
 		descriptionMeta?: string;
 		isInterpreterField?: boolean;
 		isDeployerField?: boolean;
 	};
 
-	export let contractMeta: any;
-	export let abi: Abi;
-	export let result: any = [];
-
-	export let onlyExpressions = false;
-	export let onlyConfig = false;
-	export let showInterpreterFields = false;
-
-	let errorMeta: boolean;
-	let errorMetaMsg: string;
-
-	setContext('abi-form', {
-		onlyExpressions,
-		onlyConfig,
-		showInterpreterFields
-	});
-
-	const findConfigs = (abi_: Abi, contractMeta_: any): AbiComponet[] => {
+	export const findConfigs = (
+		abi_: Abi,
+		contractMeta_: any,
+		handleError_?: Function
+	): AbiComponet[] => {
 		let paths: string[] = [];
 		let mainIndex: number;
 		let entriesIndex: number[];
@@ -74,8 +57,7 @@
 		});
 
 		if (!mainIndexMatch || !inputsMatch.length) {
-			errorMeta = true;
-			errorMetaMsg = 'It cannot find the configuration to clone the contract.';
+			if (handleError_) handleError_();
 			return [];
 		}
 
@@ -86,10 +68,35 @@
 
 		// Saving config
 		return posiAbi.inputs.filter((_, i_) => entriesIndex.includes(i_));
-		// configComponents = posiAbi.inputs.filter((_, i_) => entriesIndex.includes(i_));
 	};
+</script>
+
+<script lang="ts">
+	import { parseInt, set } from 'lodash-es';
+	import AutoAbiFormComponent from '$lib/auto-abi-form/AutoAbiFormComponent.svelte';
+	import { setContext } from 'svelte';
+
+	export let contractMeta: any;
+	export let abi: Abi;
+	export let result: any = [];
+
+	export let onlyExpressions = false;
+	export let onlyConfig = false;
+	export let showInterpreterFields = false;
+	export let pave: any[] = [];
+
+	let errorMeta: boolean;
+	let errorMetaMsg: string;
+
+	setContext('abi-form', {
+		onlyExpressions,
+		onlyConfig,
+		showInterpreterFields
+	});
 
 	let configComponents: AbiComponet[] = findConfigs(abi, contractMeta);
+
+	$: configComponents, (pave = configComponents);
 </script>
 
 {#if contractMeta || !contractMeta}
