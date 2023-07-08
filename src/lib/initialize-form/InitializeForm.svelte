@@ -1,11 +1,26 @@
+<script context="module" lang="ts">
+	export const encodeConfigs = (values_: any, abi_: any, contractMeta_: any): string | null => {
+		const abiCoder = ethers.utils.defaultAbiCoder;
+		const configs = findConfigs(abi_, contractMeta_);
+
+		try {
+			// @ts-expect-error Here the type is wrongly showing error, because the configs
+			// have all the fields required.
+			return abiCoder.encode(configs, values_);
+		} catch (error) {
+			console.log('It cannot encode the values');
+			return null;
+		}
+	};
+</script>
+
 <script lang="ts">
 	import { merge } from 'lodash-es';
-	import FormComponent from './FormComponent.svelte';
+	import FormComponent, { findConfigs } from './FormComponent.svelte';
 	import { Section, SectionBody, SectionHeading } from '$lib/section';
 
 	import type { Abi } from 'abitype';
-
-	//
+	import { ethers } from 'ethers';
 
 	export let contractMeta: any;
 	export let abi: Abi;
