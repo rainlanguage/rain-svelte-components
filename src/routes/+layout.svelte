@@ -41,6 +41,9 @@
 		<NavItem link="/examples/select-headless">
 			<span class="link">Select Headless</span>
 		</NavItem>
+		<NavItem link="/examples/initialize-form">
+			<span class="link">Initialize form</span>
+		</NavItem>
 		<NavItem link="/examples/button">
 			<span class="link">Button</span>
 		</NavItem>
