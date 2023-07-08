@@ -1,0 +1,115 @@
+{
+	"desc": "A flow contract that is also an ERC20 token that can be minted by expressions. Transfers can be restricted by an expression.",
+	"name": "Flow ERC20",
+	"alias": "flow-erc20",
+	"source": "https://github.com/rainprotocol/rain-protocol",
+	"abiName": "FlowERC20",
+	"methods": [
+		{
+			"desc": "Initialize a FlowERC20 contract.",
+			"name": "initialize",
+			"inputs": [
+				{
+					"desc": "Name of the ERC20 token that is minted.",
+					"name": "Name",
+					"path": "[13].inputs[1].components[0]",
+					"abiName": "name"
+				},
+				{
+					"desc": "Symbol of the ERC20 token that is minted.",
+					"name": "Symbol",
+					"path": "[13].inputs[1].components[1]",
+					"abiName": "symbol"
+				}
+			],
+			"abiName": "initialize",
+			"expressions": [
+				{
+					"desc": "Review and restrict transfers of the flow contract's own ERC20 token. Mint and burns must be controlled by the flow expressions instead.",
+					"name": "Handle Transfer",
+					"path": "[13].inputs[1].components[2]",
+					"abiName": "evaluableConfig",
+					"signedContext": false,
+					"contextColumns": [
+						{
+							"desc": "Base context column.",
+							"name": "Base",
+							"alias": "base",
+							"cells": [
+								{
+									"desc": "The contract or wallet that called transfer.",
+									"name": "Transfer caller",
+									"alias": "transfer-caller",
+									"cellIndex": 0
+								},
+								{
+									"desc": "The address of the FlowERC20 contract.",
+									"name": "Flow contract",
+									"alias": "flow-contract",
+									"cellIndex": 1
+								}
+							],
+							"columnIndex": 0
+						},
+						{
+							"desc": "Information about the current transfer.",
+							"name": "Transfer information",
+							"alias": "transfer-information",
+							"cells": [
+								{
+									"desc": "The address the token is being transferred from.",
+									"name": "Transfer from address",
+									"alias": "transfer-from-address",
+									"cellIndex": 0
+								},
+								{
+									"desc": "The address the token is being transferred to.",
+									"name": "Transfer to address",
+									"alias": "transfer-to-address",
+									"cellIndex": 1
+								},
+								{
+									"desc": "The amount of token being transferred.",
+									"name": "Transfer amount",
+									"alias": "transfer-amount",
+									"cellIndex": 2
+								}
+							],
+							"columnIndex": 1
+						}
+					]
+				},
+				{
+					"desc": "The available flows.",
+					"name": "Flows",
+					"path": "[13].inputs[1].components[3]",
+					"abiName": "flowConfig",
+					"callerContext": true,
+					"signedContext": true,
+					"contextColumns": [
+						{
+							"desc": "Base context column.",
+							"name": "Base",
+							"alias": "base",
+							"cells": [
+								{
+									"desc": "The contract or wallet that called flow.",
+									"name": "Flow caller",
+									"alias": "flow-caller",
+									"cellIndex": 0
+								},
+								{
+									"desc": "The address of the FlowERC20 contract.",
+									"name": "Flow contract",
+									"alias": "flow-contract",
+									"cellIndex": 1
+								}
+							],
+							"columnIndex": 0
+						}
+					]
+				}
+			]
+		}
+	]
+}
