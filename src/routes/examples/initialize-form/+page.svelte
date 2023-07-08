@@ -18,11 +18,9 @@
 	import flowMeta from './Flow_Contract_Meta.json';
 
 	import Button from '$lib/Button.svelte';
-	import { InitializeForm } from '$lib';
-	import { encodeConfigs } from '$lib/initialize-form';
-	// import { InitializeForm } from '$lib/initialize-form';
-	// import InitializeForm from '$lib/initialize-form/InitializeForm.svelte';
+	import { InitializeForm, InitFormUtils } from '$lib';
 
+	const { encodeConfigs } = InitFormUtils;
 	const _deployers = [
 		{
 			id: '4981eae3-7f4f-56ad-91de-d44e26775d7e',
