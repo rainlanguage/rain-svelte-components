@@ -14,6 +14,9 @@
 	import flowERC20Meta from './FlowERC20_Contract_Meta.json';
 	import saleAbi from './Sale_ABI.json';
 	import saleMeta from './Sale_Contract_Meta.json';
+
+	import obABI from './OB_ABI.json';
+	import obMeta from './OB_Contract_Meta.json';
 	import Button from '$lib/Button.svelte';
 
 	const _deployers = [
@@ -49,8 +52,13 @@
 
 	let resultFlow: any[];
 	let bytesFlow: string | null | undefined;
+	let isInitFlow: boolean;
 	let resultSale: any[];
 	let bytesSale: string | null | undefined;
+	let isInitSale: boolean;
+
+	let resultOB: any[];
+	let isInitOB: boolean;
 </script>
 
 <div class="flex flex-col gap-y-4 dark:text-gray-100">
@@ -76,10 +84,10 @@
 			<div class="grid grid-cols-3">
 				<div class="col-span-2">
 					<div class="text-xl mb-2">Contract: FlowERC20 | Initialize config</div>
-
 					<InitializeForm
 						abi={flowERC20Abi}
 						contractMeta={flowERC20Meta}
+						bind:isInitializable={isInitFlow}
 						bind:result={resultFlow}
 					/>
 				</div>
@@ -118,7 +126,12 @@
 				<div class="col-span-2">
 					<div class="text-xl mb-2">Contract: Sale | Initialize config</div>
 
-					<InitializeForm abi={saleAbi} contractMeta={saleMeta} bind:result={resultSale} />
+					<InitializeForm
+						abi={saleAbi}
+						contractMeta={saleMeta}
+						bind:isInitializable={isInitSale}
+						bind:result={resultSale}
+					/>
 				</div>
 				<div class="flex flex-col p-4 gap-y-2">
 					<div class="flex flex-col border border-gray-400 dark:border-gray-700 rounded-lg">
@@ -141,6 +154,40 @@
 						<pre>
 							{JSON.stringify(resultSale, null, 2)}
 						</pre>
+					</div>
+				</div>
+			</div>
+		</ExampleComponent>
+		<ExampleUsage>example usage here</ExampleUsage>
+	</Example>
+
+	<ExampleHeading id="separated">Not initializable contract: OrderBook</ExampleHeading>
+	<div class="max-w-prose flex flex-col gap-y-4">
+		<div>
+			The component provide a flag that allow to handle those cases when the data provided,
+			specifically the <span class="font-mono">ABI</span> and the
+			<span class="font-mono">Contract Meta</span>, are not compatible to an initializable/clonable
+			process. That way you can show a message to the user.
+		</div>
+	</div>
+
+	<Example>
+		<ExampleComponent>
+			<div class="grid grid-cols-3">
+				<div class="col-span-2">
+					<div class="text-xl mb-2">Contract: OB | Initialize config</div>
+
+					<InitializeForm
+						abi={obABI}
+						contractMeta={obMeta}
+						bind:isInitializable={isInitOB}
+						bind:result={resultOB}
+					/>
+				</div>
+				<div class="flex flex-col p-4 gap-y-2">
+					<div class="border border-gray-400 dark:border-gray-700 rounded-lg p-2">
+						<span>isInitializable: </span>
+						<span>{isInitOB}</span>
 					</div>
 				</div>
 			</div>
