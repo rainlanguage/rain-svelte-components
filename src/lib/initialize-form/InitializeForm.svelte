@@ -33,8 +33,14 @@
 			(method_: any) => method_.name == 'initialize'
 		);
 		if (initializeMethod) {
-			initializeMethod.inputs.forEach((input_: any) => paths.push(input_.path));
-			initializeMethod.expressions.forEach((input_: any) => paths.push(input_.path));
+			// Make sure that the init method has inputs or expressions, and that they are
+			// arrays. Otherwise, the code will skip it since does not fit the design.
+			if (initializeMethod.inputs && initializeMethod.inputs.constructor === Array) {
+				initializeMethod.inputs.forEach((input_: any) => paths.push(input_.path));
+			}
+			if (initializeMethod.expressions && initializeMethod.expressions.constructor === Array) {
+				initializeMethod.expressions.forEach((input_: any) => paths.push(input_.path));
+			}
 		}
 
 		// Assuming that all the paths shared the same index on the ABI. Otherwise,
