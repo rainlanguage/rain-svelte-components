@@ -17,16 +17,19 @@ export { default as Pills } from './Pills.svelte';
 export { default as Parser } from './parser/Parser.svelte';
 export { default as OpDocs } from './parser/OpDocs.svelte';
 export { default as ParserInput } from './parser/ParserInput.svelte';
-export { default as SimulatedOutput } from './parser/SimulatedOutput.svelte'
+export { default as SimulatedOutput } from './parser/SimulatedOutput.svelte';
 
 export { default as Formatter } from './formatter/Formatter.svelte';
 
-export { default as AutoAbiForm } from './auto-abi-form/AutoAbiForm.svelte'
-export { default as AutoAbiFormComponent } from './auto-abi-form/AutoAbiFormComponent.svelte'
-export { default as AutoAbiFormSeparated } from './auto-abi-form/AutoAbiFormSeparated.svelte'
+export { default as AutoAbiForm } from './auto-abi-form/AutoAbiForm.svelte';
+export { default as AutoAbiFormComponent } from './auto-abi-form/AutoAbiFormComponent.svelte';
+export { default as AutoAbiFormSeparated } from './auto-abi-form/AutoAbiFormSeparated.svelte';
 
-export { default as InputDropdown } from './input-dropdown/InputDropdown.svelte'
-export { default as InputItem } from './input-dropdown/InputItem.svelte'
+export { default as InputDropdown } from './input-dropdown/InputDropdown.svelte';
+export { default as InputItem } from './input-dropdown/InputItem.svelte';
 
-export * from './overflow-menu'
-export * from './section'
+export { default as InitializeForm } from './initialize-form/InitializeForm.svelte';
+export { default as FormComponent } from './initialize-form/FormComponent.svelte';
+
+export * from './overflow-menu';
+export * from './section';
