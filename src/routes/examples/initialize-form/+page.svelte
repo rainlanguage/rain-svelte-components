@@ -7,8 +7,6 @@
 	import ExampleComponent from '$lib/_docs/ExampleComponent.svelte';
 	import ExampleUsage from '$lib/_docs/ExampleUsage.svelte';
 
-	import InitializeForm, { encodeConfigs } from '$lib/initialize-form/InitializeForm.svelte';
-
 	// Arbitrary ABIs and Contract Metas
 	import flowERC20Abi from './FlowERC20_ABI.json';
 	import flowERC20Meta from './FlowERC20_Contract_Meta.json';
@@ -18,6 +16,10 @@
 	import obABI from './OB_ABI.json';
 	import obMeta from './OB_Contract_Meta.json';
 	import Button from '$lib/Button.svelte';
+	import { InitializeForm } from '$lib';
+	import { encodeConfigs } from '$lib/initialize-form';
+	// import { InitializeForm } from '$lib/initialize-form';
+	// import InitializeForm from '$lib/initialize-form/InitializeForm.svelte';
 
 	const _deployers = [
 		{
@@ -183,6 +185,11 @@
 						bind:isInitializable={isInitOB}
 						bind:result={resultOB}
 					/>
+					{#if !isInitOB}
+						<p class="text-red-500">
+							This contract and his provided data cannot generate initializable information.
+						</p>
+					{/if}
 				</div>
 				<div class="flex flex-col p-4 gap-y-2">
 					<div class="border border-gray-400 dark:border-gray-700 rounded-lg p-2">

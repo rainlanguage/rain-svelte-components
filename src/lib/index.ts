@@ -28,8 +28,7 @@ export { default as AutoAbiFormSeparated } from './auto-abi-form/AutoAbiFormSepa
 export { default as InputDropdown } from './input-dropdown/InputDropdown.svelte';
 export { default as InputItem } from './input-dropdown/InputItem.svelte';
 
-export { default as InitializeForm } from './initialize-form/InitializeForm.svelte';
-export { default as FormComponent } from './initialize-form/FormComponent.svelte';
+export { InitializeForm, FormComponent } from './initialize-form';
 
 export * from './overflow-menu';
 export * from './section';
