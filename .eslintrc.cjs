@@ -9,17 +9,11 @@ module.exports = {
 	],
 	plugins: ['@typescript-eslint'],
 	ignorePatterns: ['*.cjs'],
-	// plugins: ['svelte3', '@typescript-eslint'],
-	// overrides: [{ files: ['*.svelte'], processor: 'svelte3/svelte3' }],
-	// settings: {
-	// 	'svelte3/typescript': () => require('typescript')
-	// },
 
 	overrides: [
 		{
 			files: ['*.svelte'],
 			parser: 'svelte-eslint-parser',
-			// Parse the `<script>` in `.svelte` as TypeScript by adding the following configuration.
 			parserOptions: {
 				parser: '@typescript-eslint/parser'
 			}
@@ -28,7 +22,7 @@ module.exports = {
 	parserOptions: {
 		sourceType: 'module',
 		ecmaVersion: 2020,
-		project: './tsconfig.json',
+		// project: './tsconfig.json',
 		extraFileExtensions: ['.svelte']
 	},
 	env: {
