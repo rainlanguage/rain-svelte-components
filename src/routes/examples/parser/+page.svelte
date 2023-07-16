@@ -138,7 +138,7 @@
 					<span slot="label">Enter raw text to load into parser here.</span>
 				</Input>
 				<div class="min-h-[150px] flex flex-col">
-					<Parser on:save={saveEvent} on:load={loadEvent} on:expand={expandEvent} bind:errors />
+					<Parser signer={$signer} on:save={saveEvent} on:load={loadEvent} on:expand={expandEvent} bind:errors />
 				</div>
 				<div class="flex flex-col gap-y-2">
 					{#each events as event}
