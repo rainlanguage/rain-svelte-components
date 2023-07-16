@@ -23,7 +23,7 @@
 	let errors: RDProblem[] = [];
 	let readOnly = false;
 
-	const opMetaPromise = getOpMetaFromSg('0x01D5611c2D6FB7Bb1bFa9df2f524196743f59F2a', 524289);
+	const opMetaPromise = getOpMetaFromSg('0x11be50c8c56f7c4878cdec55e266db557eed0b6c', );
 
 	setContext('EVALUABLE_ADDRESSES', {
 		getDeployers: async () => {

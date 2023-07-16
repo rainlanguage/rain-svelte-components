@@ -7,7 +7,7 @@
 	import { type Writable, writable } from 'svelte/store';
 	import { getOpMetaFromSg, type ExpressionConfig } from '@rainprotocol/rainlang';
 
-	const opMetaPromise = getOpMetaFromSg('0x01D5611c2D6FB7Bb1bFa9df2f524196743f59F2a', 524289);
+	const opMetaPromise = getOpMetaFromSg('0x11be50c8c56f7c4878cdec55e266db557eed0b6c', 524289);
 
 	let raw = `/**
  ** Calculate the maximum number of NFTs to mint
@@ -99,7 +99,7 @@ _ _: sender-address nft-id;
 	<Example>
 		<ExampleComponent>
 			{#await opMetaPromise then opMeta}
-				<Formatter {raw} {opMeta} maxHeight="400px" />
+				<Formatter {raw} {opMeta} {expressionConfig} maxHeight="400px" />
 			{/await}
 		</ExampleComponent>
 	</Example>
