@@ -23,7 +23,7 @@
 	let errors: RDProblem[] = [];
 	let readOnly = false;
 
-	const opMetaPromise = getOpMetaFromSg('0x01D5611c2D6FB7Bb1bFa9df2f524196743f59F2a', 524289);
+	const opMetaPromise = getOpMetaFromSg('0x11be50c8c56f7c4878cdec55e266db557eed0b6c', );
 
 	setContext('EVALUABLE_ADDRESSES', {
 		getDeployers: async () => {
@@ -138,7 +138,7 @@
 					<span slot="label">Enter raw text to load into parser here.</span>
 				</Input>
 				<div class="min-h-[150px] flex flex-col">
-					<Parser on:save={saveEvent} on:load={loadEvent} on:expand={expandEvent} bind:errors />
+					<Parser signer={$signer} on:save={saveEvent} on:load={loadEvent} on:expand={expandEvent} bind:errors />
 				</div>
 				<div class="flex flex-col gap-y-2">
 					{#each events as event}

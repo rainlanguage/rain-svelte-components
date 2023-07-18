@@ -1,87 +1,84 @@
 import { describe, it, expect } from 'vitest';
-import {
-    cleanup,
-    render,
-} from '@testing-library/svelte';
+import { cleanup, render } from '@testing-library/svelte';
 import { get, writable, type Writable } from 'svelte/store';
 import { rainlang, rlc } from '@rainprotocol/rainlang';
 import type { ExpressionConfig, RDProblem } from '@rainprotocol/rainlang';
 import { getOpMetaFromSg } from '@rainprotocol/rainlang';
 import ParserInput from '../ParserInput.svelte';
 
-describe("ParserInput Tests", () => {
-    let expressionConfig: Writable<ExpressionConfig>;
-    let opMeta: string;
-    const errors: RDProblem[] = [];
+describe('ParserInput Tests', () => {
+	let expressionConfig: Writable<ExpressionConfig>;
+	let opMeta: string;
+	const errors: RDProblem[] = [];
 
-    beforeAll(async () => {
-        expressionConfig = writable({
-            sources: [],
-            constants: []
-        });
-        opMeta = await getOpMetaFromSg('0x01D5611c2D6FB7Bb1bFa9df2f524196743f59F2a', 524289);
-    });
+	beforeAll(async () => {
+		expressionConfig = writable({
+			sources: [],
+			constants: []
+		});
+		opMeta = await getOpMetaFromSg('0x11be50c8c56f7c4878cdec55e266db557eed0b6c', 524289);
+	});
 
-    it("should render ParserInput component", async () => {
-        const raw = rainlang`_: add(1000 20)`;
+	it('should render ParserInput component', async () => {
+		const raw = rainlang`_: add(1000 20)`;
 
-        const { container } = await render(ParserInput, {
-            props: {
-                expressionConfig,
-                raw,
-                errors,
-                opMeta
-            }
-        });
+		const { container } = await render(ParserInput, {
+			props: {
+				expressionConfig,
+				raw,
+				errors,
+				opMeta
+			}
+		});
 
-        expect(container.getElementsByClassName("codemirror-wrapper").length).toBe(1);
-    });
+		expect(container.getElementsByClassName('codemirror-wrapper').length).toBe(1);
+	});
 
-    it("should generate an expressionConfig for valid rainlang expressions", async () => {
-        // 0
-        const expression0 = rainlang`_: add(10 20);`
-        // rendering component
-        const { container } = await render(ParserInput, {
-            props: {
-                expressionConfig,
-                raw: expression0,
-                errors,
-                opMeta
-            }
-        });
+	it('should generate an expressionConfig for valid rainlang expressions', async () => {
+		// 0
+		const expression0 = rainlang`_: add(10 20);`;
+		// rendering component
+		const { container } = await render(ParserInput, {
+			props: {
+				expressionConfig,
+				raw: expression0,
+				errors,
+				opMeta
+			}
+		});
 
-        expect(container.getElementsByClassName("codemirror-wrapper").length).toBe(1);
+		expect(container.getElementsByClassName('codemirror-wrapper').length).toBe(1);
 
-        // asserting expressionConfig
-        const expectedExpressionConfig0 = await rlc(expression0, opMeta);
-        expect(get(expressionConfig)).toEqual(expectedExpressionConfig0);
-        cleanup();
+		// asserting expressionConfig
+		const expectedExpressionConfig0 = await rlc(expression0, opMeta);
+		expect(get(expressionConfig)).toEqual(expectedExpressionConfig0);
+		cleanup();
 
-        // 1
-        const expression1 = rainlang` _ _: erc-1155-balance-of-batch(
+		// 1
+		const expression1 = rainlang` _ _: erc-1155-balance-of-batch(
             0x01
             0x02
             0x03
             0x02
             0x03
-        );`
-        // rendering component
-        await render(ParserInput, {
-            props: {
-                expressionConfig,
-                raw: expression1,
-                errors,
-                opMeta
-            }
-        });
+        );`;
+		// rendering component
+		await render(ParserInput, {
+			props: {
+				expressionConfig,
+				raw: expression1,
+				errors,
+				opMeta
+			}
+		});
 
-        // asserting expressionConfig
-        const expectedExpressionConfig1 = await rlc(expression1, opMeta);
-        expect(get(expressionConfig)).toEqual(expectedExpressionConfig1);
-        cleanup();
+		// asserting expressionConfig
+		const expectedExpressionConfig1 = await rlc(expression1, opMeta);
+		expect(get(expressionConfig)).toEqual(expectedExpressionConfig1);
+		cleanup();
 
-        // 2
-        const expression2 = rainlang`  
+		// 2
+		const expression2 = rainlang`  
             c0: 1,
             c1: 2,
             condition: 1, 
@@ -98,18 +95,18 @@ describe("ParserInput Tests", () => {
             _: add(s0 4),
             _: add(s1 5);`;
 
-        // rendering component
-        await render(ParserInput, {
-            props: {
-                expressionConfig,
-                raw: expression2,
-                errors,
-                opMeta
-            }
-        });
+		// rendering component
+		await render(ParserInput, {
+			props: {
+				expressionConfig,
+				raw: expression2,
+				errors,
+				opMeta
+			}
+		});
 
-        // asserting expressionConfig
-        const expectedExpressionConfig2 = await rlc(expression2, opMeta);
-        expect(get(expressionConfig)).toEqual(expectedExpressionConfig2);
-    });
+		// asserting expressionConfig
+		const expectedExpressionConfig2 = await rlc(expression2, opMeta);
+		expect(get(expressionConfig)).toEqual(expectedExpressionConfig2);
+	});
 });

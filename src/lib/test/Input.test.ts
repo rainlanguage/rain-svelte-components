@@ -7,7 +7,7 @@ import {
 import Input from '../Input.svelte';
 import userEvent from '@testing-library/user-event';
 import type { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
-import html from 'svelte-htm';
+import html from 'svelte4-htm';
 
 describe("Input Tests", () => {
     let user: UserEvent;
