@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { signer } from 'svelte-ethers-store';
-	import Input from '$lib/Input.svelte';
 	import Parser from '$lib/parser/Parser.svelte';
 	import type { AbiParameter } from 'abitype';
 	import Button from '$lib/Button.svelte';
 	import { getContext, onMount } from 'svelte';
-	import Switch from '$lib/Switch.svelte';
 	import { constructEvaluableConfig, type EvaluableConfig } from '$lib/parser/types';
 	import ConfigurationSlot from './ConfigurationSlot.svelte';
+	import { id } from 'ethers/lib/utils';
 
 	export let component: AbiParameter & {
 		nameMeta?: string;
@@ -78,6 +77,10 @@
 		evaluableConfigs = evaluableConfigs.filter((x) => x.id !== instance.id);
 	};
 
+	const isLastComponent = (component_: { id: any }[], id_: any): boolean => {
+		return component_[component_.length - 1].id === id_;
+	};
+
 	// if this component is a list of expressions, add the first one
 	onMount(() => {
 		if (type == 'struct EvaluableConfig[]' && !settings.onlyConfig) addExpression();
@@ -134,7 +137,7 @@
 						</button>
 					</div>
 				{/each}
-				<div class="flex justify-center border-t border-gray-200 w-full p-2 col-span-full">
+				<div class="self-center">
 					<Button size="small" on:click={addArrayedComponent}>+ Add another</Button>
 				</div>
 			{/if}
@@ -206,31 +209,37 @@
 			<div class="text-sm col-span-full">{component.descriptionMeta}</div>
 		{/if}
 	{/if}
-	{#if type?.endsWith('[]') && type !== 'struct EvaluableConfig[]' && !settings.onlyExpressions}
+	{#if type?.endsWith('[]') && !settings.onlyExpressions}
 		{#each arrayedComponents as arrayedComponent (arrayedComponent.id)}
-			{#each component.components as subComponent}
-				{#if subComponent}
-					<svelte:self
-						component={subComponent}
-						bind:result={arrayedComponent.compResult[subComponent.name]}
-						on:save
-						on:load
-						on:expand
-						on:help
-					/>
-				{/if}
-			{/each}
-			<div class="col-span-full flex w-full justify-end">
-				<button
-					class="self-end text-xs underline cursor-pointer"
-					on:click={() => {
-						removeArrayedComponent(arrayedComponent);
-					}}
-				>
-					Remove
-				</button>
+			<div
+				class="component"
+				class:component-last={isLastComponent(arrayedComponents, arrayedComponent.id)}
+			>
+				{#each component.components as subComponent}
+					{#if subComponent}
+						<svelte:self
+							component={subComponent}
+							bind:result={arrayedComponent.compResult[subComponent.name]}
+							on:save
+							on:load
+							on:expand
+							on:help
+						/>
+					{/if}
+				{/each}
+				<div class="col-span-full flex w-full justify-end">
+					<button
+						class="self-end text-xs underline cursor-pointer"
+						on:click={() => {
+							removeArrayedComponent(arrayedComponent);
+						}}
+					>
+						Remove
+					</button>
+				</div>
 			</div>
 		{/each}
+
 		<div class="flex justify-center border-t border-gray-200 w-full p-2 col-span-full">
 			<Button size="small" on:click={addArrayedComponent}>+ Add another</Button>
 		</div>
@@ -249,3 +258,13 @@
 		{/each}
 	{/if}
 {/if}
+
+<style lang="postcss">
+	.component {
+		@apply gap-y-4 flex flex-col border-b border-gray-200 pb-4;
+	}
+
+	.component-last {
+		@apply border-0 pb-0;
+	}
+</style>
