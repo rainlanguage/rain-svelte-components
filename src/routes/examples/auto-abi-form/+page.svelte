@@ -91,12 +91,12 @@
 		<ExampleComponent>
 			<div class="grid grid-cols-3">
 				<div class="col-span-2">
-					<div class="text-xl mb-2">Contract: OrderBook | Method name: addOrder</div>
+					<div class="text-xl mb-2">Contract: OrderBook | Method name: takeOrders</div>
 					<AutoAbiFormSeparated
 						abi={OrderBook.abi}
 						metadata={OrderBookMetadata}
 						bind:result={resultMerged}
-						methodName="addOrder"
+						methodName="takeOrders"
 						on:save={({ detail }) => {
 							console.log(detail);
 						}}
