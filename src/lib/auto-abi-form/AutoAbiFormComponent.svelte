@@ -132,7 +132,7 @@
 						</button>
 					</div>
 				{/each}
-				<div class="flex justify-center border-t border-gray-200 w-full p-2 col-span-full">
+				<div class="self-center">
 					<Button size="small" on:click={addArrayedComponent}>+ Add another</Button>
 				</div>
 			{/if}
