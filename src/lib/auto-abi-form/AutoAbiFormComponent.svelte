@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { signer } from 'svelte-ethers-store';
-	import Input from '$lib/Input.svelte';
 	import Parser from '$lib/parser/Parser.svelte';
 	import type { AbiParameter } from 'abitype';
 	import Button from '$lib/Button.svelte';
 	import { getContext, onMount } from 'svelte';
-	import Switch from '$lib/Switch.svelte';
 	import { constructEvaluableConfig, type EvaluableConfig } from '$lib/parser/types';
 	import ConfigurationSlot from './ConfigurationSlot.svelte';
 
