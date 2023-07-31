@@ -7,6 +7,7 @@
 	import { getContext, onMount } from 'svelte';
 	import Switch from '$lib/Switch.svelte';
 	import { constructEvaluableConfig, type EvaluableConfig } from '$lib/parser/types';
+	import ConfigurationSlot from './ConfigurationSlot.svelte';
 
 	export let component: AbiParameter & {
 		nameMeta?: string;
@@ -15,6 +16,8 @@
 		isDeployerField?: boolean;
 	};
 	export let result: any = 'components' in component ? {} : undefined;
+
+	export let noDescription = false;
 
 	const settings: {
 		onlyConfig: boolean;
@@ -80,41 +83,58 @@
 
 {#if !((component?.isInterpreterField || component?.isDeployerField) && !settings.showInterpreterFields)}
 	{#if !settings.onlyExpressions}
-		{#if type == 'string'}
-			<Input type="text" bind:value={result}>
-				<span slot="label">{component.nameMeta || component.name} ({type})</span>
-				<span slot="description"
-					>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
+		{#if !type?.startsWith('struct')}
+			{#if !type?.endsWith('[]')}
+				{#if type == 'string'}
+					<ConfigurationSlot bind:value={result} {component} {noDescription} />
+				{:else if type?.startsWith('uint')}
+					<ConfigurationSlot
+						bind:value={result}
+						{component}
+						configInputType="number"
+						{noDescription}
+					/>
+				{:else if type == 'address'}
+					<ConfigurationSlot bind:value={result} {component} {noDescription} />
+				{:else if type == 'bool'}
+					<ConfigurationSlot bind:value={result} {component} configType="switch" {noDescription} />
+				{:else if type == 'bytes'}
+					<ConfigurationSlot bind:value={result} {component} {noDescription} />
+				{/if}
+			{:else}
+				<span class="text-gray-500 dark:text-gray-200 text-sm font-medium"
+					>{component.nameMeta || component.name} ({type})</span
 				>
-			</Input>
-		{:else if type?.startsWith('uint')}
-			<Input type="number" bind:value={result}>
-				<span slot="label">{component.nameMeta || component.name} ({type})</span>
-				<span slot="description"
-					>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
-				>
-			</Input>
-		{:else if type == 'address'}
-			<Input type="text" bind:value={result}>
-				<span slot="label">{component.nameMeta || component.name} ({type})</span>
-				<span slot="description"
-					>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
-				>
-			</Input>
-		{:else if type == 'bool'}
-			<Switch bind:checked={result}>
-				<span slot="label">{component.nameMeta || component.name} ({type})</span>
-				<span slot="description"
-					>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
-				>
-			</Switch>
-		{:else if type == 'bytes'}
-			<Input type="text" bind:value={result}>
-				<span slot="label">{component.nameMeta || component.name} ({type})</span>
-				<span slot="description"
-					>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
-				>
-			</Input>
+
+				{#each arrayedComponents as arrayedComponent (arrayedComponent.id)}
+					<svelte:self
+						component={{
+							name: component.name,
+							internalType: component.internalType?.replace('[]', ''),
+							type: component.type?.replace('[]', '')
+						}}
+						bind:result={arrayedComponent.compResult}
+						noDescription
+						on:save
+						on:load
+						on:expand
+						on:help
+					/>
+					<div class="col-span-full flex w-full justify-end">
+						<button
+							class="self-end text-xs underline cursor-pointer"
+							on:click={() => {
+								removeArrayedComponent(arrayedComponent);
+							}}
+						>
+							Remove
+						</button>
+					</div>
+				{/each}
+				<div class="flex justify-center border-t border-gray-200 w-full p-2 col-span-full">
+					<Button size="small" on:click={addArrayedComponent}>+ Add another</Button>
+				</div>
+			{/if}
 		{/if}
 	{/if}
 {/if}
