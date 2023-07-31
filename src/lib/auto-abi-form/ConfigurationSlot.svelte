@@ -22,7 +22,7 @@
 		<Input type={configInputType} bind:value />
 	{:else}
 		<Input type={configInputType} bind:value>
-			<span slot="label">{component.nameMeta || component.name} ({component.internalType})</span>
+			<span slot="label">{component.nameMeta || component.name} ({component.type})</span>
 			<span slot="description"
 				>{#if component.descriptionMeta}{component.descriptionMeta}{/if}</span
 			>

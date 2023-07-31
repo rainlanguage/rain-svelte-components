@@ -25,7 +25,10 @@
 		showInterpreterFields: boolean;
 	} = getContext('abi-form');
 
-	$: type = component.internalType;
+	// If the internal type refers to an interface of some contract, the external type must be used.
+	$: type = component.internalType?.startsWith('contract')
+		? component.type
+		: component.internalType;
 
 	// if the component is an array of subcomponents
 	let arrayedComponents: { id: number; compResult: any }[] = [{ id: 0, compResult: {} }];
