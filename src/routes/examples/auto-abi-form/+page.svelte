@@ -13,11 +13,13 @@
 	import AutoAbiFormSeparated from '$lib/auto-abi-form/AutoAbiFormSeparated.svelte';
 	import OrderBook from './OrderBook.json';
 	import OrderBookMetadata from './OrderBook.meta.json';
+	import Flow from './Flow.json';
+	import FlowMetadata from './Flow.meta.json';
 	import { setContext } from 'svelte';
 	import { getStores } from '$app/stores';
 	import { writable } from 'svelte/store';
 
-	let result: any, resultMerged: any, result2: any, resultMergedFlow: any;
+	let resultMergedOB: any, resultMergedFlow: any;
 
 	const _deployers = [
 		{
@@ -91,11 +93,45 @@
 		<ExampleComponent>
 			<div class="grid grid-cols-3">
 				<div class="col-span-2">
+					<div class="text-xl mb-2">Contract: Flow | Method name: flow</div>
+					<AutoAbiFormSeparated
+						abi={Flow}
+						metadata={FlowMetadata}
+						bind:result={resultMergedFlow}
+						methodName="flow"
+						on:save={({ detail }) => {
+							console.log(detail);
+						}}
+						on:load={(event) => {
+							console.log(event);
+						}}
+						on:help={(event) => {
+							console.log('help clicked');
+						}}
+						on:expand={(event) => {
+							console.log('expand clicked');
+						}}
+					/>
+				</div>
+				<div class="p-4">
+					<span>Result</span>
+					<pre>
+						{JSON.stringify(resultMergedFlow, null, 2)}
+					</pre>
+				</div>
+			</div>
+		</ExampleComponent>
+		<ExampleUsage>example usage here</ExampleUsage>
+	</Example>
+	<Example>
+		<ExampleComponent>
+			<div class="grid grid-cols-3">
+				<div class="col-span-2">
 					<div class="text-xl mb-2">Contract: OrderBook | Method name: takeOrders</div>
 					<AutoAbiFormSeparated
 						abi={OrderBook.abi}
 						metadata={OrderBookMetadata}
-						bind:result={resultMerged}
+						bind:result={resultMergedOB}
 						methodName="takeOrders"
 						on:save={({ detail }) => {
 							console.log(detail);
@@ -114,93 +150,11 @@
 				<div class="p-4">
 					<span>Result</span>
 					<pre>
-						{JSON.stringify(resultMerged, null, 2)}
+						{JSON.stringify(resultMergedOB, null, 2)}
 					</pre>
 				</div>
 			</div>
 		</ExampleComponent>
 		<ExampleUsage>example usage here</ExampleUsage>
 	</Example>
-	<!-- <Example>
-		<ExampleComponent>
-			<div class="grid grid-cols-3">
-				<div class="col-span-2">
-					<div class="text-xl mb-2">Contract: FlowERC20Factory | Method name: createChildTyped</div>
-					<AutoAbiFormSeparated
-						abi={FlowERC20Factory.abi}
-						metadata={FlowERC20FactoryMetadata}
-						bind:result={resultMergedFlow}
-						methodName="createChildTyped"
-						on:save={({ detail }) => {
-							console.log(detail);
-						}}
-						on:load={(event) => {
-							console.log(event);
-						}}
-						on:help={(event) => {
-							console.log('help clicked');
-						}}
-					/>
-				</div>
-				<div class="p-4">
-					<span>Result</span>
-					<pre>
-						{JSON.stringify(resultMergedFlow, null, 2)}
-					</pre>
-				</div>
-			</div>
-		</ExampleComponent>
-		<ExampleUsage>example usage here</ExampleUsage>
-	</Example>
-	<ExampleHeading id="with-parser">With parser</ExampleHeading>
-	<Example>
-		<ExampleComponent>
-			<div class="grid grid-cols-3">
-				<div class="col-span-2">
-					<div class="text-xl mb-2">Method name: createChildTyped</div>
-					<AutoAbiForm
-						abi={FlowERC20Factory.abi}
-						metadata={FlowERC20FactoryMetadata}
-						bind:result
-						methodName="createChildTyped"
-						on:help={(event) => {
-							console.log('help clicked');
-						}}
-					/>
-				</div>
-				<div class="p-4">
-					<span>Result</span>
-					<pre>
-						{JSON.stringify(result, null, 2)}
-					</pre>
-				</div>
-			</div>
-		</ExampleComponent>
-		<ExampleUsage>example usage here</ExampleUsage>
-	</Example>
-	<ExampleHeading id="without-parser">Without parser</ExampleHeading>
-	<Example>
-		<ExampleComponent>
-			<div class="grid grid-cols-3">
-				<div class="col-span-2">
-					<div class="text-xl mb-2">Method name: safeTransferFrom</div>
-					<AutoAbiForm
-						abi={Vapour721A.abi}
-						bind:result={result2}
-						methodName="safeTransferFrom"
-						on:help={(event) => {
-							console.log('help clicked');
-						}}
-					/>
-				</div>
-				<div class="p-4">
-					<span>Result</span>
-					<pre>
-						{JSON.stringify(result2, null, 2)}
-					</pre>
-				</div>
-			</div>
-		</ExampleComponent>
-		<ExampleUsage>example usage here</ExampleUsage>
-	</Example> -->
 </div>

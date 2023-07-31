@@ -44,14 +44,16 @@
 	{#if inputs}
 		<div class:onlyConfig class:normalForm={!onlyConfig}>
 			{#each inputs as component, i}
-				<AutoAbiFormComponent
-					{component}
-					bind:result={result[i]}
-					on:save
-					on:load
-					on:expand
-					on:help
-				/>
+				<div class:onlyConfig class:normalForm={!onlyConfig} class="container">
+					<AutoAbiFormComponent
+						{component}
+						bind:result={result[i]}
+						on:save
+						on:load
+						on:expand
+						on:help
+					/>
+				</div>
 			{/each}
 		</div>
 	{/if}
@@ -59,12 +61,16 @@
 	Invalid contract metadata
 {/if}
 
-<style>
+<style lang="postcss">
 	.onlyConfig {
 		@apply gap-y-4 flex flex-col;
 	}
 
 	.normalForm {
 		@apply flex flex-col gap-y-4;
+	}
+
+	.container {
+		@apply border-b border-gray-300 pb-4 w-full last:border-0 last:py-0;
 	}
 </style>
