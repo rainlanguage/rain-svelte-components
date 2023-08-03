@@ -60,29 +60,6 @@
 	// init one to start
 	let evaluableConfigs: { id: number; evaluableConfig: EvaluableConfig }[] = [];
 
-	onMount(() => {
-		// Using onMount to avoid listening changes on `type`.
-		switch (type) {
-			case 'bytes':
-				result = '';
-				break;
-			case 'struct EvaluableConfig':
-				result = evaluableConfig;
-				break;
-			case 'struct EvaluableConfig[]':
-				result = evaluableConfigs.map((e) => e.evaluableConfig);
-				break;
-
-			default:
-				break;
-		}
-	});
-
-	// $: if (type == 'bytes') result = undefined;
-	// $: if (type == 'struct EvaluableConfig') result = evaluableConfig;
-	// $: if (type == 'struct EvaluableConfig[]')
-	// 	result = evaluableConfigs.map((e) => e.evaluableConfig);
-
 	let evaluableConfigId = 0;
 	const addExpression = () => {
 		evaluableConfigs = [
@@ -113,6 +90,13 @@
 
 		return true;
 	};
+
+	// Just one scope of this reactive result
+	$: {
+		if (type == 'bytes') result = undefined;
+		if (type == 'struct EvaluableConfig') result = evaluableConfig;
+		if (type == 'struct EvaluableConfig[]') result = evaluableConfigs.map((e) => e.evaluableConfig);
+	}
 
 	// if this component is a list of expressions, add the first one
 	onMount(() => {
