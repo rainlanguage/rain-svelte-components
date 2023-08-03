@@ -1,10 +1,10 @@
 <script lang="ts">
-	import Vapour721A from './Vapour721A.json';
-	import FlowERC20Factory from './FlowERC20Factory.json';
-	import LobbyFactory from './LobbyFactory.json';
-	import LobbyFactoryMetadata from './LobbyFactoryMetadata.json';
-	import FlowERC20FactoryMetadata from './FlowERC20FactoryMetadata.json';
-	import AutoAbiForm from '$lib/auto-abi-form/AutoAbiForm.svelte';
+	// import Vapour721A from './Vapour721A.json';
+	// import FlowERC20Factory from './FlowERC20Factory.json';
+	// import LobbyFactory from './LobbyFactory.json';
+	// import LobbyFactoryMetadata from './LobbyFactoryMetadata.json';
+	// import FlowERC20FactoryMetadata from './FlowERC20FactoryMetadata.json';
+	// import AutoAbiForm from '$lib/auto-abi-form/AutoAbiForm.svelte';
 	import PageHeading from '$lib/_docs/PageHeading.svelte';
 	import ExampleHeading from '$lib/_docs/ExampleHeading.svelte';
 	import Example from '$lib/_docs/Example.svelte';
@@ -16,8 +16,8 @@
 	import Flow from './Flow.json';
 	import FlowMetadata from './Flow.meta.json';
 	import { setContext } from 'svelte';
-	import { getStores } from '$app/stores';
-	import { writable } from 'svelte/store';
+
+	import Button from '$lib/Button.svelte';
 
 	let resultMergedOB: any, resultMergedFlow: any;
 
@@ -55,9 +55,18 @@
 	// To only show the column to write expressions
 	setContext('onlyExpressionParser', true);
 
-	// Hide buttons if not user found
-	let isLogged = writable(true);
-	setContext('isLogged', isLogged);
+	// // Hide buttons if not user found
+	// let isLogged = writable(true);
+	// setContext('isLogged', isLogged);
+
+	let selectedMethod: 'flow' | 'multicall' = 'flow';
+
+	const selectFlowMethod = () => {
+		selectedMethod = 'flow';
+	};
+	const selectMulticallMethod = () => {
+		selectedMethod = 'multicall';
+	};
 </script>
 
 <div class="flex flex-col gap-y-4 dark:text-gray-100">
@@ -91,38 +100,52 @@
 	</div>
 	<Example>
 		<ExampleComponent>
-			<div class="grid grid-cols-3">
-				<div class="col-span-2">
-					<div class="text-xl mb-2">Contract: Flow | Method name: flow</div>
-					<AutoAbiFormSeparated
-						abi={Flow}
-						metadata={FlowMetadata}
-						bind:result={resultMergedFlow}
-						methodName="flow"
-						on:save={({ detail }) => {
-							console.log(detail);
-						}}
-						on:load={(event) => {
-							console.log(event);
-						}}
-						on:help={(event) => {
-							console.log('help clicked');
-						}}
-						on:expand={(event) => {
-							console.log('expand clicked');
-						}}
-					/>
+			<div class="flex flex-col gap-y-6">
+				<div class="flex flex-col self-center">
+					<p>Choose a Flow method:</p>
+					<div class="flex">
+						<Button on:click={selectFlowMethod} variant="transparent" dual={'left'}>flow</Button>
+						<Button on:click={selectMulticallMethod} variant="transparent" dual={'right'}
+							>multicall</Button
+						>
+					</div>
 				</div>
-				<div class="p-4">
-					<span>Result</span>
-					<pre>
+				<div class="grid grid-cols-3">
+					<div class="col-span-2">
+						<div class="text-xl mb-2">Contract: Flow | Method name: {selectedMethod}</div>
+						{#key selectedMethod}
+							<AutoAbiFormSeparated
+								abi={Flow}
+								metadata={FlowMetadata}
+								bind:result={resultMergedFlow}
+								methodName={selectedMethod}
+								on:save={({ detail }) => {
+									console.log(detail);
+								}}
+								on:load={(event) => {
+									console.log(event);
+								}}
+								on:help={(event) => {
+									console.log('help clicked');
+								}}
+								on:expand={(event) => {
+									console.log('expand clicked');
+								}}
+							/>
+						{/key}
+					</div>
+					<div class="p-4">
+						<span>Result</span>
+						<pre>
 						{JSON.stringify(resultMergedFlow, null, 2)}
 					</pre>
+					</div>
 				</div>
 			</div>
 		</ExampleComponent>
 		<ExampleUsage>example usage here</ExampleUsage>
 	</Example>
+
 	<Example>
 		<ExampleComponent>
 			<div class="grid grid-cols-3">

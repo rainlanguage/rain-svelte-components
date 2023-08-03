@@ -29,6 +29,6 @@ pkgs.stdenv.mkDerivation {
   source .env
   export PATH=$( npm bin ):$PATH
   # keep it fresh
-  npm install
+  # npm install
  '';
 }

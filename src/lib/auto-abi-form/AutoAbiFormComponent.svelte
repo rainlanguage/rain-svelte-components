@@ -6,7 +6,7 @@
 	import { getContext, onMount } from 'svelte';
 	import { constructEvaluableConfig, type EvaluableConfig } from '$lib/parser/types';
 	import ConfigurationSlot from './ConfigurationSlot.svelte';
-	import { id } from 'ethers/lib/utils';
+	import { isHexString } from 'ethers/lib/utils';
 
 	export let component: AbiParameter & {
 		nameMeta?: string;
@@ -60,9 +60,28 @@
 	// init one to start
 	let evaluableConfigs: { id: number; evaluableConfig: EvaluableConfig }[] = [];
 
-	$: if (type == 'struct EvaluableConfig') result = evaluableConfig;
-	$: if (type == 'struct EvaluableConfig[]')
-		result = evaluableConfigs.map((e) => e.evaluableConfig);
+	onMount(() => {
+		// Using onMount to avoid listening changes on `type`.
+		switch (type) {
+			case 'bytes':
+				result = '';
+				break;
+			case 'struct EvaluableConfig':
+				result = evaluableConfig;
+				break;
+			case 'struct EvaluableConfig[]':
+				result = evaluableConfigs.map((e) => e.evaluableConfig);
+				break;
+
+			default:
+				break;
+		}
+	});
+
+	// $: if (type == 'bytes') result = undefined;
+	// $: if (type == 'struct EvaluableConfig') result = evaluableConfig;
+	// $: if (type == 'struct EvaluableConfig[]')
+	// 	result = evaluableConfigs.map((e) => e.evaluableConfig);
 
 	let evaluableConfigId = 0;
 	const addExpression = () => {
@@ -79,6 +98,20 @@
 
 	const isLastComponent = (component_: { id: any }[], id_: any): boolean => {
 		return component_[component_.length - 1].id === id_;
+	};
+
+	const isValidHex = async (value: any) => {
+		if (!isHexString(value)) {
+			return { error: 'Not a valid hexadecimal value. (Eg. 0x0a..9f)' };
+		}
+
+		// (value.length % 2) allow to know if the byte length is odd or no. It is
+		// required even bytes.
+		if (typeof value === 'string' && value.length % 2) {
+			return { error: 'Hex bytes are odd-length. (Eg. 0x1234)' };
+		}
+
+		return true;
 	};
 
 	// if this component is a list of expressions, add the first one
@@ -105,7 +138,14 @@
 				{:else if type == 'bool'}
 					<ConfigurationSlot bind:value={result} {component} configType="switch" {noDescription} />
 				{:else if type == 'bytes'}
-					<ConfigurationSlot bind:value={result} {component} {noDescription} />
+					value: {result}
+
+					<ConfigurationSlot
+						bind:value={result}
+						{component}
+						{noDescription}
+						validatorInput={isValidHex}
+					/>
 				{/if}
 			{:else}
 				<span class="text-gray-500 dark:text-gray-200 text-sm font-medium"
@@ -216,7 +256,7 @@
 				class:component-last={isLastComponent(arrayedComponents, arrayedComponent.id)}
 			>
 				{#each component.components as subComponent}
-					{#if subComponent}
+					{#if subComponent && subComponent.name}
 						<svelte:self
 							component={subComponent}
 							bind:result={arrayedComponent.compResult[subComponent.name]}
