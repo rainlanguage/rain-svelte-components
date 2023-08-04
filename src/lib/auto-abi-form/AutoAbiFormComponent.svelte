@@ -93,13 +93,14 @@
 
 	// Just one scope of this reactive result
 	$: {
-		if (type == 'bytes') result = undefined;
 		if (type == 'struct EvaluableConfig') result = evaluableConfig;
 		if (type == 'struct EvaluableConfig[]') result = evaluableConfigs.map((e) => e.evaluableConfig);
 	}
 
 	// if this component is a list of expressions, add the first one
 	onMount(() => {
+		if (type == 'bytes') result = '';
+
 		if (type == 'struct EvaluableConfig[]' && !settings.onlyConfig) addExpression();
 	});
 </script>
